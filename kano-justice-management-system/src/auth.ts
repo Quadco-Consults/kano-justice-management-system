@@ -1,5 +1,5 @@
-import { NextAuthOptions } from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
+import NextAuth from 'next-auth'
+import Credentials from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
 import { User, UserRole } from '@/types/auth'
 
@@ -50,9 +50,9 @@ const mockUsers: User[] = [
 // Mock password hash for "password123"
 const defaultPasswordHash = '$2b$12$7R5up5UUG1a4mQhN.1JCDeBAxFv2V2cmcGrgm/XIZSZrYoODoUZfO'
 
-export const authOptions: NextAuthOptions = {
+export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    CredentialsProvider({
+    Credentials({
       name: 'credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
@@ -71,7 +71,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         // Verify password (in production, use actual hashed password from database)
-        const isValidPassword = await bcrypt.compare(credentials.password, defaultPasswordHash)
+        const isValidPassword = await bcrypt.compare(credentials.password as string, defaultPasswordHash)
 
         if (!isValidPassword) {
           throw new Error('Invalid credentials')
@@ -110,9 +110,8 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/login',
     error: '/auth/error'
-  },
-  secret: process.env.NEXTAUTH_SECRET || 'dev-secret-key'
-}
+  }
+})
 
 // Helper function to check user permissions
 export function hasPermission(userRole: UserRole, requiredRoles: UserRole[]): boolean {
