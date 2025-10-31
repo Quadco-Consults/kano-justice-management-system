@@ -41,7 +41,7 @@ import "react-quill-new/dist/quill.snow.css"
 // Dynamic import for ReactQuill to avoid SSR issues
 const ReactQuill = dynamic(() => import('react-quill-new'), {
   ssr: false,
-  loading: () => <p className="text-gray-500 py-4">Loading editor...</p>
+  loading: () => <p className="text-gray-900 py-4">Loading editor...</p>
 })
 
 const mockBill = {
@@ -411,11 +411,11 @@ export function BillDetail() {
 
   const getAmendmentStatusColor = (status: string) => {
     switch (status) {
-      case 'approved': return 'bg-green-100 text-green-800'
-      case 'pending-approval': return 'bg-orange-100 text-orange-800'
-      case 'in-discussion': return 'bg-blue-100 text-blue-800'
-      case 'rejected': return 'bg-red-100 text-red-800'
-      default: return 'bg-gray-100 text-gray-800'
+      case 'approved': return 'bg-green-100 text-green-900'
+      case 'pending-approval': return 'bg-orange-100 text-orange-900'
+      case 'in-discussion': return 'bg-blue-100 text-blue-900'
+      case 'rejected': return 'bg-red-100 text-red-900'
+      default: return 'bg-gray-100 text-gray-900'
     }
   }
 
@@ -437,7 +437,7 @@ export function BillDetail() {
                 {mockBill.priority}
               </Badge>
             </div>
-            <h2 className="text-xl text-gray-700">{mockBill.title}</h2>
+            <h2 className="text-xl text-gray-900">{mockBill.title}</h2>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -465,19 +465,19 @@ export function BillDetail() {
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">Bill Information</h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Type:</span>{" "}
+                    <span className="text-gray-900">Type:</span>{" "}
                     <span className="font-medium">{mockBill.type}</span>
                   </div>
                   <div>
-                    <span className="text-gray-600">Status:</span>{" "}
+                    <span className="text-gray-900">Status:</span>{" "}
                     <span className="font-medium capitalize">{mockBill.status}</span>
                   </div>
                   <div>
-                    <span className="text-gray-600">Sponsor:</span>{" "}
+                    <span className="text-gray-900">Sponsor:</span>{" "}
                     <span className="font-medium">{mockBill.sponsor}</span>
                   </div>
                   <div>
-                    <span className="text-gray-600">Drafter:</span>{" "}
+                    <span className="text-gray-900">Drafter:</span>{" "}
                     <span className="font-medium">{mockBill.draftedBy}</span>
                   </div>
                 </div>
@@ -485,14 +485,14 @@ export function BillDetail() {
 
               <div>
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">Description</h3>
-                <p className="text-gray-700">{mockBill.description}</p>
+                <p className="text-gray-900">{mockBill.description}</p>
               </div>
 
               <div>
                 <h3 className="font-semibold text-lg text-gray-900 mb-2">Objectives</h3>
                 <ul className="list-disc list-inside space-y-1">
                   {mockBill.objectives.map((obj, idx) => (
-                    <li key={idx} className="text-gray-700">{obj}</li>
+                    <li key={idx} className="text-gray-900">{obj}</li>
                   ))}
                 </ul>
               </div>
@@ -504,10 +504,10 @@ export function BillDetail() {
                     <div key={section.id} className="p-3 border border-gray-200 rounded-lg">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-medium">Section {section.number}:</span>
-                        <span className="text-gray-700">{section.title}</span>
+                        <span className="text-gray-900">{section.title}</span>
                         <Badge variant="outline" className="text-xs">{section.status}</Badge>
                       </div>
-                      <p className="text-sm text-gray-600 mt-2 pl-4">
+                      <p className="text-sm text-gray-900 mt-2 pl-4">
                         [Section content would appear here in the actual implementation]
                       </p>
                     </div>
@@ -534,10 +534,10 @@ export function BillDetail() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Total Sections</p>
+                <p className="text-sm text-gray-900">Total Sections</p>
                 <p className="text-2xl font-bold text-gray-900">{mockBill.sections.length}</p>
               </div>
-              <FileText className="w-8 h-8 text-gray-400" />
+              <FileText className="w-8 h-8 text-gray-900" />
             </div>
           </CardContent>
         </Card>
@@ -545,7 +545,7 @@ export function BillDetail() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Completed</p>
+                <p className="text-sm text-gray-900">Completed</p>
                 <p className="text-2xl font-bold text-green-600">
                   {mockBill.sections.filter(s => s.status === 'completed').length}
                 </p>
@@ -558,7 +558,7 @@ export function BillDetail() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">In Review</p>
+                <p className="text-sm text-gray-900">In Review</p>
                 <p className="text-2xl font-bold text-[#8B1538]">
                   {mockBill.sections.filter(s => s.status === 'in-review').length}
                 </p>
@@ -571,7 +571,7 @@ export function BillDetail() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Stakeholders</p>
+                <p className="text-sm text-gray-900">Stakeholders</p>
                 <p className="text-2xl font-bold text-blue-600">{mockBill.stakeholders.length}</p>
               </div>
               <Users className="w-8 h-8 text-blue-400" />
@@ -582,7 +582,7 @@ export function BillDetail() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Days Left</p>
+                <p className="text-sm text-gray-900">Days Left</p>
                 <p className="text-2xl font-bold text-orange-600">
                   {Math.ceil((new Date(mockBill.targetCompletion).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))}
                 </p>
@@ -615,23 +615,23 @@ export function BillDetail() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-1">
-                  <p className="text-sm text-gray-600">Bill Number</p>
+                  <p className="text-sm text-gray-900">Bill Number</p>
                   <p className="font-medium text-gray-900">{mockBill.billNo}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm text-gray-600">Bill Type</p>
+                  <p className="text-sm text-gray-900">Bill Type</p>
                   <p className="font-medium text-gray-900">{mockBill.type}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm text-gray-600">Sponsor</p>
+                  <p className="text-sm text-gray-900">Sponsor</p>
                   <p className="font-medium text-gray-900">{mockBill.sponsor}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm text-gray-600">Chief Drafter</p>
+                  <p className="text-sm text-gray-900">Chief Drafter</p>
                   <p className="font-medium text-gray-900">{mockBill.draftedBy}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm text-gray-600">Date Initiated</p>
+                  <p className="text-sm text-gray-900">Date Initiated</p>
                   <p className="font-medium text-gray-900">
                     {new Date(mockBill.dateInitiated).toLocaleDateString('en-NG', {
                       year: 'numeric',
@@ -641,7 +641,7 @@ export function BillDetail() {
                   </p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm text-gray-600">Target Completion</p>
+                  <p className="text-sm text-gray-900">Target Completion</p>
                   <p className="font-medium text-gray-900">
                     {new Date(mockBill.targetCompletion).toLocaleDateString('en-NG', {
                       year: 'numeric',
@@ -652,7 +652,7 @@ export function BillDetail() {
                 </div>
               </div>
               <div className="pt-4 border-t">
-                <p className="text-sm text-gray-600 mb-2">Description</p>
+                <p className="text-sm text-gray-900 mb-2">Description</p>
                 <p className="text-gray-900">{mockBill.description}</p>
               </div>
             </CardContent>
@@ -709,7 +709,7 @@ export function BillDetail() {
                               )}
                             </div>
                             {section.lastReviewed && (
-                              <p className="text-xs text-gray-500">
+                              <p className="text-xs text-gray-900">
                                 Last reviewed: {new Date(section.lastReviewed).toLocaleDateString('en-NG')}
                               </p>
                             )}
@@ -747,7 +747,7 @@ export function BillDetail() {
                       {isExpanded && sectionComments.length > 0 && (
                         <div className="px-4 pb-4 border-t border-gray-100">
                           <div className="pt-3 space-y-3">
-                            <p className="text-sm font-medium text-gray-700">Comments on this section:</p>
+                            <p className="text-sm font-medium text-gray-900">Comments on this section:</p>
                             {sectionComments.map((comment) => (
                               <div key={comment.id} className="p-3 bg-gray-50 rounded-lg">
                                 <div className="flex items-start gap-3">
@@ -757,14 +757,14 @@ export function BillDetail() {
                                   <div className="flex-1">
                                     <div className="flex items-center gap-2 mb-1">
                                       <p className="font-medium text-sm text-gray-900">{comment.author}</p>
-                                      <span className="text-xs text-gray-500">
+                                      <span className="text-xs text-gray-900">
                                         {new Date(comment.date).toLocaleString('en-NG')}
                                       </span>
                                       {comment.resolved && (
                                         <Badge variant="success" className="text-xs">Resolved</Badge>
                                       )}
                                     </div>
-                                    <p className="text-sm text-gray-700">{comment.comment}</p>
+                                    <p className="text-sm text-gray-900">{comment.comment}</p>
                                     {!comment.resolved && (
                                       <Button variant="ghost" size="sm" className="mt-2 text-xs">
                                         Mark as Resolved
@@ -927,7 +927,7 @@ export function BillDetail() {
                               <Badge className="bg-[#8B1538] text-white">Current</Badge>
                             )}
                           </div>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-gray-900">
                             {new Date(version.date).toLocaleString('en-NG')} • {version.author}
                           </p>
                         </div>
@@ -1026,10 +1026,10 @@ export function BillDetail() {
                           <Badge className={getAmendmentStatusColor(amendment.status)}>
                             {amendment.status.replace('-', ' ')}
                           </Badge>
-                          <span className="text-sm text-gray-600">{amendment.section}</span>
+                          <span className="text-sm text-gray-900">{amendment.section}</span>
                         </div>
                         <p className="text-gray-900 mb-2">{amendment.description}</p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-900">
                           Proposed by {amendment.proposedBy} • {new Date(amendment.date).toLocaleDateString('en-NG')}
                         </p>
                       </div>
@@ -1105,9 +1105,9 @@ export function BillDetail() {
                               {approval.status}
                             </Badge>
                           </div>
-                          <p className="text-sm text-gray-600">{approval.approver} • {approval.role}</p>
+                          <p className="text-sm text-gray-900">{approval.approver} • {approval.role}</p>
                           {approval.date && (
-                            <p className="text-xs text-gray-500 mt-1">
+                            <p className="text-xs text-gray-900 mt-1">
                               {new Date(approval.date).toLocaleString('en-NG')}
                             </p>
                           )}
@@ -1189,7 +1189,7 @@ export function BillDetail() {
                           {stakeholder.status}
                         </Badge>
                       </div>
-                      <p className="text-sm text-gray-600">{stakeholder.feedback}</p>
+                      <p className="text-sm text-gray-900">{stakeholder.feedback}</p>
                     </div>
                   </div>
                 ))}
@@ -1224,7 +1224,7 @@ export function BillDetail() {
                     </div>
                     <div className="flex-1 pb-4">
                       <p className="font-medium text-gray-900">{item.event}</p>
-                      <div className="flex items-center gap-3 text-sm text-gray-600 mt-1">
+                      <div className="flex items-center gap-3 text-sm text-gray-900 mt-1">
                         <span>{new Date(item.date).toLocaleDateString('en-NG')}</span>
                         <span>•</span>
                         <span>{item.actor}</span>
@@ -1255,7 +1255,7 @@ export function BillDetail() {
                         <p className="font-semibold text-gray-900">{comment.author}</p>
                         <Badge variant="outline">{comment.role}</Badge>
                       </div>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-900">
                         {new Date(comment.date).toLocaleString('en-NG')}
                       </p>
                     </div>
@@ -1286,7 +1286,7 @@ export function BillDetail() {
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">{doc.name}</p>
-                        <div className="flex items-center gap-3 text-xs text-gray-500 mt-1">
+                        <div className="flex items-center gap-3 text-xs text-gray-900 mt-1">
                           <Badge variant="outline">{doc.type}</Badge>
                           <span>{doc.size}</span>
                           <span>•</span>

@@ -98,7 +98,7 @@ export function DraftingList() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Legislative Drafting</h1>
-          <p className="text-gray-600">Manage bills, amendments, and legislative documents</p>
+          <p className="text-gray-900">Manage bills, amendments, and legislative documents</p>
         </div>
         <Link href="/legislative-drafting/new">
           <Button>
@@ -113,7 +113,7 @@ export function DraftingList() {
         <CardContent className="pt-6">
           <div className="flex gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-900" />
               <Input
                 type="text"
                 placeholder="Search by bill number, title, or category..."
@@ -132,7 +132,7 @@ export function DraftingList() {
           {showFilters && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-4 border-t">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Status</label>
+                <label className="text-sm font-medium text-gray-900">Status</label>
                 <select
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
@@ -147,7 +147,7 @@ export function DraftingList() {
                 </select>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Bill Type</label>
+                <label className="text-sm font-medium text-gray-900">Bill Type</label>
                 <select
                   value={selectedType}
                   onChange={(e) => setSelectedType(e.target.value)}
@@ -160,7 +160,7 @@ export function DraftingList() {
                 </select>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Category</label>
+                <label className="text-sm font-medium text-gray-900">Category</label>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
@@ -185,10 +185,10 @@ export function DraftingList() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Total Bills</p>
+                <p className="text-sm text-gray-900">Total Bills</p>
                 <p className="text-2xl font-bold text-gray-900">47</p>
               </div>
-              <BookOpen className="w-8 h-8 text-gray-400" />
+              <BookOpen className="w-8 h-8 text-gray-900" />
             </div>
           </CardContent>
         </Card>
@@ -196,7 +196,7 @@ export function DraftingList() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">In Drafting</p>
+                <p className="text-sm text-gray-900">In Drafting</p>
                 <p className="text-2xl font-bold text-blue-600">12</p>
               </div>
               <BookOpen className="w-8 h-8 text-blue-400" />
@@ -207,7 +207,7 @@ export function DraftingList() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Under Review</p>
+                <p className="text-sm text-gray-900">Under Review</p>
                 <p className="text-2xl font-bold text-orange-600">8</p>
               </div>
               <BookOpen className="w-8 h-8 text-orange-400" />
@@ -218,7 +218,7 @@ export function DraftingList() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Passed</p>
+                <p className="text-sm text-gray-900">Passed</p>
                 <p className="text-2xl font-bold text-green-600">23</p>
               </div>
               <BookOpen className="w-8 h-8 text-green-400" />
@@ -229,7 +229,7 @@ export function DraftingList() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Success Rate</p>
+                <p className="text-sm text-gray-900">Success Rate</p>
                 <p className="text-2xl font-bold text-[#8B1538]">83%</p>
               </div>
               <BookOpen className="w-8 h-8 text-[#8B1538]" />
@@ -247,7 +247,7 @@ export function DraftingList() {
           <div className="space-y-4">
             {filteredBills.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-500">No bills found matching your criteria</p>
+                <p className="text-gray-900">No bills found matching your criteria</p>
               </div>
             ) : (
               filteredBills.map((bill) => (
@@ -262,26 +262,26 @@ export function DraftingList() {
                           {bill.type}
                         </span>
                       </div>
-                      <p className="text-sm font-medium text-gray-700">{bill.title}</p>
+                      <p className="text-sm font-medium text-gray-900">{bill.title}</p>
                       <div className="flex items-center gap-4 mt-2">
-                        <p className="text-sm text-gray-600">{bill.category}</p>
-                        <span className="text-gray-400">•</span>
+                        <p className="text-sm text-gray-900">{bill.category}</p>
+                        <span className="text-gray-900">•</span>
                         <p className="text-sm font-medium text-[#8B1538]">{bill.stage}</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm text-gray-600">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm text-gray-900">
                     <div className="flex items-center gap-2">
-                      <User className="w-4 h-4 text-gray-400" />
+                      <User className="w-4 h-4 text-gray-900" />
                       <span>{bill.assignedTo}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <Calendar className="w-4 h-4 text-gray-900" />
                       <span>Initiated: {new Date(bill.dateInitiated).toLocaleDateString('en-NG')}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <Calendar className="w-4 h-4 text-gray-900" />
                       <span>Updated: {new Date(bill.lastUpdated).toLocaleDateString('en-NG')}</span>
                     </div>
                   </div>
