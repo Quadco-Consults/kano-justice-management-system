@@ -292,102 +292,81 @@ export function CorrespondencesTab() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {mockCorrespondences.map((correspondence, index) => {
-              const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
-              const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
-              const colorIndex = index % 4
-
-              return (
-                <Link key={correspondence.id} href={`/correspondences/${correspondence.id}`}>
-                  <div
-                    className={`flex items-start gap-4 p-4 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded cursor-pointer hover:shadow-md transition-all`}
-                  >
-                    <div className="flex-shrink-0">
-                      {correspondence.status === 'active' ? (
-                        <AlertCircle className="w-6 h-6 text-blue-600" />
-                      ) : correspondence.status === 'pending-approval' ? (
-                        <Clock className="w-6 h-6 text-orange-600" />
-                      ) : (
-                        <CheckCircle2 className="w-6 h-6 text-green-600" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <h4 className="font-semibold text-gray-900">{correspondence.title}</h4>
-                            <Badge variant="outline" className="text-xs">{correspondence.id}</Badge>
-                          </div>
-                          <div className="flex items-center gap-2 mb-2">
-                            <Link
-                              href={`/stakeholders/${correspondence.stakeholder.id}`}
-                              onClick={(e) => e.stopPropagation()}
-                              className="hover:underline"
-                            >
-                              <Badge variant="outline">
-                                {correspondence.stakeholder.name}
-                              </Badge>
-                            </Link>
-                            <Badge
-                              variant={
-                                correspondence.status === 'active'
-                                  ? 'default'
-                                  : correspondence.status === 'pending-approval'
-                                  ? 'secondary'
-                                  : 'success'
-                              }
-                            >
-                              {correspondence.status}
-                            </Badge>
-                            <Badge
-                              className={
-                                correspondence.priority === 'high'
-                                  ? 'bg-red-100 text-red-800'
-                                  : correspondence.priority === 'medium'
-                                  ? 'bg-orange-100 text-orange-800'
-                                  : 'bg-gray-100 text-gray-800'
-                              }
-                            >
-                              {correspondence.priority}
-                            </Badge>
-                          </div>
-                        </div>
+            {mockCorrespondences.map((correspondence) => (
+              <Link key={correspondence.id} href={`/correspondences/${correspondence.id}`}>
+                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h4 className="font-semibold text-gray-900">{correspondence.title}</h4>
+                        <Badge variant="outline" className="text-xs">{correspondence.id}</Badge>
                       </div>
-
-                      <div className="grid grid-cols-3 gap-4 mb-3">
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <FileText className="w-4 h-4" />
-                          <span>{correspondence.requestsCount} requests</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <FileText className="w-4 h-4" />
-                          <span>{correspondence.documentsCount} documents</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <MessageSquare className="w-4 h-4" />
-                          <span>{correspondence.commentsCount} comments</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between text-xs text-gray-500">
-                        <div className="flex items-center gap-3">
-                          <span>Created: {new Date(correspondence.createdDate).toLocaleDateString('en-NG')}</span>
-                          <span>•</span>
-                          <span>Last activity: {new Date(correspondence.lastActivity).toLocaleDateString('en-NG')}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2 mt-2">
-                        <Users className="w-4 h-4 text-gray-400" />
-                        <span className="text-xs text-gray-600">
-                          {correspondence.participants.join(', ')}
-                        </span>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Link
+                          href={`/stakeholders/${correspondence.stakeholder.id}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="hover:underline"
+                        >
+                          <Badge variant="outline">
+                            {correspondence.stakeholder.name}
+                          </Badge>
+                        </Link>
+                        <Badge
+                          variant={
+                            correspondence.status === 'active'
+                              ? 'default'
+                              : correspondence.status === 'pending-approval'
+                              ? 'secondary'
+                              : 'success'
+                          }
+                        >
+                          {correspondence.status}
+                        </Badge>
+                        <Badge
+                          className={
+                            correspondence.priority === 'high'
+                              ? 'bg-red-100 text-red-800'
+                              : correspondence.priority === 'medium'
+                              ? 'bg-orange-100 text-orange-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }
+                        >
+                          {correspondence.priority}
+                        </Badge>
                       </div>
                     </div>
                   </div>
-                </Link>
-              )
-            })}
+
+                  <div className="grid grid-cols-3 gap-4 mb-3 text-sm text-gray-600">
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-4 h-4" />
+                      <span>{correspondence.requestsCount} requests</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-4 h-4" />
+                      <span>{correspondence.documentsCount} documents</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MessageSquare className="w-4 h-4" />
+                      <span>{correspondence.commentsCount} comments</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center gap-3">
+                      <span>Created: {new Date(correspondence.createdDate).toLocaleDateString('en-NG')}</span>
+                      <span>•</span>
+                      <span>Last activity: {new Date(correspondence.lastActivity).toLocaleDateString('en-NG')}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 mt-2 text-xs text-gray-600">
+                    <Users className="w-4 h-4 text-gray-400" />
+                    <span>{correspondence.participants.join(', ')}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </CardContent>
       </Card>

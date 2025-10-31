@@ -332,35 +332,29 @@ export function RequestDetail({ id }: RequestDetailProps) {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {mockRequest.attachments.map((attachment, index) => {
-              const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
-              const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
-              const colorIndex = index % 4
-
-              return (
-                <div
-                  key={attachment.id}
-                  className={`flex items-center justify-between p-4 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                      <FileText className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-900">{attachment.name}</p>
-                      <div className="flex items-center gap-3 text-xs text-gray-600 mt-1">
-                        <span>{attachment.size}</span>
-                        <span>•</span>
-                        <span>Uploaded {new Date(attachment.uploadDate).toLocaleDateString('en-NG')}</span>
-                      </div>
+            {mockRequest.attachments.map((attachment) => (
+              <div
+                key={attachment.id}
+                className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <FileText className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">{attachment.name}</p>
+                    <div className="flex items-center gap-3 text-xs text-gray-600 mt-1">
+                      <span>{attachment.size}</span>
+                      <span>•</span>
+                      <span>Uploaded {new Date(attachment.uploadDate).toLocaleDateString('en-NG')}</span>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm">
-                    View
-                  </Button>
                 </div>
-              )
-            })}
+                <Button variant="outline" size="sm">
+                  View
+                </Button>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
@@ -372,37 +366,31 @@ export function RequestDetail({ id }: RequestDetailProps) {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {mockRequest.comments.map((comment, index) => {
-              const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
-              const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
-              const colorIndex = index % 4
-
-              return (
-                <div
-                  key={comment.id}
-                  className={`p-4 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                      <User className="w-5 h-5 text-gray-600" />
+            {mockRequest.comments.map((comment) => (
+              <div
+                key={comment.id}
+                className="p-4 bg-gray-50 rounded-lg"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                    <User className="w-5 h-5 text-gray-600" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className="font-semibold text-gray-900">{comment.author}</p>
+                      <span className="text-xs text-gray-500">
+                        {new Date(comment.date).toLocaleDateString('en-NG', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
+                      </span>
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="font-semibold text-gray-900">{comment.author}</p>
-                        <span className="text-xs text-gray-500">
-                          {new Date(comment.date).toLocaleDateString('en-NG', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric'
-                          })}
-                        </span>
-                      </div>
-                      <p className="text-gray-900">{comment.comment}</p>
-                    </div>
+                    <p className="text-gray-900">{comment.comment}</p>
                   </div>
                 </div>
-              )
-            })}
+              </div>
+            ))}
           </div>
           <div className="mt-4 pt-4 border-t">
             <Button className="w-full">
