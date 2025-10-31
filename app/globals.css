@@ -44,3 +44,40 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Quill Editor Styles - Dark text for readability */
+.ql-editor {
+  color: #111827 !important; /* Almost black text */
+  font-size: 16px !important;
+}
+
+.ql-editor.ql-blank::before {
+  color: #111827 !important; /* Dark placeholder text */
+  font-style: normal !important;
+  opacity: 0.6;
+}
+
+.ql-editor p,
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6,
+.ql-editor li,
+.ql-editor span {
+  color: #111827 !important; /* Ensure all text is dark */
+}
+
+/* Quill toolbar buttons */
+.ql-toolbar .ql-stroke {
+  stroke: #374151 !important; /* Dark gray for icons */
+}
+
+.ql-toolbar .ql-fill {
+  fill: #374151 !important;
+}
+
+.ql-toolbar .ql-picker-label {
+  color: #111827 !important;
+}
