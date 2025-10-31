@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,13 +15,55 @@ import {
 } from "@/components/ui/select"
 import { FileText, Upload, X, Save, Send, Plus, Trash2 } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export function CaseForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const editId = searchParams.get('id')
+  const isEditMode = !!editId
+
   const [files, setFiles] = useState<File[]>([])
   const [suspects, setSuspects] = useState([{ name: "", age: "", address: "" }])
   const [charges, setCharges] = useState([{ offense: "", section: "" }])
+  const [formData, setFormData] = useState({
+    caseType: "",
+    priority: "",
+    caseTitle: "",
+    crNo: "",
+    dateReported: "",
+    dateIncident: "",
+    location: "",
+    facts: "",
+    policeStation: "",
+    ipo: "",
+    ipoPhone: "",
+    ipoEmail: "",
+    notes: "",
+  })
+
+  useEffect(() => {
+    if (isEditMode) {
+      // Fetch case data and populate form
+      // Replace with actual API call
+      const mockData = {
+        caseType: "felony",
+        priority: "high",
+        caseTitle: "State v. Ahmad Musa",
+        crNo: "CR/2025/1234",
+        dateReported: "2025-09-16",
+        dateIncident: "2025-09-15",
+        location: "Sabon Gari Market, Kano",
+        facts: "Armed robbery incident...",
+        policeStation: "Sabon Gari Police Division",
+        ipo: "Inspector Ibrahim Sani",
+        ipoPhone: "+234 803 456 7890",
+        ipoEmail: "ibrahim.sani@police.gov.ng",
+        notes: "",
+      }
+      setFormData(mockData)
+    }
+  }, [isEditMode, editId])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -51,7 +93,13 @@ export function CaseForm() {
 
   const handleSubmit = (e: React.FormEvent, draft: boolean = false) => {
     e.preventDefault()
-    console.log('Form submitted', { draft })
+    if (isEditMode) {
+      console.log('Updating case', editId, { ...formData, draft })
+      // Add API call to update case
+    } else {
+      console.log('Creating new case', { ...formData, draft })
+      // Add API call to create case
+    }
     router.push('/prosecution')
   }
 
@@ -64,8 +112,12 @@ export function CaseForm() {
             <Button variant="outline" size="sm">← Back</Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">New Prosecution Case</h1>
-            <p className="text-gray-600">Register a new criminal prosecution case</p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {isEditMode ? 'Edit Prosecution Case' : 'New Prosecution Case'}
+            </h1>
+            <p className="text-gray-600">
+              {isEditMode ? 'Update the case details' : 'Register a new criminal prosecution case'}
+            </p>
           </div>
         </div>
       </div>
@@ -80,7 +132,11 @@ export function CaseForm() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="caseType">Case Type *</Label>
-                <Select required>
+                <Select
+                  required
+                  value={formData.caseType}
+                  onValueChange={(value) => setFormData({ ...formData, caseType: value })}
+                >
                   <SelectTrigger id="caseType">
                     <SelectValue placeholder="Select case type" />
                   </SelectTrigger>
@@ -94,7 +150,11 @@ export function CaseForm() {
 
               <div className="space-y-2">
                 <Label htmlFor="priority">Priority Level *</Label>
-                <Select required>
+                <Select
+                  required
+                  value={formData.priority}
+                  onValueChange={(value) => setFormData({ ...formData, priority: value })}
+                >
                   <SelectTrigger id="priority">
                     <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
@@ -114,6 +174,8 @@ export function CaseForm() {
                 id="caseTitle"
                 placeholder="e.g., State v. John Doe"
                 required
+                value={formData.caseTitle}
+                onChange={(e) => setFormData({ ...formData, caseTitle: e.target.value })}
               />
             </div>
 
@@ -122,6 +184,8 @@ export function CaseForm() {
               <Input
                 id="crNo"
                 placeholder="Police CR Number"
+                value={formData.crNo}
+                onChange={(e) => setFormData({ ...formData, crNo: e.target.value })}
               />
             </div>
 
@@ -132,6 +196,8 @@ export function CaseForm() {
                   id="dateReported"
                   type="date"
                   required
+                  value={formData.dateReported}
+                  onChange={(e) => setFormData({ ...formData, dateReported: e.target.value })}
                 />
               </div>
 
@@ -141,6 +207,8 @@ export function CaseForm() {
                   id="dateIncident"
                   type="date"
                   required
+                  value={formData.dateIncident}
+                  onChange={(e) => setFormData({ ...formData, dateIncident: e.target.value })}
                 />
               </div>
             </div>
@@ -151,6 +219,8 @@ export function CaseForm() {
                 id="location"
                 placeholder="Where the incident occurred"
                 required
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
               />
             </div>
 
@@ -161,6 +231,8 @@ export function CaseForm() {
                 placeholder="Brief summary of the case facts"
                 rows={6}
                 required
+                value={formData.facts}
+                onChange={(e) => setFormData({ ...formData, facts: e.target.value })}
               />
             </div>
           </CardContent>
@@ -298,6 +370,8 @@ export function CaseForm() {
                   id="policeStation"
                   placeholder="Name of police station"
                   required
+                  value={formData.policeStation}
+                  onChange={(e) => setFormData({ ...formData, policeStation: e.target.value })}
                 />
               </div>
 
@@ -307,6 +381,8 @@ export function CaseForm() {
                   id="ipo"
                   placeholder="IPO name and rank"
                   required
+                  value={formData.ipo}
+                  onChange={(e) => setFormData({ ...formData, ipo: e.target.value })}
                 />
               </div>
             </div>
@@ -319,6 +395,8 @@ export function CaseForm() {
                   type="tel"
                   placeholder="+234 803 123 4567"
                   required
+                  value={formData.ipoPhone}
+                  onChange={(e) => setFormData({ ...formData, ipoPhone: e.target.value })}
                 />
               </div>
 
@@ -328,6 +406,8 @@ export function CaseForm() {
                   id="ipoEmail"
                   type="email"
                   placeholder="ipo@police.gov.ng"
+                  value={formData.ipoEmail}
+                  onChange={(e) => setFormData({ ...formData, ipoEmail: e.target.value })}
                 />
               </div>
             </div>
@@ -408,6 +488,8 @@ export function CaseForm() {
                 id="notes"
                 placeholder="Any additional notes or special circumstances"
                 rows={4}
+                value={formData.notes}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               />
             </div>
           </CardContent>
@@ -428,7 +510,7 @@ export function CaseForm() {
           </Button>
           <Button type="submit">
             <Send className="w-4 h-4 mr-2" />
-            Register Case
+            {isEditMode ? 'Update Case' : 'Register Case'}
           </Button>
         </div>
       </form>

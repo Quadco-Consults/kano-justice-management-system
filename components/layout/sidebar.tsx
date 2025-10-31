@@ -41,7 +41,7 @@ const menuSections = [
         icon: FileText,
       },
       {
-        title: 'Public Prosecution',
+        title: 'Case Management',
         href: '/prosecution',
         icon: Gavel,
       },

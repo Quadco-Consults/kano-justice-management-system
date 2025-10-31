@@ -3,6 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { CaseStatusIndicator } from "@/components/shared/case-status-indicator"
 import { Timeline } from "@/components/shared/timeline"
 import { Badge } from "@/components/ui/badge"
@@ -18,8 +20,27 @@ import {
   MessageSquare,
   UserCircle,
   AlertCircle,
+  Edit,
+  RefreshCw,
+  XCircle,
 } from "lucide-react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface CaseDetailProps {
   id: string
@@ -27,6 +48,40 @@ interface CaseDetailProps {
 
 export function CaseDetail({ id }: CaseDetailProps) {
   const [note, setNote] = useState("")
+  const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false)
+  const [isHearingDialogOpen, setIsHearingDialogOpen] = useState(false)
+  const [isNolleDialogOpen, setIsNolleDialogOpen] = useState(false)
+  const [newStatus, setNewStatus] = useState("")
+  const [hearingData, setHearingData] = useState({
+    date: "",
+    time: "",
+    purpose: "",
+    courtRoom: "",
+  })
+  const [nolleReason, setNolleReason] = useState("")
+  const router = useRouter()
+
+  const handleEdit = () => {
+    router.push(`/prosecution/new?id=${id}`)
+  }
+
+  const handleStatusChange = () => {
+    console.log('Changing status to:', newStatus)
+    setIsStatusDialogOpen(false)
+    // Add API call to update status
+  }
+
+  const handleScheduleHearing = () => {
+    console.log('Scheduling hearing:', hearingData)
+    setIsHearingDialogOpen(false)
+    // Add API call to schedule hearing
+  }
+
+  const handleNolle = () => {
+    console.log('Withdrawing case:', nolleReason)
+    setIsNolleDialogOpen(false)
+    // Add API call to withdraw case
+  }
 
   // Mock data - replace with actual API call
   const caseData = {
@@ -143,14 +198,141 @@ Following a tip-off, the accused was arrested on September 16, 2025, in possessi
           <p className="text-gray-600">{caseData.offense}</p>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={handleEdit}>
+            <Edit className="w-4 h-4 mr-2" />
+            Edit
+          </Button>
+          <Dialog open={isStatusDialogOpen} onOpenChange={setIsStatusDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline">
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Change Status
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Change Case Status</DialogTitle>
+                <DialogDescription>
+                  Update the current status of this case
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label>Current Status</Label>
+                  <div className="flex items-center gap-2">
+                    <CaseStatusIndicator status={caseData.status as any} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>New Status</Label>
+                  <Select value={newStatus} onValueChange={setNewStatus}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select new status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="under-investigation">Under Investigation</SelectItem>
+                      <SelectItem value="filed">Filed</SelectItem>
+                      <SelectItem value="in-trial">In Trial</SelectItem>
+                      <SelectItem value="verdict-delivered">Verdict Delivered</SelectItem>
+                      <SelectItem value="convicted">Convicted</SelectItem>
+                      <SelectItem value="acquitted">Acquitted</SelectItem>
+                      <SelectItem value="withdrawn">Withdrawn (Nolle Prosequi)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setIsStatusDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleStatusChange} disabled={!newStatus}>
+                  Update Status
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+
           <Button variant="outline">
             <Upload className="w-4 h-4 mr-2" />
             Upload Document
           </Button>
-          <Button>
-            <Calendar className="w-4 h-4 mr-2" />
-            Schedule Hearing
-          </Button>
+
+          <Dialog open={isHearingDialogOpen} onOpenChange={setIsHearingDialogOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Calendar className="w-4 h-4 mr-2" />
+                Schedule Hearing
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Schedule Hearing</DialogTitle>
+                <DialogDescription>
+                  Schedule a new court hearing for this case
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Date</Label>
+                    <Input
+                      type="date"
+                      value={hearingData.date}
+                      onChange={(e) => setHearingData({ ...hearingData, date: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Time</Label>
+                    <Input
+                      type="time"
+                      value={hearingData.time}
+                      onChange={(e) => setHearingData({ ...hearingData, time: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Purpose</Label>
+                  <Select
+                    value={hearingData.purpose}
+                    onValueChange={(value) => setHearingData({ ...hearingData, purpose: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select hearing purpose" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="arraignment">Arraignment</SelectItem>
+                      <SelectItem value="mention">Mention</SelectItem>
+                      <SelectItem value="trial">Trial</SelectItem>
+                      <SelectItem value="continuation">Continuation of Trial</SelectItem>
+                      <SelectItem value="judgment">Judgment</SelectItem>
+                      <SelectItem value="sentencing">Sentencing</SelectItem>
+                      <SelectItem value="bail-application">Bail Application</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Court Room</Label>
+                  <Input
+                    placeholder="e.g., Court Room 3"
+                    value={hearingData.courtRoom}
+                    onChange={(e) => setHearingData({ ...hearingData, courtRoom: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setIsHearingDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleScheduleHearing}
+                  disabled={!hearingData.date || !hearingData.purpose}
+                >
+                  Schedule Hearing
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
@@ -388,6 +570,93 @@ Following a tip-off, the accused was arrested on September 16, 2025, in possessi
             </CardHeader>
             <CardContent>
               <Timeline items={caseData.timeline} />
+            </CardContent>
+          </Card>
+
+          {/* Case Statistics */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Case Statistics</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Total Hearings:</span>
+                <span className="font-medium text-gray-900">{caseData.hearings.length}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Days Since Filing:</span>
+                <span className="font-medium text-gray-900">
+                  {Math.floor((new Date().getTime() - new Date(caseData.filingDate).getTime()) / (1000 * 60 * 60 * 24))} days
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Next Hearing In:</span>
+                <span className="font-medium text-gray-900">
+                  {Math.floor((new Date(caseData.nextHearing).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))} days
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Evidence Items:</span>
+                <span className="font-medium text-gray-900">{caseData.evidence.length}</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Actions */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Case Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <Dialog open={isNolleDialogOpen} onOpenChange={setIsNolleDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full justify-start text-white">
+                    <XCircle className="w-4 h-4 mr-2" />
+                    Withdraw Case (Nolle Prosequi)
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Withdraw Case (Nolle Prosequi)</DialogTitle>
+                    <DialogDescription>
+                      Enter the reason for withdrawing this case. This action should be taken after careful consideration.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label>Reason for Withdrawal</Label>
+                      <Textarea
+                        placeholder="Provide detailed reasons for withdrawing the case..."
+                        value={nolleReason}
+                        onChange={(e) => setNolleReason(e.target.value)}
+                        rows={5}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-2">
+                    <Button variant="outline" onClick={() => setIsNolleDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleNolle}
+                      disabled={!nolleReason}
+                      variant="destructive"
+                    >
+                      Withdraw Case
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+
+              <Button variant="outline" className="w-full justify-start text-white">
+                <FileText className="w-4 h-4 mr-2" />
+                Generate Report
+              </Button>
+
+              <Button variant="outline" className="w-full justify-start text-white">
+                <Download className="w-4 h-4 mr-2" />
+                Export Case File
+              </Button>
             </CardContent>
           </Card>
         </div>
