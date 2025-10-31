@@ -17,6 +17,7 @@ import {
   Bell,
   MessageSquare,
   FolderOpen,
+  Globe,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { useAuthStore } from '@/lib/stores/authStore';
@@ -64,6 +65,11 @@ const menuSections = [
         title: 'Statutory Submissions',
         href: '/statutory-submissions',
         icon: ClipboardList,
+      },
+      {
+        title: 'Public Notices',
+        href: '/public-notices',
+        icon: Globe,
       },
     ],
   },
