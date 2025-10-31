@@ -5,8 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Search, Plus, Filter, FolderOpen, Calendar, FileText, Download } from "lucide-react"
+import { Search, Plus, Filter, FolderOpen, Calendar, FileText, Download, X } from "lucide-react"
 import Link from "next/link"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const mockRecords = [
   {
@@ -79,6 +86,24 @@ const categories = [
 
 export function RecordsList() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [showFilters, setShowFilters] = useState(false)
+  const [filters, setFilters] = useState({
+    category: "",
+    securityLevel: "",
+    fileType: "",
+    author: "",
+  })
+
+  const clearFilters = () => {
+    setFilters({
+      category: "",
+      securityLevel: "",
+      fileType: "",
+      author: "",
+    })
+  }
+
+  const hasActiveFilters = Object.values(filters).some(value => value !== "")
 
   return (
     <div className="space-y-6">
@@ -99,43 +124,128 @@ export function RecordsList() {
       {/* Filters */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search documents by title, category, tags, or content..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
+          <div className="space-y-4">
+            <div className="flex gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search documents by title, category, tags, or content..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className={hasActiveFilters ? "border-[#8B1538] text-[#8B1538]" : ""}
+              >
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+                {hasActiveFilters && (
+                  <Badge className="ml-2 bg-[#8B1538] text-white">
+                    {Object.values(filters).filter(v => v !== "").length}
+                  </Badge>
+                )}
+              </Button>
             </div>
-            <Button variant="outline">
-              <Filter className="w-4 h-4 mr-2" />
-              Filters
-            </Button>
+
+            {/* Filter Options */}
+            {showFilters && (
+              <div className="space-y-4 pt-4 border-t">
+                {/* Category Filter */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Category</label>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    {categories.map((category) => (
+                      <Button
+                        key={category}
+                        variant={filters.category === category ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setFilters({ ...filters, category: filters.category === category ? "" : category })}
+                        className={filters.category === category ? "bg-[#8B1538] hover:bg-[#6B0F28]" : ""}
+                      >
+                        <FolderOpen className="w-4 h-4 mr-2" />
+                        {category}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Other Filters */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-900">Security Level</label>
+                    <Select
+                      value={filters.securityLevel}
+                      onValueChange={(value) => setFilters({ ...filters, securityLevel: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="All Levels" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Levels</SelectItem>
+                        <SelectItem value="Public">Public</SelectItem>
+                        <SelectItem value="Confidential">Confidential</SelectItem>
+                        <SelectItem value="Restricted">Restricted</SelectItem>
+                        <SelectItem value="Top Secret">Top Secret</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-900">File Type</label>
+                    <Select
+                      value={filters.fileType}
+                      onValueChange={(value) => setFilters({ ...filters, fileType: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="All Types" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Types</SelectItem>
+                        <SelectItem value="PDF">PDF</SelectItem>
+                        <SelectItem value="DOCX">DOCX</SelectItem>
+                        <SelectItem value="DOC">DOC</SelectItem>
+                        <SelectItem value="TXT">TXT</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-900">Author</label>
+                    <Select
+                      value={filters.author}
+                      onValueChange={(value) => setFilters({ ...filters, author: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="All Authors" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Authors</SelectItem>
+                        <SelectItem value="fatima">Barr. Fatima Ibrahim</SelectItem>
+                        <SelectItem value="ahmad">Barr. Ahmad Sani</SelectItem>
+                        <SelectItem value="maryam">Barr. Maryam Usman</SelectItem>
+                        <SelectItem value="ibrahim">Barr. Ibrahim Sani</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {hasActiveFilters && (
+                  <div className="flex justify-end">
+                    <Button variant="ghost" onClick={clearFilters} size="sm">
+                      <X className="w-4 h-4 mr-2" />
+                      Clear Filters
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
-
-      {/* Categories Grid */}
-      <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Browse by Category</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {categories.map((category) => (
-            <Link key={category} href={`/legal-records/category/${category.toLowerCase().replace(/\s+/g, '-')}`}>
-              <Card className="hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-3">
-                    <FolderOpen className="w-5 h-5 text-[#8B1538]" />
-                    <span className="text-sm font-medium text-gray-900">{category}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

@@ -24,6 +24,9 @@ import {
   Calendar,
   User,
   Building2,
+  Upload,
+  Plus,
+  X,
 } from "lucide-react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -49,7 +52,13 @@ interface DocumentDetailProps {
 
 export function DocumentDetail({ id }: DocumentDetailProps) {
   const [isAccessRequestDialogOpen, setIsAccessRequestDialogOpen] = useState(false)
+  const [isSecurityDialogOpen, setIsSecurityDialogOpen] = useState(false)
+  const [isVersionUploadDialogOpen, setIsVersionUploadDialogOpen] = useState(false)
   const [accessReason, setAccessReason] = useState("")
+  const [newSecurityLevel, setNewSecurityLevel] = useState("")
+  const [securityChangeReason, setSecurityChangeReason] = useState("")
+  const [versionFile, setVersionFile] = useState<File | null>(null)
+  const [versionChanges, setVersionChanges] = useState("")
   const router = useRouter()
 
   const handleEdit = () => {
@@ -60,6 +69,36 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
     console.log('Requesting access:', accessReason)
     setIsAccessRequestDialogOpen(false)
     // Add API call
+  }
+
+  const handleSecurityChange = () => {
+    console.log('Changing security level to:', newSecurityLevel, 'Reason:', securityChangeReason)
+    setIsSecurityDialogOpen(false)
+    setNewSecurityLevel("")
+    setSecurityChangeReason("")
+    // Add API call to update security level
+  }
+
+  const handleDownload = () => {
+    console.log('Downloading document:', document.documentNo)
+    // Add actual download logic
+  }
+
+  const handleVersionFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setVersionFile(e.target.files[0])
+    }
+  }
+
+  const handleVersionUpload = () => {
+    console.log('Uploading new version:', {
+      file: versionFile?.name,
+      changes: versionChanges,
+    })
+    setIsVersionUploadDialogOpen(false)
+    setVersionFile(null)
+    setVersionChanges("")
+    // Add API call to upload new version
   }
 
   // Mock data - replace with actual API call
@@ -75,6 +114,7 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
     lastModified: '2025-10-26',
     fileSize: '2.4 MB',
     fileType: 'PDF',
+    fileUrl: '/documents/legal-opinion-land-acquisition.pdf',
     version: '1.2',
     securityLevel: 'Confidential',
     tags: ['Land Law', 'Property', 'Policy Review', 'Constitutional Law'],
@@ -214,7 +254,7 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
             <Share2 className="w-4 h-4 mr-2" />
             Share
           </Button>
-          <Button>
+          <Button onClick={handleDownload}>
             <Download className="w-4 h-4 mr-2" />
             Download
           </Button>
@@ -224,6 +264,45 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
+          {/* Document File/Preview */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  Document File
+                </CardTitle>
+                <div className="flex items-center gap-2">
+                  <Badge variant="outline">{document.fileType}</Badge>
+                  <Badge variant="outline">{document.fileSize}</Badge>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {/* PDF Preview/Viewer */}
+              <div className="border border-gray-300 rounded-lg bg-gray-50 p-8 text-center">
+                <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-lg font-medium text-gray-900 mb-2">{document.title}</p>
+                <p className="text-sm text-gray-600 mb-4">
+                  {document.fileType} Document • {document.fileSize}
+                </p>
+                <div className="flex items-center justify-center gap-3">
+                  <Button onClick={handleDownload}>
+                    <Download className="w-4 h-4 mr-2" />
+                    Download Document
+                  </Button>
+                  <Button variant="outline">
+                    <Eye className="w-4 h-4 mr-2" />
+                    Open in Viewer
+                  </Button>
+                </div>
+                <p className="text-xs text-gray-500 mt-4">
+                  File path: {document.fileUrl}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Document Details */}
           <Card>
             <CardHeader>
@@ -454,7 +533,113 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
 
                 {/* Version History Tab */}
                 <TabsContent value="versions" className="space-y-4">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Version History</h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Version History</h3>
+                    <Dialog open={isVersionUploadDialogOpen} onOpenChange={setIsVersionUploadDialogOpen}>
+                      <DialogTrigger asChild>
+                        <Button size="sm">
+                          <Upload className="w-4 h-4 mr-2" />
+                          Upload New Version
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Upload New Version</DialogTitle>
+                          <DialogDescription>
+                            Upload a new version of this document with updated changes.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4 py-4">
+                          {/* Current Version Info */}
+                          <div className="space-y-2">
+                            <Label>Current Version</Label>
+                            <div className="p-3 border border-gray-200 rounded-md bg-gray-50">
+                              <p className="text-sm font-medium text-gray-900">
+                                Version {document.version}
+                              </p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                Last updated on {new Date(document.lastModified).toLocaleDateString('en-NG')}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* File Upload */}
+                          <div className="space-y-2">
+                            <Label>Upload New File *</Label>
+                            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-[#8B1538] transition-colors">
+                              <input
+                                id="version-file"
+                                type="file"
+                                onChange={handleVersionFileChange}
+                                className="hidden"
+                                accept=".pdf,.doc,.docx,.txt"
+                              />
+                              <label htmlFor="version-file" className="cursor-pointer">
+                                <Upload className="w-10 h-10 text-gray-400 mx-auto mb-2" />
+                                <p className="text-sm text-gray-600 mb-1">
+                                  Click to upload document
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                  PDF, DOC, DOCX, TXT (max. 25MB)
+                                </p>
+                              </label>
+                            </div>
+                            {versionFile && (
+                              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg mt-2">
+                                <div className="flex items-center gap-3">
+                                  <FileText className="w-5 h-5 text-blue-600" />
+                                  <div>
+                                    <p className="text-sm font-medium text-gray-900">{versionFile.name}</p>
+                                    <p className="text-xs text-gray-500">
+                                      {(versionFile.size / (1024 * 1024)).toFixed(2)} MB
+                                    </p>
+                                  </div>
+                                </div>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setVersionFile(null)}
+                                >
+                                  <X className="w-4 h-4" />
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Change Notes */}
+                          <div className="space-y-2">
+                            <Label>Change Notes *</Label>
+                            <Textarea
+                              placeholder="Describe what has been changed in this version..."
+                              value={versionChanges}
+                              onChange={(e) => setVersionChanges(e.target.value)}
+                              rows={4}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              setIsVersionUploadDialogOpen(false)
+                              setVersionFile(null)
+                              setVersionChanges("")
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={handleVersionUpload}
+                            disabled={!versionFile || !versionChanges}
+                          >
+                            <Upload className="w-4 h-4 mr-2" />
+                            Upload Version
+                          </Button>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
                   <div className="space-y-3">
                     {document.versions.map((version, index) => (
                       <div key={index} className="p-4 border border-gray-200 rounded-lg">
@@ -565,10 +750,74 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
               <CardTitle>Security Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button variant="outline" className="w-full justify-start">
-                <Shield className="w-4 h-4 mr-2" />
-                Change Security Level
-              </Button>
+              <Dialog open={isSecurityDialogOpen} onOpenChange={setIsSecurityDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full justify-start">
+                    <Shield className="w-4 h-4 mr-2" />
+                    Change Security Level
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Change Security Level</DialogTitle>
+                    <DialogDescription>
+                      Update the security clearance level required to access this document.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label>Current Security Level</Label>
+                      <div className="p-3 border border-gray-200 rounded-md bg-gray-50">
+                        <Badge className={`${getSecurityBadgeColor(document.securityLevel)} border`}>
+                          <Shield className="w-3 h-3 mr-1" />
+                          {document.securityLevel}
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>New Security Level</Label>
+                      <Select value={newSecurityLevel} onValueChange={setNewSecurityLevel}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select new security level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Public">Public</SelectItem>
+                          <SelectItem value="Confidential">Confidential</SelectItem>
+                          <SelectItem value="Restricted">Restricted</SelectItem>
+                          <SelectItem value="Top Secret">Top Secret</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Reason for Change</Label>
+                      <Textarea
+                        placeholder="Explain why the security level is being changed..."
+                        value={securityChangeReason}
+                        onChange={(e) => setSecurityChangeReason(e.target.value)}
+                        rows={4}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setIsSecurityDialogOpen(false)
+                        setNewSecurityLevel("")
+                        setSecurityChangeReason("")
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleSecurityChange}
+                      disabled={!newSecurityLevel || !securityChangeReason}
+                    >
+                      Update Security Level
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
               <Button variant="outline" className="w-full justify-start">
                 <Eye className="w-4 h-4 mr-2" />
                 View Access Log
