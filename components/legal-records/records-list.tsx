@@ -193,10 +193,9 @@ export function RecordsList() {
         <CardContent>
           <div className="space-y-4">
             {mockRecords.map((record) => (
-              <div
-                key={record.id}
-                className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer"
-              >
+              <Link key={record.id} href={`/legal-records/${record.id}`}>
+                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
@@ -238,7 +237,8 @@ export function RecordsList() {
                     <span className="font-medium text-gray-700">{record.fileSize}</span>
                   </div>
                 </div>
-              </div>
+                </div>
+              </Link>
             ))}
           </div>
         </CardContent>
