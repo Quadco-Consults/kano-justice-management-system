@@ -1,22 +1,35 @@
 'use client';
 
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { StatsCard } from '@/components/dashboard/stats-card';
+import { StatCard } from '@/components/shared/stat-card';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DollarSign, ShoppingCart, Fuel, Truck } from 'lucide-react';
+import { Gavel, FileText, Scale, Clock, TrendingUp, AlertCircle } from 'lucide-react';
+import { StatusBadge } from '@/components/shared/status-badge';
 
 export default function DashboardPage() {
   // Mock data - replace with actual API calls
   const stats = {
-    totalRevenue: '₦45,231,890',
-    revenueChange: 12.5,
-    totalSales: '1,234',
-    salesChange: 8.2,
-    activeStations: '12',
-    stationsChange: 0,
-    activeTrucks: '28',
-    trucksChange: -4.3,
+    totalCases: 1247,
+    pendingAdvisory: 38,
+    activeProsecution: 156,
+    civilLitigation: 89,
   };
+
+  const recentAdvisory = [
+    { id: 1, agency: 'Ministry of Education', subject: 'Contract Review - School Construction', status: 'pending', date: '2 hours ago' },
+    { id: 2, agency: 'Ministry of Health', subject: 'Legal Opinion on Procurement', status: 'in-progress', date: '5 hours ago' },
+    { id: 3, agency: 'Ministry of Works', subject: 'Compliance Advisory', status: 'completed', date: '1 day ago' },
+    { id: 4, agency: 'Ministry of Agriculture', subject: 'Policy Review', status: 'under-review', date: '2 days ago' },
+    { id: 5, agency: 'Ministry of Finance', subject: 'Contract Vetting', status: 'pending', date: '3 days ago' },
+  ];
+
+  const activeProsecutions = [
+    { id: 1, caseNo: 'CR/45/2025', accused: 'State v. Ahmad Musa', offense: 'Armed Robbery', court: 'High Court 1', status: 'in-trial' },
+    { id: 2, caseNo: 'CR/46/2025', accused: 'State v. Fatima Ibrahim', offense: 'Fraud', court: 'High Court 2', status: 'under-investigation' },
+    { id: 3, caseNo: 'CR/47/2025', accused: 'State v. Yusuf Ali', offense: 'Assault', court: 'Magistrate Court 3', status: 'filed' },
+    { id: 4, caseNo: 'CR/48/2025', accused: 'State v. Hauwa Sani', offense: 'Embezzlement', court: 'High Court 1', status: 'in-trial' },
+    { id: 5, caseNo: 'CR/49/2025', accused: 'State v. Ibrahim Garba', offense: 'Theft', court: 'Magistrate Court 1', status: 'pending' },
+  ];
 
   return (
     <DashboardLayout>
@@ -24,77 +37,88 @@ export default function DashboardPage() {
         {/* Page Header */}
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Welcome to Bayscom Energy ERP System</p>
+          <p className="text-gray-600">Overview of Ministry of Justice operations</p>
         </div>
 
         {/* Stats Grid */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <StatsCard
-            title="Total Revenue"
-            value={stats.totalRevenue}
-            change={stats.revenueChange}
-            icon={DollarSign}
-            iconColor="bg-[#2D5016]"
+          <StatCard
+            title="Total Cases"
+            value={stats.totalCases.toString()}
+            icon={Gavel}
+            description="All active matters"
+            trend={{ value: 12, isPositive: true }}
           />
-          <StatsCard
-            title="Total Sales"
-            value={stats.totalSales}
-            change={stats.salesChange}
-            icon={ShoppingCart}
-            iconColor="bg-[#8B1538]"
+          <StatCard
+            title="Pending Advisory"
+            value={stats.pendingAdvisory.toString()}
+            icon={FileText}
+            description="Awaiting review"
+            trend={{ value: 5, isPositive: false }}
           />
-          <StatsCard
-            title="Active Stations"
-            value={stats.activeStations}
-            change={stats.stationsChange}
-            icon={Fuel}
-            iconColor="bg-[#6B0F2A]"
+          <StatCard
+            title="Active Prosecution"
+            value={stats.activeProsecution.toString()}
+            icon={Gavel}
+            description="Ongoing cases"
           />
-          <StatsCard
-            title="Active Trucks"
-            value={stats.activeTrucks}
-            change={stats.trucksChange}
-            icon={Truck}
-            iconColor="bg-[#E67E22]"
+          <StatCard
+            title="Civil Litigation"
+            value={stats.civilLitigation.toString()}
+            icon={Scale}
+            description="Active litigation"
+            trend={{ value: 8, isPositive: true }}
           />
         </div>
 
-        {/* Charts and Tables */}
+        {/* Main Content Grid */}
         <div className="grid gap-4 md:grid-cols-2">
+          {/* Recent Advisory Requests */}
           <Card>
             <CardHeader>
-              <CardTitle>Recent Sales</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="w-5 h-5 text-[#8B1538]" />
+                Recent Advisory Requests
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">Sale #{1000 + i}</p>
-                      <p className="text-xs text-gray-600">2 hours ago</p>
+                {recentAdvisory.map((item) => (
+                  <div key={item.id} className="flex items-start justify-between pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">{item.agency}</p>
+                      <p className="text-xs text-gray-600 truncate">{item.subject}</p>
+                      <p className="text-xs text-gray-500 mt-1">{item.date}</p>
                     </div>
-                    <p className="text-sm font-medium text-gray-900">₦{(Math.random() * 50000 + 10000).toFixed(2)}</p>
+                    <StatusBadge status={item.status as any} />
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
 
+          {/* Active Prosecutions */}
           <Card>
             <CardHeader>
-              <CardTitle>Active Truck Trips</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Gavel className="w-5 h-5 text-[#8B1538]" />
+                Active Prosecutions
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">Truck {i + 1} - AGO</p>
-                      <p className="text-xs text-gray-600">Lagos to Port Harcourt</p>
+                {activeProsecutions.map((item) => (
+                  <div key={item.id} className="flex items-start justify-between pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900">{item.caseNo}</p>
+                      <p className="text-xs text-gray-600 truncate">{item.accused}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs text-gray-500">{item.offense}</span>
+                        <span className="text-xs text-gray-400">•</span>
+                        <span className="text-xs text-gray-500">{item.court}</span>
+                      </div>
                     </div>
-                    <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
-                      In Transit
-                    </span>
+                    <StatusBadge status={item.status as any} />
                   </div>
                 ))}
               </div>
@@ -102,37 +126,64 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* Station Overview */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Filling Stations Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 md:grid-cols-3">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="rounded-lg border border-gray-200 p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium text-gray-900">Station {i + 1}</h3>
-                    <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
-                      Active
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-600">Lagos, Nigeria</p>
-                  <div className="mt-3 space-y-1">
-                    <div className="flex justify-between text-xs text-gray-700">
-                      <span>PMS Tank:</span>
-                      <span className="font-medium text-gray-900">{Math.floor(Math.random() * 30 + 70)}%</span>
-                    </div>
-                    <div className="flex justify-between text-xs text-gray-700">
-                      <span>AGO Tank:</span>
-                      <span className="font-medium text-gray-900">{Math.floor(Math.random() * 30 + 70)}%</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        {/* Quick Stats */}
+        <div className="grid gap-4 md:grid-cols-3">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-medium text-gray-600 flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                Average Response Time
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-baseline gap-2">
+                <p className="text-3xl font-bold text-gray-900">4.2</p>
+                <p className="text-sm text-gray-600">days</p>
+              </div>
+              <div className="flex items-center gap-1 mt-2">
+                <TrendingUp className="w-3 h-3 text-green-600" />
+                <span className="text-xs text-green-600">15% faster than last month</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-medium text-gray-600 flex items-center gap-2">
+                <Gavel className="w-4 h-4" />
+                Conviction Rate
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-baseline gap-2">
+                <p className="text-3xl font-bold text-gray-900">78%</p>
+                <p className="text-sm text-gray-600">success</p>
+              </div>
+              <div className="flex items-center gap-1 mt-2">
+                <TrendingUp className="w-3 h-3 text-green-600" />
+                <span className="text-xs text-green-600">3% increase</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-medium text-gray-600 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4" />
+                Overdue Items
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-baseline gap-2">
+                <p className="text-3xl font-bold text-gray-900">12</p>
+                <p className="text-sm text-gray-600">items</p>
+              </div>
+              <div className="flex items-center gap-1 mt-2">
+                <span className="text-xs text-orange-600">Requires attention</span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </DashboardLayout>
   );

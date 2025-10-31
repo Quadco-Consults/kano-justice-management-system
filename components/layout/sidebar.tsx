@@ -7,33 +7,19 @@ import {
   Users,
   Shield,
   Building2,
-  Fuel,
-  Truck,
-  Package,
-  Droplet,
   Settings,
   LogOut,
-  ShoppingCart,
-  UserCog,
-  Wrench,
-  DollarSign,
   FileText,
+  Scale,
+  Gavel,
+  FileCheck,
+  BookOpen,
   ClipboardList,
-  Store,
-  UserCheck,
-  Calendar,
-  Clock,
-  TrendingUp,
-  Briefcase,
-  GraduationCap,
-  Archive,
-  Boxes,
-  ShoppingBag,
-  PackageCheck,
-  Warehouse,
-  Mail,
-  Bike,
-  Flame,
+  Bell,
+  BarChart3,
+  MessageSquare,
+  FolderOpen,
+  UserCog,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { useAuthStore } from '@/lib/stores/authStore';
@@ -50,40 +36,75 @@ const menuSections = [
     ],
   },
   {
-    section: 'Procurement',
+    section: 'Core Modules',
     items: [
       {
-        title: 'Purchase Request',
-        href: '/procurement/purchase-request',
+        title: 'Legal Advisory',
+        href: '/legal-advisory',
         icon: FileText,
       },
       {
-        title: 'Purchase Order',
-        href: '/procurement/purchase-order',
+        title: 'Public Prosecution',
+        href: '/prosecution',
+        icon: Gavel,
+      },
+      {
+        title: 'Civil Litigation',
+        href: '/civil-litigation',
+        icon: Scale,
+      },
+      {
+        title: 'Legislative Drafting',
+        href: '/legislative-drafting',
+        icon: BookOpen,
+      },
+      {
+        title: 'Legal Records',
+        href: '/legal-records',
+        icon: FolderOpen,
+      },
+      {
+        title: 'Statutory Submissions',
+        href: '/statutory-submissions',
         icon: ClipboardList,
-      },
-      {
-        title: 'Vendor Database',
-        href: '/procurement/vendors',
-        icon: Store,
-      },
-      {
-        title: 'LPG Accessories',
-        href: '/inventory',
-        icon: Package,
-      },
-      {
-        title: 'Lubricants',
-        href: '/lubricants',
-        icon: Droplet,
       },
     ],
   },
   {
-    section: 'Admin and HR',
+    section: 'Collaboration',
     items: [
       {
-        title: 'Users',
+        title: 'Stakeholder Portal',
+        href: '/stakeholders',
+        icon: MessageSquare,
+      },
+      {
+        title: 'Notifications',
+        href: '/notifications',
+        icon: Bell,
+      },
+    ],
+  },
+  {
+    section: 'Reports & Analytics',
+    items: [
+      {
+        title: 'Reports',
+        href: '/reports',
+        icon: BarChart3,
+      },
+      {
+        title: 'Activity Logs',
+        href: '/activity-logs',
+        icon: FileCheck,
+      },
+    ],
+  },
+  {
+    section: 'Administration',
+    items: [
+      {
+        title: 'User Management',
         href: '/users',
         icon: Users,
       },
@@ -93,123 +114,12 @@ const menuSections = [
         icon: Building2,
       },
       {
-        title: 'Attendance',
-        href: '/hr/attendance',
-        icon: UserCheck,
-      },
-      {
-        title: 'Leave Management',
-        href: '/hr/leave',
-        icon: Calendar,
-      },
-      {
-        title: 'Overtime',
-        href: '/hr/overtime',
-        icon: Clock,
-      },
-      {
-        title: 'Performance',
-        href: '/hr/performance',
-        icon: TrendingUp,
-      },
-      {
-        title: 'Recruitment',
-        href: '/hr/recruitment',
-        icon: Briefcase,
-      },
-      {
-        title: 'Training',
-        href: '/hr/training',
-        icon: GraduationCap,
-      },
-    ],
-  },
-  {
-    section: 'Inventory Management',
-    items: [
-      {
-        title: 'Consumables',
-        href: '/inventory-management/consumables',
-        icon: Boxes,
-      },
-      {
-        title: 'Assets',
-        href: '/inventory-management/assets',
-        icon: Archive,
-      },
-      {
-        title: 'Item Request',
-        href: '/inventory-management/item-request',
-        icon: ShoppingBag,
-      },
-      {
-        title: 'Asset Request',
-        href: '/inventory-management/asset-request',
-        icon: PackageCheck,
-      },
-      {
-        title: 'Goods Receipt Note',
-        href: '/inventory-management/goods-receipt',
-        icon: ClipboardList,
-      },
-      {
-        title: 'Store',
-        href: '/inventory-management/store',
-        icon: Warehouse,
-      },
-    ],
-  },
-  {
-    section: 'Memo',
-    items: [
-      {
-        title: 'Memo',
-        href: '/memo',
-        icon: Mail,
-      },
-    ],
-  },
-  {
-    section: 'Operations',
-    items: [
-      {
-        title: 'Filling Stations',
-        href: '/operations/filling-stations',
-        icon: Fuel,
-      },
-      {
-        title: 'Peddler Operations',
-        href: '/operations/peddler',
-        icon: Bike,
-      },
-      {
-        title: 'Fleet Management',
-        href: '/operations/fleet',
-        icon: Truck,
-      },
-      {
-        title: 'LPG Operations',
-        href: '/operations/lpg',
-        icon: Flame,
-      },
-    ],
-  },
-  {
-    section: 'Finance',
-    items: [
-      // Finance items will be added here
-    ],
-  },
-  {
-    section: 'Access Control',
-    items: [
-      {
         title: 'Roles & Permissions',
         href: '/roles',
         icon: Shield,
       },
       {
-        title: 'Settings',
+        title: 'System Settings',
         href: '/settings',
         icon: Settings,
       },
@@ -225,10 +135,15 @@ export function Sidebar() {
     <div className="flex h-full w-64 flex-col border-r bg-gray-50">
       {/* Logo */}
       <div className="flex h-16 items-center border-b px-6 bg-white">
-        <h1 className="text-xl font-bold">
-          <span className="text-[#8B1538]">BAYSCOM</span>{' '}
-          <span className="text-[#E67E22]">ERP</span>
-        </h1>
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
+            <Scale className="h-5 w-5 text-[#8B1538]" />
+          </div>
+          <div>
+            <h1 className="text-sm font-bold text-gray-900">Kano Justice</h1>
+            <p className="text-xs text-gray-600">Management System</p>
+          </div>
+        </div>
       </div>
 
       {/* User Info */}
@@ -242,7 +157,7 @@ export function Sidebar() {
             <p className="text-sm font-medium text-gray-900 truncate">
               {user?.firstName} {user?.lastName}
             </p>
-            <p className="text-xs text-gray-500 truncate">{user?.role?.name}</p>
+            <p className="text-xs text-gray-500 truncate">{user?.role?.name || 'Legal Officer'}</p>
           </div>
         </div>
       </div>
