@@ -1,5 +1,6 @@
 import { StakeholderDetail } from "@/components/stakeholders/stakeholder-detail"
 
-export default function StakeholderDetailPage({ params }: { params: { id: string } }) {
-  return <StakeholderDetail id={params.id} />
+export default async function StakeholderDetailPage({ params }: { params: Promise<{ id: string } }) {
+  const { id } = await params
+  return <StakeholderDetail id={id} />
 }

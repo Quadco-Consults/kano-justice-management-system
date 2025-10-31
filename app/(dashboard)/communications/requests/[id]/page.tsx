@@ -1,5 +1,6 @@
 import { RequestDetail } from "@/components/communications/request-detail"
 
-export default function RequestDetailPage({ params }: { params: { id: string } }) {
-  return <RequestDetail id={params.id} />
+export default async function RequestDetailPage({ params }: { params: Promise<{ id: string } }) {
+  const { id } = await params
+  return <RequestDetail id={id} />
 }

@@ -1,5 +1,6 @@
 import { CorrespondenceDetail } from "@/components/correspondences/correspondence-detail"
 
-export default function CorrespondenceDetailPage({ params }: { params: { id: string } }) {
-  return <CorrespondenceDetail id={params.id} />
+export default async function CorrespondenceDetailPage({ params }: { params: Promise<{ id: string } }) {
+  const { id } = await params
+  return <CorrespondenceDetail id={id} />
 }

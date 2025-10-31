@@ -1,11 +1,12 @@
 import { CaseDetail } from "@/components/prosecution/case-detail"
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string
   }
 }
 
-export default function ProsecutionCaseDetailPage({ params }: PageProps) {
-  return <CaseDetail id={params.id} />
+export default async function ProsecutionCaseDetailPage({ params }: PageProps) {
+  const { id } = await params
+  return <CaseDetail id={id} />
 }
