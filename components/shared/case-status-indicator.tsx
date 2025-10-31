@@ -81,7 +81,11 @@ export function CaseStatusIndicator({
   showIcon = true,
   className,
 }: CaseStatusIndicatorProps) {
-  const config = caseStatusConfig[status]
+  const config = caseStatusConfig[status] || {
+    label: status,
+    variant: "secondary" as const,
+    icon: <FileText className="w-3 h-3" />
+  }
 
   return (
     <Badge variant={config.variant} className={cn("gap-1.5", className)}>
