@@ -1,6 +1,7 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Scale, Menu } from "lucide-react"
+import { Menu } from "lucide-react"
 
 export function Navbar() {
   return (
@@ -9,8 +10,15 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#006403]/10 rounded-lg flex items-center justify-center">
-              <Scale className="h-6 w-6 text-[#006403]" />
+            <div className="relative">
+              <Image
+                src="/images/Seal_of_Kano.png"
+                alt="Kano State Logo"
+                width={40}
+                height={40}
+                className="object-contain"
+                style={{ height: '40px', width: 'auto' }}
+              />
             </div>
             <div className="hidden sm:block">
               <div className="text-sm font-bold text-gray-900">Kano State</div>
