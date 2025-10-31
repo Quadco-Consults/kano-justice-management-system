@@ -64,39 +64,45 @@ Despite several demands and notices, the contractor failed to return to site or 
     ],
     timeline: [
       {
+        id: '1',
         title: 'Case Filed',
         description: 'Statement of claim filed at Federal High Court',
-        timestamp: '2025-08-15T09:00:00',
+        date: '2025-08-15',
         status: 'completed' as const,
       },
       {
+        id: '2',
         title: 'Service Completed',
         description: 'Defendant served with court processes',
-        timestamp: '2025-08-25T14:00:00',
+        date: '2025-08-25',
         status: 'completed' as const,
       },
       {
+        id: '3',
         title: 'Defense Filed',
         description: 'Statement of defense filed by defendant',
-        timestamp: '2025-09-10T11:00:00',
+        date: '2025-09-10',
         status: 'completed' as const,
       },
       {
+        id: '4',
         title: 'Pre-Trial Conference',
         description: 'Issues joined, case set for trial',
-        timestamp: '2025-10-05T10:00:00',
+        date: '2025-10-05',
         status: 'completed' as const,
       },
       {
+        id: '5',
         title: 'Trial in Progress',
         description: 'Plaintiff presenting evidence',
-        timestamp: '2025-10-25T10:00:00',
-        status: 'in-progress' as const,
+        date: '2025-10-25',
+        status: 'current' as const,
       },
       {
+        id: '6',
         title: 'Next Hearing',
         description: 'Continuation of trial',
-        timestamp: null,
+        date: '2025-11-15',
         status: 'pending' as const,
       },
     ],
@@ -145,8 +151,8 @@ Despite several demands and notices, the contractor failed to return to site or 
         timestamp: '2025-09-15T14:30:00',
       },
     ],
-    judgment: null, // Can be: { date, ruling, amount, judge, summary, enforcement }
-    settlement: null, // Can be: { proposedDate, proposedAmount, status, terms, finalizedDate }
+    judgment: null as null | { date: string, ruling: string, amount: string, judge: string, summary: string, enforcement: string }, // Can be: { date, ruling, amount, judge, summary, enforcement }
+    settlement: null as null | { proposedDate: string, proposedAmount: string, status: string, terms: string, finalizedDate: string }, // Can be: { proposedDate, proposedAmount, status, terms, finalizedDate }
   }
 
   return (

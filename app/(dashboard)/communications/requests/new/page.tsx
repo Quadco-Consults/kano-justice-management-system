@@ -1,5 +1,14 @@
+import { Suspense } from "react"
 import { RequestForm } from "@/components/communications/request-form"
 
-export default function NewRequestPage() {
+function RequestFormContent() {
   return <RequestForm />
+}
+
+export default function NewRequestPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RequestFormContent />
+    </Suspense>
+  )
 }

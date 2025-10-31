@@ -1,5 +1,14 @@
+import { Suspense } from "react"
 import { DocumentUploadForm } from "@/components/legal-records/document-upload-form"
 
-export default function DocumentUploadPage() {
+function DocumentUploadContent() {
   return <DocumentUploadForm />
+}
+
+export default function DocumentUploadPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DocumentUploadContent />
+    </Suspense>
+  )
 }
