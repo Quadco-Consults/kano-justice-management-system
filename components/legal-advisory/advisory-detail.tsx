@@ -21,8 +21,26 @@ import {
   XCircle,
   Clock,
   MessageSquare,
+  Edit,
+  UserPlus,
 } from "lucide-react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface AdvisoryDetailProps {
   id: string
@@ -30,6 +48,29 @@ interface AdvisoryDetailProps {
 
 export function AdvisoryDetail({ id }: AdvisoryDetailProps) {
   const [comment, setComment] = useState("")
+  const [assignedTo, setAssignedTo] = useState("")
+  const [isReassignDialogOpen, setIsReassignDialogOpen] = useState(false)
+  const router = useRouter()
+
+  // Mock list of legal officers - replace with actual API call
+  const legalOfficers = [
+    { id: '1', name: 'Barr. Fatima Ibrahim' },
+    { id: '2', name: 'Barr. Musa Abdullahi' },
+    { id: '3', name: 'Barr. Aisha Mohammed' },
+    { id: '4', name: 'Barr. Ibrahim Sani' },
+    { id: '5', name: 'Barr. Hauwa Garba' },
+  ]
+
+  const handleReassign = () => {
+    // Add API call to reassign the request
+    console.log('Reassigning to:', assignedTo)
+    setIsReassignDialogOpen(false)
+    // Show success toast
+  }
+
+  const handleEdit = () => {
+    router.push(`/legal-advisory/new?id=${id}`)
+  }
 
   // Mock data - replace with actual API call
   const advisory = {
@@ -122,6 +163,10 @@ The ministry requires urgent advisory as the project is scheduled to commence by
           <p className="text-xl text-gray-700">{advisory.subject}</p>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={handleEdit}>
+            <Edit className="w-4 h-4 mr-2" />
+            Edit
+          </Button>
           <Button variant="outline">
             <Upload className="w-4 h-4 mr-2" />
             Upload Response
@@ -311,19 +356,62 @@ The ministry requires urgent advisory as the project is scheduled to commence by
               <CardTitle>Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button variant="outline" className="w-full justify-start">
+              <Button variant="outline" className="w-full justify-start text-white">
                 <CheckCircle className="w-4 h-4 mr-2" />
                 Approve Request
               </Button>
-              <Button variant="outline" className="w-full justify-start">
+              <Button variant="outline" className="w-full justify-start text-white">
                 <XCircle className="w-4 h-4 mr-2" />
                 Reject Request
               </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <User className="w-4 h-4 mr-2" />
-                Reassign
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
+
+              <Dialog open={isReassignDialogOpen} onOpenChange={setIsReassignDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full justify-start text-white">
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    Reassign
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Reassign Request</DialogTitle>
+                    <DialogDescription>
+                      Assign this legal advisory request to a different legal officer.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-900">Currently Assigned To</label>
+                      <p className="text-sm text-gray-700">{advisory.assignedTo}</p>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-900">Reassign To</label>
+                      <Select value={assignedTo} onValueChange={setAssignedTo}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a legal officer" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {legalOfficers.map((officer) => (
+                            <SelectItem key={officer.id} value={officer.id}>
+                              {officer.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-2">
+                    <Button variant="outline" onClick={() => setIsReassignDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button onClick={handleReassign} disabled={!assignedTo}>
+                      Reassign Request
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+
+              <Button variant="outline" className="w-full justify-start text-white">
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Request Information
               </Button>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,11 +15,51 @@ import {
 } from "@/components/ui/select"
 import { FileText, Upload, X, Save, Send } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export function AdvisoryForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const editId = searchParams.get('id')
+  const isEditMode = !!editId
+
   const [files, setFiles] = useState<File[]>([])
+  const [formData, setFormData] = useState({
+    agency: '',
+    priority: '',
+    subject: '',
+    description: '',
+    category: '',
+    deadline: '',
+    contact: '',
+    email: '',
+    phone: '',
+    background: '',
+    questions: '',
+    references: '',
+  })
+
+  useEffect(() => {
+    if (isEditMode) {
+      // Fetch the advisory data and populate the form
+      // Replace with actual API call
+      const mockData = {
+        agency: 'education',
+        priority: 'high',
+        subject: 'Contract Review - School Construction Project',
+        description: 'The Ministry of Education is seeking legal review...',
+        category: 'contract',
+        deadline: '2025-11-11',
+        contact: 'Dr. Amina Hassan',
+        email: 'amina.hassan@education.kano.gov.ng',
+        phone: '+234 803 456 7890',
+        background: '',
+        questions: '',
+        references: '',
+      }
+      setFormData(mockData)
+    }
+  }, [isEditMode, editId])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -34,7 +74,13 @@ export function AdvisoryForm() {
   const handleSubmit = (e: React.FormEvent, draft: boolean = false) => {
     e.preventDefault()
     // Handle form submission
-    console.log('Form submitted', { draft })
+    if (isEditMode) {
+      console.log('Updating advisory', editId, { ...formData, draft })
+      // Add API call to update advisory
+    } else {
+      console.log('Creating new advisory', { ...formData, draft })
+      // Add API call to create advisory
+    }
     router.push('/legal-advisory')
   }
 
@@ -47,8 +93,14 @@ export function AdvisoryForm() {
             <Button variant="outline" size="sm">← Back</Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">New Legal Advisory Request</h1>
-            <p className="text-gray-600">Submit a new request for legal opinion or advisory</p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {isEditMode ? 'Edit Legal Advisory Request' : 'New Legal Advisory Request'}
+            </h1>
+            <p className="text-gray-600">
+              {isEditMode
+                ? 'Update the legal advisory request details'
+                : 'Submit a new request for legal opinion or advisory'}
+            </p>
           </div>
         </div>
       </div>
@@ -63,7 +115,11 @@ export function AdvisoryForm() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="agency">Requesting Agency/MDA *</Label>
-                <Select required>
+                <Select
+                  required
+                  value={formData.agency}
+                  onValueChange={(value) => setFormData({ ...formData, agency: value })}
+                >
                   <SelectTrigger id="agency">
                     <SelectValue placeholder="Select agency" />
                   </SelectTrigger>
@@ -80,7 +136,11 @@ export function AdvisoryForm() {
 
               <div className="space-y-2">
                 <Label htmlFor="priority">Priority Level *</Label>
-                <Select required>
+                <Select
+                  required
+                  value={formData.priority}
+                  onValueChange={(value) => setFormData({ ...formData, priority: value })}
+                >
                   <SelectTrigger id="priority">
                     <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
@@ -100,6 +160,8 @@ export function AdvisoryForm() {
                 id="subject"
                 placeholder="Brief title of the legal matter"
                 required
+                value={formData.subject}
+                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
               />
             </div>
 
@@ -110,12 +172,18 @@ export function AdvisoryForm() {
                 placeholder="Provide comprehensive details about the legal issue requiring advisory"
                 rows={6}
                 required
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="category">Request Category *</Label>
-              <Select required>
+              <Select
+                required
+                value={formData.category}
+                onValueChange={(value) => setFormData({ ...formData, category: value })}
+              >
                 <SelectTrigger id="category">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
@@ -138,6 +206,8 @@ export function AdvisoryForm() {
                 <Input
                   id="deadline"
                   type="date"
+                  value={formData.deadline}
+                  onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
                 />
               </div>
 
@@ -147,6 +217,8 @@ export function AdvisoryForm() {
                   id="contact"
                   placeholder="Name of contact person"
                   required
+                  value={formData.contact}
+                  onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
                 />
               </div>
             </div>
@@ -159,6 +231,8 @@ export function AdvisoryForm() {
                   type="email"
                   placeholder="email@agency.kano.gov.ng"
                   required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
 
@@ -169,6 +243,8 @@ export function AdvisoryForm() {
                   type="tel"
                   placeholder="+234 803 123 4567"
                   required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 />
               </div>
             </div>
@@ -249,6 +325,8 @@ export function AdvisoryForm() {
                 id="background"
                 placeholder="Provide any relevant background information or context"
                 rows={4}
+                value={formData.background}
+                onChange={(e) => setFormData({ ...formData, background: e.target.value })}
               />
             </div>
 
@@ -258,6 +336,8 @@ export function AdvisoryForm() {
                 id="questions"
                 placeholder="List specific legal questions requiring answers"
                 rows={4}
+                value={formData.questions}
+                onChange={(e) => setFormData({ ...formData, questions: e.target.value })}
               />
             </div>
 
@@ -266,6 +346,8 @@ export function AdvisoryForm() {
               <Input
                 id="references"
                 placeholder="Reference numbers of related cases or files"
+                value={formData.references}
+                onChange={(e) => setFormData({ ...formData, references: e.target.value })}
               />
             </div>
           </CardContent>
@@ -286,7 +368,7 @@ export function AdvisoryForm() {
           </Button>
           <Button type="submit">
             <Send className="w-4 h-4 mr-2" />
-            Submit Request
+            {isEditMode ? 'Update Request' : 'Submit Request'}
           </Button>
         </div>
       </form>
