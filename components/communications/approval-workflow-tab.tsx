@@ -17,6 +17,8 @@ import {
   ArrowRight,
   Plus,
   Search,
+  Filter,
+  X,
 } from "lucide-react"
 import {
   Dialog,
@@ -118,7 +120,7 @@ const mockApprovalWorkflows = [
         approver: 'Chief of Staff - Governor\'s Office',
         status: 'approved',
         date: '2025-10-29',
-        comments: 'Governor's office approves public consultation.',
+        comments: 'Governor\'s office approves public consultation.',
       },
       {
         id: 4,
@@ -173,26 +175,56 @@ const mockApprovalWorkflows = [
 
 export function ApprovalWorkflowTab() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [showFilters, setShowFilters] = useState(false)
+  const [filters, setFilters] = useState({
+    type: "",
+    status: "",
+    priority: "",
+  })
   const [isNewWorkflowDialogOpen, setIsNewWorkflowDialogOpen] = useState(false)
   const [selectedWorkflow, setSelectedWorkflow] = useState<typeof mockApprovalWorkflows[0] | null>(null)
+
+  const clearFilters = () => {
+    setFilters({
+      type: "",
+      status: "",
+      priority: "",
+    })
+  }
+
+  const hasActiveFilters = Object.values(filters).some(value => value !== "")
 
   return (
     <div className="space-y-6">
       {/* Header Actions */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex items-center gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search approval workflows..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9"
-              />
-            </div>
-            <Dialog open={isNewWorkflowDialogOpen} onOpenChange={setIsNewWorkflowDialogOpen}>
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search approval workflows..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9"
+                />
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className={hasActiveFilters ? "border-[#8B1538] text-[#8B1538]" : ""}
+              >
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+                {hasActiveFilters && (
+                  <Badge className="ml-2 bg-[#8B1538] text-white">
+                    {Object.values(filters).filter(v => v !== "").length}
+                  </Badge>
+                )}
+              </Button>
+              <Dialog open={isNewWorkflowDialogOpen} onOpenChange={setIsNewWorkflowDialogOpen}>
               <DialogTrigger asChild>
                 <Button>
                   <Plus className="w-4 h-4 mr-2" />
@@ -308,6 +340,79 @@ export function ApprovalWorkflowTab() {
                 </div>
               </DialogContent>
             </Dialog>
+            </div>
+
+            {/* Filter Options */}
+            {showFilters && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Workflow Type</label>
+                  <Select
+                    value={filters.type}
+                    onValueChange={(value) => setFilters({ ...filters, type: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Types" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Types</SelectItem>
+                      <SelectItem value="legal-opinion">Legal Opinion</SelectItem>
+                      <SelectItem value="legislative">Legislative Approval</SelectItem>
+                      <SelectItem value="contract">Contract Approval</SelectItem>
+                      <SelectItem value="policy">Policy Review</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Status</label>
+                  <Select
+                    value={filters.status}
+                    onValueChange={(value) => setFilters({ ...filters, status: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Statuses" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Statuses</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="approved">Approved</SelectItem>
+                      <SelectItem value="rejected">Rejected</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Priority</label>
+                  <Select
+                    value={filters.priority}
+                    onValueChange={(value) => setFilters({ ...filters, priority: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Priorities" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Priorities</SelectItem>
+                      <SelectItem value="urgent">Urgent</SelectItem>
+                      <SelectItem value="high">High</SelectItem>
+                      <SelectItem value="normal">Normal</SelectItem>
+                      <SelectItem value="low">Low</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {hasActiveFilters && (
+                  <div className="md:col-span-3 flex justify-end">
+                    <Button variant="ghost" onClick={clearFilters} size="sm">
+                      <X className="w-4 h-4 mr-2" />
+                      Clear Filters
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
