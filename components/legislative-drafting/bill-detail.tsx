@@ -25,6 +25,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useState, useMemo } from "react"
+import { useRouter } from "next/navigation"
 import { Textarea } from "@/components/ui/textarea"
 import {
   Dialog,
@@ -332,10 +333,10 @@ const mockBill = {
 }
 
 export function BillDetail() {
+  const router = useRouter()
   const [showAmendmentDialog, setShowAmendmentDialog] = useState(false)
   const [showApprovalDialog, setShowApprovalDialog] = useState(false)
   const [showCommentDialog, setShowCommentDialog] = useState(false)
-  const [showPreviewDialog, setShowPreviewDialog] = useState(false)
   const [showEditSectionDialog, setShowEditSectionDialog] = useState(false)
   const [amendmentText, setAmendmentText] = useState("")
   const [approvalComments, setApprovalComments] = useState("")
@@ -445,88 +446,12 @@ export function BillDetail() {
             <Download className="w-4 h-4 mr-2" />
             Export PDF
           </Button>
-          <Button variant="outline" onClick={() => setShowPreviewDialog(true)}>
+          <Button variant="outline" onClick={() => router.push(`/legislative-drafting/${mockBill.id}/preview`)}>
             <Eye className="w-4 h-4 mr-2" />
             Preview
           </Button>
         </div>
       </div>
-
-      {/* Preview Dialog */}
-      <Dialog open={showPreviewDialog} onOpenChange={setShowPreviewDialog}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{mockBill.title}</DialogTitle>
-            <DialogDescription>Bill Number: {mockBill.billNo}</DialogDescription>
-          </DialogHeader>
-          <div className="space-y-6 py-4">
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">Bill Information</h3>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-gray-900">Type:</span>{" "}
-                    <span className="font-medium">{mockBill.type}</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-900">Status:</span>{" "}
-                    <span className="font-medium capitalize">{mockBill.status}</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-900">Sponsor:</span>{" "}
-                    <span className="font-medium">{mockBill.sponsor}</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-900">Drafter:</span>{" "}
-                    <span className="font-medium">{mockBill.draftedBy}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">Description</h3>
-                <p className="text-gray-900">{mockBill.description}</p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">Objectives</h3>
-                <ul className="list-disc list-inside space-y-1">
-                  {mockBill.objectives.map((obj, idx) => (
-                    <li key={idx} className="text-gray-900">{obj}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">Sections</h3>
-                <div className="space-y-3">
-                  {mockBill.sections.map((section) => (
-                    <div key={section.id} className="p-3 border border-gray-200 rounded-lg">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-medium">Section {section.number}:</span>
-                        <span className="text-gray-900">{section.title}</span>
-                        <Badge variant="outline" className="text-xs">{section.status}</Badge>
-                      </div>
-                      <p className="text-sm text-gray-900 mt-2 pl-4">
-                        [Section content would appear here in the actual implementation]
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setShowPreviewDialog(false)}>
-              Close
-            </Button>
-            <Button onClick={handleExportPDF}>
-              <Download className="w-4 h-4 mr-2" />
-              Export as PDF
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
