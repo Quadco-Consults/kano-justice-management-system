@@ -4,9 +4,17 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { StatusBadge } from "@/components/shared/status-badge"
-import { Search, Plus, Filter, ClipboardList, Calendar, Building2, AlertCircle } from "lucide-react"
+import { Search, Plus, Filter, ClipboardList, Calendar, Building2, AlertCircle, X } from "lucide-react"
 import Link from "next/link"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const mockSubmissions = [
   {
@@ -73,6 +81,24 @@ const mockSubmissions = [
 
 export function SubmissionsList() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [showFilters, setShowFilters] = useState(false)
+  const [filters, setFilters] = useState({
+    status: "",
+    frequency: "",
+    regulatoryBody: "",
+    assignee: "",
+  })
+
+  const clearFilters = () => {
+    setFilters({
+      status: "",
+      frequency: "",
+      regulatoryBody: "",
+      assignee: "",
+    })
+  }
+
+  const hasActiveFilters = Object.values(filters).some(value => value !== "")
 
   return (
     <div className="space-y-6">
@@ -93,21 +119,125 @@ export function SubmissionsList() {
       {/* Filters */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search by submission name, number, or regulatory body..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
+          <div className="space-y-4">
+            <div className="flex gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search by submission name, number, or regulatory body..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className={hasActiveFilters ? "border-[#8B1538] text-[#8B1538]" : ""}
+              >
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+                {hasActiveFilters && (
+                  <Badge className="ml-2 bg-[#8B1538] text-white">
+                    {Object.values(filters).filter(v => v !== "").length}
+                  </Badge>
+                )}
+              </Button>
             </div>
-            <Button variant="outline">
-              <Filter className="w-4 h-4 mr-2" />
-              Filters
-            </Button>
+
+            {/* Filter Options */}
+            {showFilters && (
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Status</label>
+                  <Select
+                    value={filters.status}
+                    onValueChange={(value) => setFilters({ ...filters, status: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Statuses" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Statuses</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
+                      <SelectItem value="draft">Draft</SelectItem>
+                      <SelectItem value="submitted">Submitted</SelectItem>
+                      <SelectItem value="overdue">Overdue</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Frequency</label>
+                  <Select
+                    value={filters.frequency}
+                    onValueChange={(value) => setFilters({ ...filters, frequency: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Frequencies" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Frequencies</SelectItem>
+                      <SelectItem value="Monthly">Monthly</SelectItem>
+                      <SelectItem value="Quarterly">Quarterly</SelectItem>
+                      <SelectItem value="Annual">Annual</SelectItem>
+                      <SelectItem value="Ad-hoc">Ad-hoc</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Regulatory Body</label>
+                  <Select
+                    value={filters.regulatoryBody}
+                    onValueChange={(value) => setFilters({ ...filters, regulatoryBody: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Bodies" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Bodies</SelectItem>
+                      <SelectItem value="fmoj">Federal Ministry of Justice</SelectItem>
+                      <SelectItem value="njc">National Judicial Council</SelectItem>
+                      <SelectItem value="oagf">Office of the Attorney General Federation</SelectItem>
+                      <SelectItem value="oag">Office of the Auditor General</SelectItem>
+                      <SelectItem value="npf">Nigerian Police Force</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Assigned To</label>
+                  <Select
+                    value={filters.assignee}
+                    onValueChange={(value) => setFilters({ ...filters, assignee: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Assignees" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Assignees</SelectItem>
+                      <SelectItem value="fatima">Barr. Fatima Ibrahim</SelectItem>
+                      <SelectItem value="ahmad">Barr. Ahmad Sani</SelectItem>
+                      <SelectItem value="halima">Barr. Halima Mohammed</SelectItem>
+                      <SelectItem value="ibrahim">Barr. Ibrahim Bello</SelectItem>
+                      <SelectItem value="maryam">Barr. Maryam Usman</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {hasActiveFilters && (
+                  <div className="md:col-span-4 flex justify-end">
+                    <Button variant="ghost" onClick={clearFilters} size="sm">
+                      <X className="w-4 h-4 mr-2" />
+                      Clear Filters
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

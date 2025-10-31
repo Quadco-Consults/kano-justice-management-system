@@ -13,9 +13,12 @@ import {
   AlertTriangle,
   Upload,
   Download,
-  Send
+  Send,
+  Edit,
+  Bell
 } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 const mockSubmission = {
   id: 1,
@@ -183,11 +186,20 @@ const mockSubmission = {
   ]
 }
 
-export function SubmissionDetail() {
+interface SubmissionDetailProps {
+  id: string
+}
+
+export function SubmissionDetail({ id }: SubmissionDetailProps) {
+  const router = useRouter()
   const daysUntilDue = Math.ceil((new Date(mockSubmission.dueDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
   const overallProgress = Math.round(
     mockSubmission.sections.reduce((sum, s) => sum + s.progress, 0) / mockSubmission.sections.length
   )
+
+  const handleEdit = () => {
+    router.push(`/statutory-submissions/new?id=${id}`)
+  }
 
   return (
     <div className="space-y-6">
@@ -211,6 +223,14 @@ export function SubmissionDetail() {
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={handleEdit}>
+            <Edit className="w-4 h-4 mr-2" />
+            Edit
+          </Button>
+          <Button variant="outline">
+            <Bell className="w-4 h-4 mr-2" />
+            Set Reminder
+          </Button>
           <Button variant="outline">
             <Download className="w-4 h-4 mr-2" />
             Export
