@@ -14,9 +14,26 @@ import {
   AlertCircle,
   MessageSquare,
   Download,
-  Eye
+  Eye,
+  GitBranch,
+  History,
+  ThumbsUp,
+  ThumbsDown,
+  ArrowRight,
+  Edit3
 } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
 
 const mockBill = {
   id: 1,
@@ -176,16 +193,158 @@ const mockBill = {
       uploadedBy: 'Legislative Team',
       uploadedDate: '2025-10-26'
     }
-  ]
+  ],
+  versions: [
+    {
+      id: 1,
+      version: '1.2',
+      date: '2025-10-28T14:30:00',
+      author: 'Barr. Ibrahim Bello',
+      changes: 'Updated Section 3 penalty provisions with new Supreme Court precedents',
+      changesSummary: '12 additions, 5 deletions',
+      isCurrent: true
+    },
+    {
+      id: 2,
+      version: '1.1',
+      date: '2025-10-22T10:15:00',
+      author: 'Barr. Ibrahim Bello',
+      changes: 'Completed Section 2 with amendments to principal law',
+      changesSummary: '25 additions, 8 deletions',
+      isCurrent: false
+    },
+    {
+      id: 3,
+      version: '1.0',
+      date: '2025-10-20T09:00:00',
+      author: 'Barr. Ibrahim Bello',
+      changes: 'Initial draft - Sections 1 completed',
+      changesSummary: '45 additions, 0 deletions',
+      isCurrent: false
+    }
+  ],
+  amendments: [
+    {
+      id: 1,
+      section: 'Section 3',
+      amendmentNo: 'AMD-001',
+      proposedBy: 'Barr. Fatima Hassan',
+      date: '2025-10-29',
+      description: 'Increase maximum penalty from ₦5M to ₦10M for serious corruption offenses',
+      status: 'pending-approval',
+      votes: { approved: 2, rejected: 0, pending: 3 }
+    },
+    {
+      id: 2,
+      section: 'Section 4',
+      amendmentNo: 'AMD-002',
+      proposedBy: 'Anti-Corruption Commission',
+      date: '2025-10-26',
+      description: 'Add provision for immediate freezing of suspect assets pending investigation',
+      status: 'approved',
+      votes: { approved: 5, rejected: 0, pending: 0 }
+    },
+    {
+      id: 3,
+      section: 'Section 5',
+      amendmentNo: 'AMD-003',
+      proposedBy: 'Barr. Ahmad Sani',
+      date: '2025-10-25',
+      description: 'Extend whistleblower protection to family members of whistleblower',
+      status: 'in-discussion',
+      votes: { approved: 1, rejected: 1, pending: 3 }
+    }
+  ],
+  approvals: [
+    {
+      id: 1,
+      approver: 'Barr. Fatima Hassan',
+      role: 'Senior Legislative Counsel',
+      stage: 'Technical Review',
+      status: 'approved',
+      date: '2025-10-29T16:00:00',
+      comments: 'Technically sound. Recommend approval with minor amendments.'
+    },
+    {
+      id: 2,
+      approver: 'Director of Legislative Drafting',
+      role: 'Department Head',
+      stage: 'Department Review',
+      status: 'approved',
+      date: '2025-10-30T10:30:00',
+      comments: 'Approved for stakeholder consultation.'
+    },
+    {
+      id: 3,
+      approver: 'Legal Advisor to the Governor',
+      role: 'Chief Legal Advisor',
+      stage: 'Executive Review',
+      status: 'pending',
+      date: null,
+      comments: null
+    },
+    {
+      id: 4,
+      approver: 'Attorney General',
+      role: 'State Attorney General',
+      stage: 'Final Legal Review',
+      status: 'pending',
+      date: null,
+      comments: null
+    },
+    {
+      id: 5,
+      approver: 'Governor',
+      role: 'State Governor',
+      stage: 'Executive Assent',
+      status: 'pending',
+      date: null,
+      comments: null
+    }
+  ],
+  sectionComments: {
+    3: [
+      {
+        id: 1,
+        author: 'Barr. Fatima Hassan',
+        date: '2025-10-29T14:30:00',
+        comment: 'The penalty provisions in subsection (2) need to reference the recent Supreme Court ruling on proportionality.',
+        resolved: false
+      },
+      {
+        id: 2,
+        author: 'Barr. Ibrahim Bello',
+        date: '2025-10-30T09:15:00',
+        comment: 'Acknowledged. Will update to include Yusuf v. State (2024) precedent.',
+        resolved: false
+      }
+    ]
+  }
 }
 
 export function BillDetail() {
+  const [showAmendmentDialog, setShowAmendmentDialog] = useState(false)
+  const [showApprovalDialog, setShowApprovalDialog] = useState(false)
+  const [amendmentText, setAmendmentText] = useState("")
+  const [approvalComments, setApprovalComments] = useState("")
+  const [selectedSection, setSelectedSection] = useState<number | null>(null)
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed': return 'success'
       case 'in-review': return 'default'
       case 'draft': return 'secondary'
       default: return 'outline'
+    }
+  }
+
+  const getAmendmentStatusColor = (status: string) => {
+    switch (status) {
+      case 'approved': return 'bg-green-100 text-green-800'
+      case 'pending-approval': return 'bg-orange-100 text-orange-800'
+      case 'in-discussion': return 'bg-blue-100 text-blue-800'
+      case 'rejected': return 'bg-red-100 text-red-800'
+      default: return 'bg-gray-100 text-gray-800'
     }
   }
 
@@ -291,6 +450,9 @@ export function BillDetail() {
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="sections">Bill Sections</TabsTrigger>
+          <TabsTrigger value="versions">Version History</TabsTrigger>
+          <TabsTrigger value="amendments">Amendments</TabsTrigger>
+          <TabsTrigger value="approvals">Approval Workflow</TabsTrigger>
           <TabsTrigger value="stakeholders">Stakeholders</TabsTrigger>
           <TabsTrigger value="timeline">Timeline</TabsTrigger>
           <TabsTrigger value="comments">Comments</TabsTrigger>
@@ -396,6 +558,280 @@ export function BillDetail() {
                       </div>
                     </div>
                     <Button variant="outline" size="sm">Edit Section</Button>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Version History Tab */}
+        <TabsContent value="versions" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle>Version History</CardTitle>
+                <Badge className="bg-blue-100 text-blue-800">
+                  <History className="w-3 h-3 mr-1" />
+                  Current: v{mockBill.versions.find(v => v.isCurrent)?.version}
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {mockBill.versions.map((version) => (
+                  <div
+                    key={version.id}
+                    className={`p-4 border rounded-lg ${
+                      version.isCurrent ? 'border-[#8B1538] bg-[#8B1538]/5' : 'border-gray-200'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                          <GitBranch className="w-6 h-6 text-blue-600" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-bold text-gray-900">Version {version.version}</p>
+                            {version.isCurrent && (
+                              <Badge className="bg-[#8B1538] text-white">Current</Badge>
+                            )}
+                          </div>
+                          <p className="text-sm text-gray-600">
+                            {new Date(version.date).toLocaleString('en-NG')} • {version.author}
+                          </p>
+                        </div>
+                      </div>
+                      {!version.isCurrent && (
+                        <div className="flex items-center gap-2">
+                          <Button variant="outline" size="sm">
+                            <Eye className="w-4 h-4 mr-1" />
+                            View
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Download className="w-4 h-4 mr-1" />
+                            Download
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-gray-900 mb-2">{version.changes}</p>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Badge variant="outline" className="text-green-600">
+                        +{version.changesSummary.split(',')[0].trim()}
+                      </Badge>
+                      <Badge variant="outline" className="text-red-600">
+                        -{version.changesSummary.split(',')[1].trim()}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Amendments Tab */}
+        <TabsContent value="amendments" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle>Proposed Amendments</CardTitle>
+                <Dialog open={showAmendmentDialog} onOpenChange={setShowAmendmentDialog}>
+                  <DialogTrigger asChild>
+                    <Button size="sm">
+                      <Edit3 className="w-4 h-4 mr-2" />
+                      Propose Amendment
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Propose New Amendment</DialogTitle>
+                      <DialogDescription>
+                        Suggest changes to specific sections of the bill
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <Label>Section</Label>
+                        <select className="w-full p-2 border border-gray-200 rounded-lg">
+                          {mockBill.sections.map((section) => (
+                            <option key={section.id} value={section.number}>
+                              Section {section.number}: {section.title}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Amendment Description</Label>
+                        <Textarea
+                          placeholder="Describe the proposed amendment..."
+                          value={amendmentText}
+                          onChange={(e) => setAmendmentText(e.target.value)}
+                          rows={5}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-end gap-2">
+                      <Button variant="outline" onClick={() => setShowAmendmentDialog(false)}>
+                        Cancel
+                      </Button>
+                      <Button>Submit Amendment</Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {mockBill.amendments.map((amendment) => (
+                  <div
+                    key={amendment.id}
+                    className="p-4 border border-gray-200 rounded-lg"
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant="outline">{amendment.amendmentNo}</Badge>
+                          <Badge className={getAmendmentStatusColor(amendment.status)}>
+                            {amendment.status.replace('-', ' ')}
+                          </Badge>
+                          <span className="text-sm text-gray-600">{amendment.section}</span>
+                        </div>
+                        <p className="text-gray-900 mb-2">{amendment.description}</p>
+                        <p className="text-sm text-gray-600">
+                          Proposed by {amendment.proposedBy} • {new Date(amendment.date).toLocaleDateString('en-NG')}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 pt-3 border-t">
+                      <div className="flex items-center gap-2">
+                        <ThumbsUp className="w-4 h-4 text-green-600" />
+                        <span className="text-sm font-medium text-green-600">{amendment.votes.approved} Approved</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <ThumbsDown className="w-4 h-4 text-red-600" />
+                        <span className="text-sm font-medium text-red-600">{amendment.votes.rejected} Rejected</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-orange-600" />
+                        <span className="text-sm font-medium text-orange-600">{amendment.votes.pending} Pending</span>
+                      </div>
+                      {amendment.status !== 'approved' && amendment.status !== 'rejected' && (
+                        <div className="ml-auto flex gap-2">
+                          <Button variant="outline" size="sm">
+                            <ThumbsUp className="w-4 h-4 mr-1" />
+                            Approve
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <ThumbsDown className="w-4 h-4 mr-1" />
+                            Reject
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Approval Workflow Tab */}
+        <TabsContent value="approvals" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Approval Workflow</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {mockBill.approvals.map((approval, index) => (
+                  <div key={approval.id} className="flex gap-4">
+                    <div className="flex flex-col items-center">
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                        approval.status === 'approved' ? 'bg-green-100' :
+                        approval.status === 'pending' ? 'bg-orange-100' :
+                        'bg-red-100'
+                      }`}>
+                        {approval.status === 'approved' ? <CheckCircle className="w-6 h-6 text-green-600" /> :
+                         approval.status === 'pending' ? <Clock className="w-6 h-6 text-orange-600" /> :
+                         <AlertCircle className="w-6 h-6 text-red-600" />}
+                      </div>
+                      {index < mockBill.approvals.length - 1 && (
+                        <div className={`w-0.5 h-16 my-2 ${
+                          approval.status === 'approved' ? 'bg-green-200' : 'bg-gray-200'
+                        }`} />
+                      )}
+                    </div>
+                    <div className="flex-1 pb-4">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-semibold text-gray-900">{approval.stage}</p>
+                            <Badge variant={
+                              approval.status === 'approved' ? 'success' :
+                              approval.status === 'pending' ? 'secondary' : 'destructive'
+                            }>
+                              {approval.status}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-gray-600">{approval.approver} • {approval.role}</p>
+                          {approval.date && (
+                            <p className="text-xs text-gray-500 mt-1">
+                              {new Date(approval.date).toLocaleString('en-NG')}
+                            </p>
+                          )}
+                        </div>
+                        {approval.status === 'pending' && index === mockBill.approvals.findIndex(a => a.status === 'pending') && (
+                          <Dialog open={showApprovalDialog} onOpenChange={setShowApprovalDialog}>
+                            <DialogTrigger asChild>
+                              <Button size="sm">
+                                <ArrowRight className="w-4 h-4 mr-1" />
+                                Review
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Review & Approve</DialogTitle>
+                                <DialogDescription>
+                                  Review the bill and provide your approval decision
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="space-y-4 py-4">
+                                <div className="space-y-2">
+                                  <Label>Review Comments</Label>
+                                  <Textarea
+                                    placeholder="Provide comments or feedback..."
+                                    value={approvalComments}
+                                    onChange={(e) => setApprovalComments(e.target.value)}
+                                    rows={4}
+                                  />
+                                </div>
+                              </div>
+                              <div className="flex justify-end gap-2">
+                                <Button variant="outline" onClick={() => setShowApprovalDialog(false)}>
+                                  Cancel
+                                </Button>
+                                <Button variant="destructive">
+                                  <ThumbsDown className="w-4 h-4 mr-1" />
+                                  Reject
+                                </Button>
+                                <Button>
+                                  <ThumbsUp className="w-4 h-4 mr-1" />
+                                  Approve
+                                </Button>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        )}
+                      </div>
+                      {approval.comments && (
+                        <div className="p-3 bg-gray-50 rounded-lg mt-2">
+                          <p className="text-sm text-gray-900">{approval.comments}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
