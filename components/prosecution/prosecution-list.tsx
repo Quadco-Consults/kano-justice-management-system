@@ -134,12 +134,12 @@ export function ProsecutionList() {
               <Button
                 variant="outline"
                 onClick={() => setShowFilters(!showFilters)}
-                className={hasActiveFilters ? "border-[#8B1538] text-[#8B1538]" : ""}
+                className={hasActiveFilters ? "border-[#006403] text-[#006403]" : ""}
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Filters
                 {hasActiveFilters && (
-                  <Badge className="ml-2 bg-[#8B1538] text-white">
+                  <Badge className="ml-2 bg-[#006403] text-white">
                     {Object.values(filters).filter(v => v !== "").length}
                   </Badge>
                 )}
@@ -300,9 +300,9 @@ export function ProsecutionList() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Conviction Rate</p>
-                <p className="text-2xl font-bold text-[#8B1538]">84%</p>
+                <p className="text-2xl font-bold text-[#006403]">84%</p>
               </div>
-              <Gavel className="w-8 h-8 text-[#8B1538]" />
+              <Gavel className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -317,7 +317,7 @@ export function ProsecutionList() {
           <div className="space-y-4">
             {mockCases.map((caseItem) => (
               <Link key={caseItem.id} href={`/prosecution/${caseItem.id}`}>
-                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">

@@ -56,9 +56,9 @@ export function CommunicationsPortal() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Shared Documents</p>
-                <p className="text-2xl font-bold text-[#8B1538]">156</p>
+                <p className="text-2xl font-bold text-[#006403]">156</p>
               </div>
-              <FileText className="w-8 h-8 text-[#8B1538]" />
+              <FileText className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>

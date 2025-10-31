@@ -214,12 +214,12 @@ export function ApprovalWorkflowTab() {
               <Button
                 variant="outline"
                 onClick={() => setShowFilters(!showFilters)}
-                className={hasActiveFilters ? "border-[#8B1538] text-[#8B1538]" : ""}
+                className={hasActiveFilters ? "border-[#006403] text-[#006403]" : ""}
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Filters
                 {hasActiveFilters && (
-                  <Badge className="ml-2 bg-[#8B1538] text-white">
+                  <Badge className="ml-2 bg-[#006403] text-white">
                     {Object.values(filters).filter(v => v !== "").length}
                   </Badge>
                 )}
@@ -475,7 +475,7 @@ export function ApprovalWorkflowTab() {
             {mockApprovalWorkflows.map((workflow) => (
               <div
                 key={workflow.id}
-                className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer"
+                className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer"
                 onClick={() => setSelectedWorkflow(workflow)}
               >
                 {/* Workflow Header */}

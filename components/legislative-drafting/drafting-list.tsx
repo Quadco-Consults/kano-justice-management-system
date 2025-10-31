@@ -230,9 +230,9 @@ export function DraftingList() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-900">Success Rate</p>
-                <p className="text-2xl font-bold text-[#8B1538]">83%</p>
+                <p className="text-2xl font-bold text-[#006403]">83%</p>
               </div>
-              <BookOpen className="w-8 h-8 text-[#8B1538]" />
+              <BookOpen className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -252,7 +252,7 @@ export function DraftingList() {
             ) : (
               filteredBills.map((bill) => (
               <Link key={bill.id} href={`/legislative-drafting/${bill.id}`}>
-                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
@@ -266,7 +266,7 @@ export function DraftingList() {
                       <div className="flex items-center gap-4 mt-2">
                         <p className="text-sm text-gray-900">{bill.category}</p>
                         <span className="text-gray-900">•</span>
-                        <p className="text-sm font-medium text-[#8B1538]">{bill.stage}</p>
+                        <p className="text-sm font-medium text-[#006403]">{bill.stage}</p>
                       </div>
                     </div>
                   </div>

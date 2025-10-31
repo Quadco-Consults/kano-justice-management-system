@@ -75,7 +75,7 @@ export function DashboardContent() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <FileText className="w-5 h-5 text-[#8B1538]" />
+              <FileText className="w-5 h-5 text-[#006403]" />
               Recent Advisory Requests
             </CardTitle>
           </CardHeader>
@@ -99,7 +99,7 @@ export function DashboardContent() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Gavel className="w-5 h-5 text-[#8B1538]" />
+              <Gavel className="w-5 h-5 text-[#006403]" />
               Active Prosecutions
             </CardTitle>
           </CardHeader>

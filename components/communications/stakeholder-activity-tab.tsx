@@ -127,7 +127,7 @@ export function StakeholderActivityTab() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-[#8B1538]" />
+            <TrendingUp className="w-5 h-5 text-[#006403]" />
             Top Stakeholders by Engagement
           </CardTitle>
         </CardHeader>
@@ -136,11 +136,11 @@ export function StakeholderActivityTab() {
             {mockStakeholderStats.map((stat, index) => (
               <div
                 key={index}
-                className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all"
+                className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <Building2 className="w-5 h-5 text-[#8B1538]" />
+                    <Building2 className="w-5 h-5 text-[#006403]" />
                     <div>
                       <h3 className="font-semibold text-gray-900">{stat.stakeholder}</h3>
                       <p className="text-sm text-gray-600">
@@ -157,7 +157,7 @@ export function StakeholderActivityTab() {
                     <span className="text-gray-600">{stat.interactions} interactions</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-[#8B1538]" />
+                    <FileText className="w-4 h-4 text-[#006403]" />
                     <span className="text-gray-600">{stat.documentsShared} documents</span>
                   </div>
                 </div>

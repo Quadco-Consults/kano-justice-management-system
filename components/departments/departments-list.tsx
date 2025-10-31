@@ -124,11 +124,11 @@ export function DepartmentsList() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Active Cases</p>
-                <p className="text-2xl font-bold text-[#8B1538]">
+                <p className="text-2xl font-bold text-[#006403]">
                   {mockDepartments.reduce((sum, dept) => sum + dept.activeCases, 0)}
                 </p>
               </div>
-              <Briefcase className="w-8 h-8 text-[#8B1538]" />
+              <Briefcase className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -166,12 +166,12 @@ export function DepartmentsList() {
       {/* Departments Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {mockDepartments.map((dept) => (
-          <Card key={dept.id} className="hover:border-[#8B1538] hover:shadow-lg transition-all">
+          <Card key={dept.id} className="hover:border-[#006403] hover:shadow-lg transition-all">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-[#8B1538]" />
+                  <div className="w-12 h-12 bg-[#006403]/10 rounded-lg flex items-center justify-center">
+                    <Building2 className="w-6 h-6 text-[#006403]" />
                   </div>
                   <div>
                     <CardTitle className="text-lg">{dept.name}</CardTitle>

@@ -118,9 +118,9 @@ export function RolesList() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Custom Roles</p>
-                <p className="text-2xl font-bold text-[#8B1538]">4</p>
+                <p className="text-2xl font-bold text-[#006403]">4</p>
               </div>
-              <Shield className="w-8 h-8 text-[#8B1538]" />
+              <Shield className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -142,12 +142,12 @@ export function RolesList() {
       {/* Roles List */}
       <div className="grid grid-cols-1 gap-4">
         {mockRoles.map((role) => (
-          <Card key={role.id} className="hover:border-[#8B1538] hover:shadow-md transition-all">
+          <Card key={role.id} className="hover:border-[#006403] hover:shadow-md transition-all">
             <CardContent className="pt-6">
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4 flex-1">
-                  <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-6 h-6 text-[#8B1538]" />
+                  <div className="w-12 h-12 bg-[#006403]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-6 h-6 text-[#006403]" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">

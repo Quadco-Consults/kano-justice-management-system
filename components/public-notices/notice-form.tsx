@@ -262,7 +262,7 @@ export function NoticeForm() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#8B1538] transition-colors">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#006403] transition-colors">
                 <input
                   id="documents"
                   type="file"
@@ -314,7 +314,7 @@ export function NoticeForm() {
         </Card>
 
         {/* Publishing Options */}
-        <Card className="border-[#8B1538]/20 bg-[#8B1538]/5">
+        <Card className="border-[#006403]/20 bg-[#006403]/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Globe className="w-5 h-5" />
@@ -326,7 +326,7 @@ export function NoticeForm() {
               <p className="text-sm text-gray-700">
                 This notice will be published to the public portal and will be accessible to all citizens. Ensure all information is accurate and approved before publishing.
               </p>
-              <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-[#8B1538]/20">
+              <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-[#006403]/20">
                 <input type="checkbox" id="approvalConfirm" required className="w-4 h-4" />
                 <label htmlFor="approvalConfirm" className="text-sm text-gray-900">
                   I confirm that this notice has been reviewed and approved for public publication

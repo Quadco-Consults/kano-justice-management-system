@@ -80,8 +80,8 @@ export default function NoticesPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-10">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-[#8B1538]/10 rounded-full mb-4">
-              <Bell className="w-8 h-8 text-[#8B1538]" />
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-[#006403]/10 rounded-full mb-4">
+              <Bell className="w-8 h-8 text-[#006403]" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-3">
               Public Notices
@@ -166,7 +166,7 @@ export default function NoticesPage() {
                 )}
 
                 <div className="mt-4">
-                  <button className="text-sm font-medium text-[#8B1538] hover:text-[#6B0F2A] hover:underline">
+                  <button className="text-sm font-medium text-[#006403] hover:text-[#004d02] hover:underline">
                     Read full notice →
                   </button>
                 </div>
@@ -180,7 +180,7 @@ export default function NoticesPage() {
               <button className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                 Previous
               </button>
-              <button className="px-4 py-2 bg-[#8B1538] text-white rounded-lg text-sm font-medium">
+              <button className="px-4 py-2 bg-[#006403] text-white rounded-lg text-sm font-medium">
                 1
               </button>
               <button className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">

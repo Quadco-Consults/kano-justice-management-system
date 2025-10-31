@@ -169,7 +169,7 @@ Despite several demands and notices, the contractor failed to return to site or 
           <div className="flex items-center gap-4 mt-2">
             <p className="text-gray-600">{litigation.nature}</p>
             <span className="text-gray-400">•</span>
-            <p className="text-lg font-semibold text-[#8B1538]">{litigation.claimAmount}</p>
+            <p className="text-lg font-semibold text-[#006403]">{litigation.claimAmount}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -208,7 +208,7 @@ Despite several demands and notices, the contractor failed to return to site or 
                   <div key={index} className="p-3 border border-gray-200 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <User className="w-5 h-5 text-[#8B1538]" />
+                        <User className="w-5 h-5 text-[#006403]" />
                         <div>
                           <p className="font-medium text-gray-900">{party.name}</p>
                           <p className="text-sm text-gray-600">{party.role}</p>
@@ -236,10 +236,10 @@ Despite several demands and notices, the contractor failed to return to site or 
                 {litigation.documents.map((doc, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-colors"
+                    className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#006403] transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-[#8B1538]" />
+                      <FileText className="w-5 h-5 text-[#006403]" />
                       <div>
                         <p className="font-medium text-gray-900">{doc.name}</p>
                         <p className="text-sm text-gray-600">
@@ -264,7 +264,7 @@ Despite several demands and notices, the contractor failed to return to site or 
             <CardContent>
               <div className="space-y-4">
                 {litigation.hearings.map((hearing, index) => (
-                  <div key={index} className="border-l-4 border-[#8B1538] pl-4 py-2">
+                  <div key={index} className="border-l-4 border-[#006403] pl-4 py-2">
                     <div className="flex items-center gap-2 mb-2">
                       <Calendar className="w-4 h-4 text-gray-400" />
                       <p className="font-medium text-gray-900">
@@ -306,7 +306,7 @@ Despite several demands and notices, the contractor failed to return to site or 
                 <div className="pt-3 border-t">
                   <div className="flex items-center justify-between">
                     <p className="font-semibold text-gray-900">Total Costs</p>
-                    <p className="text-lg font-bold text-[#8B1538]">₦30,000</p>
+                    <p className="text-lg font-bold text-[#006403]">₦30,000</p>
                   </div>
                 </div>
               </div>
@@ -324,7 +324,7 @@ Despite several demands and notices, the contractor failed to return to site or 
             <CardContent className="space-y-4">
               <div className="space-y-4">
                 {litigation.notes.map((note) => (
-                  <div key={note.id} className="border-l-4 border-[#8B1538] pl-4 py-2">
+                  <div key={note.id} className="border-l-4 border-[#006403] pl-4 py-2">
                     <div className="flex items-center gap-2 mb-2">
                       <p className="font-medium text-gray-900">{note.user}</p>
                       <span className="text-sm text-gray-500">

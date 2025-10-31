@@ -202,7 +202,7 @@ export default function BillPreviewPage() {
               <div>
                 <div className="flex items-center gap-3 mb-1">
                   <h1 className="text-2xl font-bold text-gray-900">{mockBill.billNo}</h1>
-                  <Badge className="bg-[#8B1538] text-white">
+                  <Badge className="bg-[#006403] text-white">
                     <FileText className="w-3 h-3 mr-1" />
                     Full Preview
                   </Badge>
@@ -231,7 +231,7 @@ export default function BillPreviewPage() {
                   <Badge className={getStatusColor(mockBill.status)}>
                     {mockBill.status.toUpperCase()}
                   </Badge>
-                  <Badge variant="outline" className="border-[#8B1538] text-[#8B1538]">
+                  <Badge variant="outline" className="border-[#006403] text-[#006403]">
                     {mockBill.type}
                   </Badge>
                 </div>
@@ -290,8 +290,8 @@ export default function BillPreviewPage() {
               <ul className="space-y-3">
                 {mockBill.objectives.map((objective, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-[#8B1538]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-xs font-bold text-[#8B1538]">{index + 1}</span>
+                    <div className="w-6 h-6 rounded-full bg-[#006403]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-xs font-bold text-[#006403]">{index + 1}</span>
                     </div>
                     <span className="text-gray-900 leading-relaxed">{objective}</span>
                   </li>
@@ -310,8 +310,8 @@ export default function BillPreviewPage() {
                 {mockBill.sections.map((section, index) => (
                   <div key={section.id} className={index > 0 ? 'pt-8 border-t border-gray-200' : ''}>
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <span className="text-lg font-bold text-[#8B1538]">{section.number}</span>
+                      <div className="w-12 h-12 bg-[#006403]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span className="text-lg font-bold text-[#006403]">{section.number}</span>
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">

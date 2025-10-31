@@ -187,10 +187,10 @@ export function LitigationDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Total Recovered</p>
-                <p className="text-2xl font-bold text-[#8B1538]">{mockDashboardData.overview.totalRecovered}</p>
+                <p className="text-2xl font-bold text-[#006403]">{mockDashboardData.overview.totalRecovered}</p>
                 <p className="text-xs text-gray-500 mt-1">of {mockDashboardData.overview.totalClaimAmount} claimed</p>
               </div>
-              <DollarSign className="w-10 h-10 text-[#8B1538]" />
+              <DollarSign className="w-10 h-10 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -261,7 +261,7 @@ export function LitigationDashboard() {
             <div className="space-y-3">
               {mockDashboardData.byCategory.map((category, index) => (
                 <Link key={index} href={`/civil-litigation/${category.id}`}>
-                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                     <div className="flex items-center justify-between mb-3">
                       <div>
                         <p className="font-semibold text-gray-900">{category.name}</p>
@@ -303,7 +303,7 @@ export function LitigationDashboard() {
             <div className="space-y-3">
               {mockDashboardData.byCourt.map((court, index) => (
                 <Link key={index} href={`/civil-litigation/${court.id}`}>
-                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
                         <Building2 className="w-5 h-5 text-gray-400" />
@@ -344,10 +344,10 @@ export function LitigationDashboard() {
         <CardContent>
           <div className="space-y-3">
             {mockDashboardData.byCounsel.map((counsel, index) => (
-              <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all">
+              <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                    <Users className="w-5 h-5 text-[#8B1538]" />
+                  <div className="w-10 h-10 bg-[#006403]/10 rounded-full flex items-center justify-center">
+                    <Users className="w-5 h-5 text-[#006403]" />
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">{counsel.name}</p>
@@ -360,7 +360,7 @@ export function LitigationDashboard() {
                     <p className="text-xs text-gray-600">Won</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-[#8B1538]">{counsel.success}%</p>
+                    <p className="text-2xl font-bold text-[#006403]">{counsel.success}%</p>
                     <p className="text-xs text-gray-600">Success Rate</p>
                   </div>
                 </div>
@@ -385,7 +385,7 @@ export function LitigationDashboard() {
             <div className="space-y-3">
               {mockDashboardData.upcomingHearings.map((hearing, index) => (
                 <Link key={index} href={`/civil-litigation/${hearing.suitNo}`}>
-                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                     <div className="flex items-center justify-between mb-2">
                       <Badge variant="outline">{hearing.suitNo}</Badge>
                       <div className="flex items-center gap-1 text-sm text-gray-600">
@@ -419,7 +419,7 @@ export function LitigationDashboard() {
             <div className="space-y-3">
               {mockDashboardData.criticalCases.map((caseItem, index) => (
                 <Link key={index} href={`/civil-litigation/${caseItem.suitNo}`}>
-                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                     <div className="flex items-center justify-between mb-2">
                       <Badge variant="outline">{caseItem.suitNo}</Badge>
                       <Badge className="bg-red-100 text-red-800">
@@ -434,7 +434,7 @@ export function LitigationDashboard() {
                       </div>
                       <div>
                         <p className="text-gray-600">Claim</p>
-                        <p className="font-medium text-[#8B1538]">{caseItem.claimAmount}</p>
+                        <p className="font-medium text-[#006403]">{caseItem.claimAmount}</p>
                       </div>
                       <div>
                         <p className="text-gray-600">Next Date</p>
@@ -462,7 +462,7 @@ export function LitigationDashboard() {
               <div className="space-y-3">
                 {mockDashboardData.allCases.map((caseItem, index) => (
                   <Link key={index} href={`/civil-litigation/${caseItem.suitNo}`}>
-                    <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                    <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                       <div className="flex items-center justify-between mb-3">
                         <div>
                           <div className="flex items-center gap-2 mb-1">
@@ -489,7 +489,7 @@ export function LitigationDashboard() {
                           <p className="text-sm text-gray-600">{caseItem.category}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-lg font-bold text-[#8B1538]">{caseItem.claimAmount}</p>
+                          <p className="text-lg font-bold text-[#006403]">{caseItem.claimAmount}</p>
                           <p className="text-xs text-gray-500">Claim Amount</p>
                         </div>
                       </div>

@@ -120,9 +120,9 @@ export function UsersList() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Pending Requests</p>
-                <p className="text-2xl font-bold text-[#8B1538]">3</p>
+                <p className="text-2xl font-bold text-[#006403]">3</p>
               </div>
-              <Mail className="w-8 h-8 text-[#8B1538]" />
+              <Mail className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -160,11 +160,11 @@ export function UsersList() {
             {mockUsers.map((user) => (
               <div
                 key={user.id}
-                className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all"
+                className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all"
               >
                 <div className="flex items-center gap-4 flex-1">
-                  <div className="w-12 h-12 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                    <span className="text-lg font-semibold text-[#8B1538]">
+                  <div className="w-12 h-12 bg-[#006403]/10 rounded-full flex items-center justify-center">
+                    <span className="text-lg font-semibold text-[#006403]">
                       {user.firstName[0]}{user.lastName[0]}
                     </span>
                   </div>

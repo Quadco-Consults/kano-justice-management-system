@@ -244,9 +244,9 @@ export function NoticeDetail({ id }: NoticeDetailProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Public Comments</p>
-                <p className="text-2xl font-bold text-[#8B1538]">{notice.publicComments.length}</p>
+                <p className="text-2xl font-bold text-[#006403]">{notice.publicComments.length}</p>
               </div>
-              <Mail className="w-8 h-8 text-[#8B1538]" />
+              <Mail className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -314,7 +314,7 @@ export function NoticeDetail({ id }: NoticeDetailProps) {
                     {notice.attachments.map((attachment) => (
                       <div
                         key={attachment.id}
-                        className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                        className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                       >
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -420,9 +420,9 @@ export function NoticeDetail({ id }: NoticeDetailProps) {
                 <div className="space-y-3">
                   {notice.relatedNotices.map((related) => (
                     <Link key={related.id} href={`/public-notices/${related.id}`}>
-                      <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-colors">
+                      <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#006403] transition-colors">
                         <div className="flex items-center gap-3">
-                          <Globe className="w-5 h-5 text-[#8B1538]" />
+                          <Globe className="w-5 h-5 text-[#006403]" />
                           <div>
                             <p className="font-medium text-gray-900">{related.noticeNo}</p>
                             <p className="text-sm text-gray-600">{related.title}</p>

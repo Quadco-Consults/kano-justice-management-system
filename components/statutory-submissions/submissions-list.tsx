@@ -134,12 +134,12 @@ export function SubmissionsList() {
               <Button
                 variant="outline"
                 onClick={() => setShowFilters(!showFilters)}
-                className={hasActiveFilters ? "border-[#8B1538] text-[#8B1538]" : ""}
+                className={hasActiveFilters ? "border-[#006403] text-[#006403]" : ""}
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Filters
                 {hasActiveFilters && (
-                  <Badge className="ml-2 bg-[#8B1538] text-white">
+                  <Badge className="ml-2 bg-[#006403] text-white">
                     {Object.values(filters).filter(v => v !== "").length}
                   </Badge>
                 )}
@@ -293,9 +293,9 @@ export function SubmissionsList() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">On-Time Rate</p>
-                <p className="text-2xl font-bold text-[#8B1538]">97%</p>
+                <p className="text-2xl font-bold text-[#006403]">97%</p>
               </div>
-              <ClipboardList className="w-8 h-8 text-[#8B1538]" />
+              <ClipboardList className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -310,7 +310,7 @@ export function SubmissionsList() {
           <div className="space-y-4">
             {mockSubmissions.map((submission) => (
               <Link key={submission.id} href={`/statutory-submissions/${submission.id}`}>
-                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">

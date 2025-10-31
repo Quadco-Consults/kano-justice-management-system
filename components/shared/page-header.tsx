@@ -57,8 +57,8 @@ export function PageHeader({
         <div className="flex-1">
           <div className="flex items-center gap-3">
             {Icon && (
-              <div className="flex-shrink-0 w-10 h-10 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-                <Icon className="w-5 h-5 text-[#8B1538]" />
+              <div className="flex-shrink-0 w-10 h-10 bg-[#006403]/10 rounded-lg flex items-center justify-center">
+                <Icon className="w-5 h-5 text-[#006403]" />
               </div>
             )}
             <div>

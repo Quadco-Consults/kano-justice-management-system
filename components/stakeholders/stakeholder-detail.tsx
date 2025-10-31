@@ -289,11 +289,11 @@ export function StakeholderDetail({ id }: StakeholderDetailProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Active Requests</p>
-                <p className="text-2xl font-bold text-[#8B1538]">
+                <p className="text-2xl font-bold text-[#006403]">
                   {mockStakeholder.engagement.activeRequests}
                 </p>
               </div>
-              <Activity className="w-8 h-8 text-[#8B1538]" />
+              <Activity className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -469,9 +469,9 @@ export function StakeholderDetail({ id }: StakeholderDetailProps) {
                   <p className="text-sm text-blue-600 mb-2">Advisory Requests</p>
                   <p className="text-3xl font-bold text-blue-900">{mockStakeholder.statistics.advisoryRequests}</p>
                 </div>
-                <div className="text-center p-4 bg-[#8B1538]/10 rounded-lg">
-                  <p className="text-sm text-[#8B1538] mb-2">Litigation Cases</p>
-                  <p className="text-3xl font-bold text-[#8B1538]">{mockStakeholder.statistics.litigationCases}</p>
+                <div className="text-center p-4 bg-[#006403]/10 rounded-lg">
+                  <p className="text-sm text-[#006403] mb-2">Litigation Cases</p>
+                  <p className="text-3xl font-bold text-[#006403]">{mockStakeholder.statistics.litigationCases}</p>
                 </div>
                 <div className="text-center p-4 bg-green-50 rounded-lg">
                   <p className="text-sm text-green-600 mb-2">Legislative Drafting</p>
@@ -493,7 +493,7 @@ export function StakeholderDetail({ id }: StakeholderDetailProps) {
                 {mockStakeholder.activeRequests.map((request) => (
                   <div
                     key={request.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
@@ -544,7 +544,7 @@ export function StakeholderDetail({ id }: StakeholderDetailProps) {
               <div className="space-y-3">
                 {mockStakeholder.correspondences.map((correspondence) => (
                   <Link key={correspondence.id} href={`/correspondences/${correspondence.id}`}>
-                    <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                    <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
@@ -622,8 +622,8 @@ export function StakeholderDetail({ id }: StakeholderDetailProps) {
                 {mockStakeholder.recentInteractions.map((interaction, index) => (
                   <div key={interaction.id} className="flex gap-4">
                     <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                        <MessageSquare className="w-5 h-5 text-[#8B1538]" />
+                      <div className="w-10 h-10 bg-[#006403]/10 rounded-full flex items-center justify-center">
+                        <MessageSquare className="w-5 h-5 text-[#006403]" />
                       </div>
                       {index < mockStakeholder.recentInteractions.length - 1 && (
                         <div className="w-0.5 h-12 bg-gray-200 my-1" />
@@ -659,7 +659,7 @@ export function StakeholderDetail({ id }: StakeholderDetailProps) {
                 {mockStakeholder.documents.map((doc) => (
                   <div
                     key={doc.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">

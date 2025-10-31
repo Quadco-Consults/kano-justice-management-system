@@ -190,7 +190,7 @@ export function MessagesTab() {
                 onClick={() => setSelectedConversation(conversation)}
                 className={`p-3 rounded-lg cursor-pointer transition-all ${
                   selectedConversation.id === conversation.id
-                    ? 'bg-[#8B1538]/10 border-l-4 border-[#8B1538]'
+                    ? 'bg-[#006403]/10 border-l-4 border-[#006403]'
                     : 'hover:bg-gray-50 border-l-4 border-transparent'
                 }`}
               >
@@ -202,7 +202,7 @@ export function MessagesTab() {
                     </p>
                   </div>
                   {conversation.unread > 0 && (
-                    <Badge className="bg-[#8B1538] text-white text-xs">
+                    <Badge className="bg-[#006403] text-white text-xs">
                       {conversation.unread}
                     </Badge>
                   )}
@@ -228,7 +228,7 @@ export function MessagesTab() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="flex items-center gap-2">
-                <Building2 className="w-5 h-5 text-[#8B1538]" />
+                <Building2 className="w-5 h-5 text-[#006403]" />
                 {selectedConversation.stakeholder}
               </CardTitle>
               <p className="text-sm text-gray-600 mt-1">

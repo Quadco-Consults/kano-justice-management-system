@@ -54,7 +54,7 @@ export function PriorityIndicator({
           "inline-flex items-center justify-center",
           priority === "low" && "text-gray-500",
           priority === "medium" && "text-[#E67E22]",
-          priority === "high" && "text-[#8B1538]",
+          priority === "high" && "text-[#006403]",
           priority === "urgent" && "text-red-600",
           className
         )}

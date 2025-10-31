@@ -133,8 +133,8 @@ export function UserDetail() {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                <span className="text-xl font-semibold text-[#8B1538]">
+              <div className="w-12 h-12 bg-[#006403]/10 rounded-full flex items-center justify-center">
+                <span className="text-xl font-semibold text-[#006403]">
                   {mockUser.firstName[0]}{mockUser.lastName[0]}
                 </span>
               </div>
@@ -172,11 +172,11 @@ export function UserDetail() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Active Cases</p>
-                <p className="text-2xl font-bold text-[#8B1538]">
+                <p className="text-2xl font-bold text-[#006403]">
                   {mockUser.assignments.length}
                 </p>
               </div>
-              <FileText className="w-8 h-8 text-[#8B1538]" />
+              <FileText className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -297,7 +297,7 @@ export function UserDetail() {
                 {mockUser.assignments.map((assignment) => (
                   <div
                     key={assignment.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
@@ -341,8 +341,8 @@ export function UserDetail() {
                     key={activity.id}
                     className="flex items-start gap-4 pb-4 border-b border-gray-200 last:border-0"
                   >
-                    <div className="w-10 h-10 bg-[#8B1538]/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Activity className="w-5 h-5 text-[#8B1538]" />
+                    <div className="w-10 h-10 bg-[#006403]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Activity className="w-5 h-5 text-[#006403]" />
                     </div>
                     <div className="flex-1">
                       <p className="font-medium text-gray-900">{activity.action}</p>
@@ -371,7 +371,7 @@ export function UserDetail() {
                     key={index}
                     className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
                   >
-                    <Shield className="w-4 h-4 text-[#8B1538]" />
+                    <Shield className="w-4 h-4 text-[#006403]" />
                     <span className="text-sm text-gray-900">{permission}</span>
                   </div>
                 ))}

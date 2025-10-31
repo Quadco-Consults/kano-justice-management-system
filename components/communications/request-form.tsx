@@ -216,7 +216,7 @@ export function RequestForm() {
             {/* Attachments */}
             <div className="space-y-2">
               <Label htmlFor="attachments">Attachments</Label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#8B1538] transition-colors cursor-pointer">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#006403] transition-colors cursor-pointer">
                 <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                 <p className="text-sm text-gray-600 mb-1">
                   Click to upload or drag and drop

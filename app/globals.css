@@ -4,10 +4,10 @@
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Bayscom Brand Colors */
-  --bayscom-burgundy: #8B1538;
-  --bayscom-burgundy-dark: #6B0F2A;
-  --bayscom-burgundy-light: #A01843;
+  /* Kano State Brand Colors */
+  --kano-green: #006403;
+  --kano-green-dark: #004d02;
+  --kano-green-light: #007d04;
   --bayscom-orange: #E67E22;
   --bayscom-orange-dark: #D35400;
   --bayscom-orange-light: #F39C12;
@@ -21,10 +21,10 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Bayscom Brand Colors */
-  --color-primary: var(--bayscom-burgundy);
-  --color-primary-dark: var(--bayscom-burgundy-dark);
-  --color-primary-light: var(--bayscom-burgundy-light);
+  /* Kano State Brand Colors */
+  --color-primary: var(--kano-green);
+  --color-primary-dark: var(--kano-green-dark);
+  --color-primary-light: var(--kano-green-light);
   --color-accent: var(--bayscom-orange);
   --color-accent-dark: var(--bayscom-orange-dark);
   --color-accent-light: var(--bayscom-orange-light);

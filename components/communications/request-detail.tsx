@@ -335,7 +335,7 @@ export function RequestDetail({ id }: RequestDetailProps) {
             {mockRequest.attachments.map((attachment) => (
               <div
                 key={attachment.id}
-                className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">

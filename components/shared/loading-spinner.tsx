@@ -22,7 +22,7 @@ export function LoadingSpinner({
 }: LoadingSpinnerProps) {
   const spinner = (
     <div className={cn("flex flex-col items-center justify-center gap-2", className)}>
-      <Loader2 className={cn("animate-spin text-[#8B1538]", sizeClasses[size])} />
+      <Loader2 className={cn("animate-spin text-[#006403]", sizeClasses[size])} />
       {text && <p className="text-sm text-gray-600">{text}</p>}
     </div>
   )

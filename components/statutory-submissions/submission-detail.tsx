@@ -260,11 +260,11 @@ export function SubmissionDetail({ id }: SubmissionDetailProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Days Until Due</p>
-                <p className={`text-2xl font-bold ${daysUntilDue <= 7 ? 'text-red-600' : 'text-[#8B1538]'}`}>
+                <p className={`text-2xl font-bold ${daysUntilDue <= 7 ? 'text-red-600' : 'text-[#006403]'}`}>
                   {daysUntilDue}
                 </p>
               </div>
-              <Clock className={`w-8 h-8 ${daysUntilDue <= 7 ? 'text-red-400' : 'text-[#8B1538]'}`} />
+              <Clock className={`w-8 h-8 ${daysUntilDue <= 7 ? 'text-red-400' : 'text-[#006403]'}`} />
             </div>
           </CardContent>
         </Card>
@@ -375,7 +375,7 @@ export function SubmissionDetail({ id }: SubmissionDetailProps) {
               <ul className="space-y-2">
                 {mockSubmission.requirements.map((req, index) => (
                   <li key={index} className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-[#8B1538] flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-[#006403] flex-shrink-0 mt-0.5" />
                     <span className="text-gray-900">{req}</span>
                   </li>
                 ))}
@@ -411,7 +411,7 @@ export function SubmissionDetail({ id }: SubmissionDetailProps) {
                 {mockSubmission.sections.map((section) => (
                   <div
                     key={section.id}
-                    className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-3">
@@ -432,7 +432,7 @@ export function SubmissionDetail({ id }: SubmissionDetailProps) {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
                       <div
-                        className="bg-[#8B1538] h-2 rounded-full transition-all"
+                        className="bg-[#006403] h-2 rounded-full transition-all"
                         style={{ width: `${section.progress}%` }}
                       />
                     </div>
@@ -495,7 +495,7 @@ export function SubmissionDetail({ id }: SubmissionDetailProps) {
                 {mockSubmission.documents.map((doc) => (
                   <div
                     key={doc.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">

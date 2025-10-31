@@ -137,7 +137,7 @@ export function LoginForm() {
 
         <Link
           href="/auth/forgot-password"
-          className="text-sm font-medium text-[#8B1538] hover:text-[#6B0F2A]"
+          className="text-sm font-medium text-[#006403] hover:text-[#004d02]"
         >
           Forgot password?
         </Link>
@@ -172,7 +172,7 @@ export function LoginForm() {
           Don't have an account?{" "}
           <Link
             href="/auth/signup"
-            className="font-medium text-[#8B1538] hover:text-[#6B0F2A]"
+            className="font-medium text-[#006403] hover:text-[#004d02]"
           >
             Request Access
           </Link>

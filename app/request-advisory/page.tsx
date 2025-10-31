@@ -12,8 +12,8 @@ export default function RequestAdvisoryPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-10">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-[#8B1538]/10 rounded-full mb-4">
-              <Scale className="w-8 h-8 text-[#8B1538]" />
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-[#006403]/10 rounded-full mb-4">
+              <Scale className="w-8 h-8 text-[#006403]" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-3">
               Request Legal Advisory
@@ -32,7 +32,7 @@ export default function RequestAdvisoryPage() {
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-600">
               Need help? Contact us at{" "}
-              <a href="mailto:advisory@justice.kano.gov.ng" className="text-[#8B1538] hover:underline">
+              <a href="mailto:advisory@justice.kano.gov.ng" className="text-[#006403] hover:underline">
                 advisory@justice.kano.gov.ng
               </a>
             </p>

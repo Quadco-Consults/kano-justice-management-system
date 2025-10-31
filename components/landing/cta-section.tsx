@@ -8,7 +8,7 @@ export function CTASection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12">
           {/* CTA Card */}
-          <div className="bg-gradient-to-br from-[#8B1538] to-[#6B0F2A] rounded-2xl p-8 lg:p-12 text-white">
+          <div className="bg-gradient-to-br from-[#006403] to-[#004d02] rounded-2xl p-8 lg:p-12 text-white">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">
               Ready to Get Started?
             </h2>
@@ -17,7 +17,7 @@ export function CTASection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/request-advisory">
-                <Button size="lg" className="w-full sm:w-auto bg-white text-[#8B1538] hover:bg-gray-100">
+                <Button size="lg" className="w-full sm:w-auto bg-white text-[#006403] hover:bg-gray-100">
                   Request Advisory
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
@@ -38,8 +38,8 @@ export function CTASection() {
 
             <div className="space-y-4">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-[#8B1538]" />
+                <div className="w-12 h-12 bg-[#006403]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-[#006403]" />
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900 mb-1">Address</div>
@@ -52,8 +52,8 @@ export function CTASection() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5 text-[#8B1538]" />
+                <div className="w-12 h-12 bg-[#006403]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 text-[#006403]" />
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900 mb-1">Phone</div>
@@ -64,8 +64,8 @@ export function CTASection() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-[#8B1538]" />
+                <div className="w-12 h-12 bg-[#006403]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-[#006403]" />
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900 mb-1">Email</div>

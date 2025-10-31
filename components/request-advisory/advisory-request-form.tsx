@@ -78,7 +78,7 @@ export function AdvisoryRequestForm() {
 
             <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-6 max-w-md mx-auto">
               <p className="text-sm text-gray-600 mb-2">Your Tracking Number</p>
-              <p className="text-3xl font-bold text-[#8B1538]">{trackingNumber}</p>
+              <p className="text-3xl font-bold text-[#006403]">{trackingNumber}</p>
               <p className="text-xs text-gray-500 mt-2">Please save this number for future reference</p>
             </div>
           </div>
@@ -87,19 +87,19 @@ export function AdvisoryRequestForm() {
             <h4 className="font-semibold text-gray-900 mb-3">What happens next?</h4>
             <ul className="space-y-3 text-sm text-gray-600 text-left">
               <li className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-6 h-6 bg-[#8B1538] text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                <span className="flex-shrink-0 w-6 h-6 bg-[#006403] text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
                 <span>Your request will be reviewed and assigned to a legal officer</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-6 h-6 bg-[#8B1538] text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                <span className="flex-shrink-0 w-6 h-6 bg-[#006403] text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
                 <span>You'll receive an email confirmation with your tracking number</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-6 h-6 bg-[#8B1538] text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                <span className="flex-shrink-0 w-6 h-6 bg-[#006403] text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
                 <span>We'll notify you of any status updates or if additional information is needed</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-6 h-6 bg-[#8B1538] text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
+                <span className="flex-shrink-0 w-6 h-6 bg-[#006403] text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
                 <span>You'll receive the legal opinion once completed</span>
               </li>
             </ul>
@@ -304,7 +304,7 @@ export function AdvisoryRequestForm() {
         {/* File Upload */}
         <div className="space-y-2">
           <Label htmlFor="documents">Supporting Documents</Label>
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#8B1538] transition-colors">
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#006403] transition-colors">
             <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
             <p className="text-sm text-gray-600 mb-1">
               Click to upload or drag and drop

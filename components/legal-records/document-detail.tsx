@@ -383,10 +383,10 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
                     <a
                       key={index}
                       href={caseItem.link}
-                      className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-colors"
+                      className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#006403] transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5 text-[#8B1538]" />
+                        <FileText className="w-5 h-5 text-[#006403]" />
                         <div>
                           <p className="font-medium text-gray-900">{caseItem.caseNo}</p>
                           <p className="text-sm text-gray-600">{caseItem.title}</p>
@@ -458,7 +458,7 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
                               <p className="text-xs text-gray-500">{search.timestamp}</p>
                             </div>
                             <p className="text-sm text-gray-600">
-                              Searched for: <span className="font-medium text-[#8B1538]">"{search.query}"</span>
+                              Searched for: <span className="font-medium text-[#006403]">"{search.query}"</span>
                             </p>
                           </div>
                         </div>
@@ -587,7 +587,7 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
                           {/* File Upload */}
                           <div className="space-y-2">
                             <Label>Upload New File *</Label>
-                            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-[#8B1538] transition-colors">
+                            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-[#006403] transition-colors">
                               <input
                                 id="version-file"
                                 type="file"
@@ -669,7 +669,7 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
                             <div className="flex items-center gap-2 mb-1">
                               <p className="font-medium text-gray-900">Version {version.version}</p>
                               {index === 0 && (
-                                <Badge className="bg-[#8B1538] text-white">Current</Badge>
+                                <Badge className="bg-[#006403] text-white">Current</Badge>
                               )}
                             </div>
                             <p className="text-sm text-gray-600">{version.changes}</p>

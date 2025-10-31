@@ -178,13 +178,13 @@ export function NotificationsList() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Today</p>
-                <p className="text-2xl font-bold text-[#8B1538]">
+                <p className="text-2xl font-bold text-[#006403]">
                   {notifications.filter(n =>
                     new Date(n.timestamp).toDateString() === new Date().toDateString()
                   ).length}
                 </p>
               </div>
-              <Calendar className="w-8 h-8 text-[#8B1538]" />
+              <Calendar className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -225,7 +225,7 @@ export function NotificationsList() {
                 className={`p-4 border rounded-lg transition-all ${
                   notification.read
                     ? 'border-gray-200 bg-white'
-                    : 'border-[#8B1538] bg-red-50'
+                    : 'border-[#006403] bg-red-50'
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">

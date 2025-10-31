@@ -376,7 +376,7 @@ Following a tip-off, the accused was arrested on September 16, 2025, in possessi
                 {caseData.victims.map((victim, index) => (
                   <div key={index} className="p-3 border border-gray-200 rounded-lg">
                     <div className="flex items-center gap-3 mb-2">
-                      <UserCircle className="w-5 h-5 text-[#8B1538]" />
+                      <UserCircle className="w-5 h-5 text-[#006403]" />
                       <div>
                         <p className="font-medium text-gray-900">{victim.name}</p>
                         <p className="text-sm text-gray-600">{victim.type}</p>
@@ -418,10 +418,10 @@ Following a tip-off, the accused was arrested on September 16, 2025, in possessi
                     {caseData.evidence.map((item, index) => (
                       <div
                         key={index}
-                        className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-colors"
+                        className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#006403] transition-colors"
                       >
                         <div className="flex items-center gap-3">
-                          <FileText className="w-5 h-5 text-[#8B1538]" />
+                          <FileText className="w-5 h-5 text-[#006403]" />
                           <div>
                             <p className="font-medium text-gray-900">{item.name}</p>
                             <p className="text-sm text-gray-600">
@@ -448,7 +448,7 @@ Following a tip-off, the accused was arrested on September 16, 2025, in possessi
                   </div>
                   <div className="space-y-4">
                     {caseData.hearings.map((hearing, index) => (
-                      <div key={index} className="border-l-4 border-[#8B1538] pl-4 py-2">
+                      <div key={index} className="border-l-4 border-[#006403] pl-4 py-2">
                         <div className="flex items-center gap-2 mb-2">
                           <Calendar className="w-4 h-4 text-gray-400" />
                           <p className="font-medium text-gray-900">
@@ -470,7 +470,7 @@ Following a tip-off, the accused was arrested on September 16, 2025, in possessi
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Case Notes</h3>
                   <div className="space-y-4">
                     {caseData.notes.map((noteItem) => (
-                      <div key={noteItem.id} className="border-l-4 border-[#8B1538] pl-4 py-2">
+                      <div key={noteItem.id} className="border-l-4 border-[#006403] pl-4 py-2">
                         <div className="flex items-center gap-2 mb-2">
                           <p className="font-medium text-gray-900">{noteItem.user}</p>
                           <span className="text-sm text-gray-500">
@@ -524,8 +524,8 @@ Following a tip-off, the accused was arrested on September 16, 2025, in possessi
                         <p className="text-xs text-gray-500 mt-1">2025-10-05 03:45 PM</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 border-l-4 border-[#8B1538] bg-red-50 rounded">
-                      <FileText className="w-5 h-5 text-[#8B1538] mt-0.5" />
+                    <div className="flex items-start gap-3 p-3 border-l-4 border-[#006403] bg-red-50 rounded">
+                      <FileText className="w-5 h-5 text-[#006403] mt-0.5" />
                       <div>
                         <p className="font-medium text-gray-900">Case Filed</p>
                         <p className="text-sm text-gray-600">Case filed at High Court 1, Kano</p>

@@ -30,7 +30,7 @@ export function Timeline({ items, className }: TimelineProps) {
             {item.status === "completed" ? (
               <CheckCircle className="w-6 h-6 text-green-600 fill-green-50" />
             ) : item.status === "current" ? (
-              <Circle className="w-6 h-6 text-[#8B1538] fill-[#8B1538]" />
+              <Circle className="w-6 h-6 text-[#006403] fill-[#006403]" />
             ) : (
               <Circle className="w-6 h-6 text-gray-300" />
             )}

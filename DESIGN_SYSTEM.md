@@ -9,8 +9,8 @@ This design system provides guidelines for building consistent, accessible, and 
 
 ### Primary Colors
 ```css
-Primary (Burgundy):     #8B1538  /* Main brand color - buttons, links, emphasis */
-Primary Dark:           #6B0F2A  /* Hover states, active elements */
+Primary (Burgundy):     #006403  /* Main brand color - buttons, links, emphasis */
+Primary Dark:           #004d02  /* Hover states, active elements */
 Primary Light:          #A31D45  /* Lighter variant for backgrounds */
 Primary Subtle:         rgba(139, 21, 56, 0.1)  /* Subtle backgrounds */
 ```
@@ -546,7 +546,7 @@ Maintain WCAG 2.1 Level AA:
 ### 2. Focus Indicators
 Always visible:
 ```tsx
-focus:ring-2 focus:ring-[#8B1538] focus:ring-offset-2
+focus:ring-2 focus:ring-[#006403] focus:ring-offset-2
 ```
 
 ### 3. ARIA Labels

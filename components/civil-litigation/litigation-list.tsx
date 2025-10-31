@@ -168,9 +168,9 @@ export function LitigationList() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Success Rate</p>
-                <p className="text-2xl font-bold text-[#8B1538]">71%</p>
+                <p className="text-2xl font-bold text-[#006403]">71%</p>
               </div>
-              <Scale className="w-8 h-8 text-[#8B1538]" />
+              <Scale className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -185,7 +185,7 @@ export function LitigationList() {
           <div className="space-y-4">
             {mockCases.map((caseItem) => (
               <Link key={caseItem.id} href={`/civil-litigation/${caseItem.id}`}>
-                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">

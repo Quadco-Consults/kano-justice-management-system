@@ -47,8 +47,8 @@ export function StatCard({
             )}
           </div>
           <div className="flex-shrink-0">
-            <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-              <Icon className="w-6 h-6 text-[#8B1538]" />
+            <div className="w-12 h-12 bg-[#006403]/10 rounded-lg flex items-center justify-center">
+              <Icon className="w-6 h-6 text-[#006403]" />
             </div>
           </div>
         </div>

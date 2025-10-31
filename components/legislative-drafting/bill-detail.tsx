@@ -484,11 +484,11 @@ export function BillDetail() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-900">In Review</p>
-                <p className="text-2xl font-bold text-[#8B1538]">
+                <p className="text-2xl font-bold text-[#006403]">
                   {mockBill.sections.filter(s => s.status === 'in-review').length}
                 </p>
               </div>
-              <AlertCircle className="w-8 h-8 text-[#8B1538]" />
+              <AlertCircle className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -591,7 +591,7 @@ export function BillDetail() {
               <ul className="space-y-2">
                 {mockBill.objectives.map((objective, index) => (
                   <li key={index} className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-[#8B1538] flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-[#006403] flex-shrink-0 mt-0.5" />
                     <span className="text-gray-900">{objective}</span>
                   </li>
                 ))}
@@ -615,12 +615,12 @@ export function BillDetail() {
                   return (
                     <div
                       key={section.id}
-                      className="border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                      className="border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                     >
                       <div className="flex items-center justify-between p-4">
                         <div className="flex items-center gap-4 flex-1">
-                          <div className="w-10 h-10 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-                            <span className="font-bold text-[#8B1538]">{section.number}</span>
+                          <div className="w-10 h-10 bg-[#006403]/10 rounded-lg flex items-center justify-center">
+                            <span className="font-bold text-[#006403]">{section.number}</span>
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-3 mb-1">
@@ -837,7 +837,7 @@ export function BillDetail() {
                   <div
                     key={version.id}
                     className={`p-4 border rounded-lg ${
-                      version.isCurrent ? 'border-[#8B1538] bg-[#8B1538]/5' : 'border-gray-200'
+                      version.isCurrent ? 'border-[#006403] bg-[#006403]/5' : 'border-gray-200'
                     }`}
                   >
                     <div className="flex items-start justify-between mb-3">
@@ -849,7 +849,7 @@ export function BillDetail() {
                           <div className="flex items-center gap-2 mb-1">
                             <p className="font-bold text-gray-900">Version {version.version}</p>
                             {version.isCurrent && (
-                              <Badge className="bg-[#8B1538] text-white">Current</Badge>
+                              <Badge className="bg-[#006403] text-white">Current</Badge>
                             )}
                           </div>
                           <p className="text-sm text-gray-900">
@@ -1135,11 +1135,11 @@ export function BillDetail() {
                   <div key={item.id} className="flex gap-4">
                     <div className="flex flex-col items-center">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        item.type === 'milestone' ? 'bg-[#8B1538]/10' :
+                        item.type === 'milestone' ? 'bg-[#006403]/10' :
                         item.type === 'progress' ? 'bg-green-100' :
                         'bg-blue-100'
                       }`}>
-                        {item.type === 'milestone' ? <CheckCircle className="w-5 h-5 text-[#8B1538]" /> :
+                        {item.type === 'milestone' ? <CheckCircle className="w-5 h-5 text-[#006403]" /> :
                          item.type === 'progress' ? <FileText className="w-5 h-5 text-green-600" /> :
                          <Users className="w-5 h-5 text-blue-600" />}
                       </div>
@@ -1172,8 +1172,8 @@ export function BillDetail() {
               {mockBill.comments.map((comment) => (
                 <div key={comment.id} className="p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-start gap-3 mb-2">
-                    <div className="w-10 h-10 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                      <User className="w-5 h-5 text-[#8B1538]" />
+                    <div className="w-10 h-10 bg-[#006403]/10 rounded-full flex items-center justify-center">
+                      <User className="w-5 h-5 text-[#006403]" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
@@ -1203,7 +1203,7 @@ export function BillDetail() {
                 {mockBill.documents.map((doc) => (
                   <div
                     key={doc.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">

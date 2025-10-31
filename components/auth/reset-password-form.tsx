@@ -238,7 +238,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           Remember your password?{" "}
           <Link
             href="/auth/login"
-            className="font-medium text-[#8B1538] hover:text-[#6B0F2A]"
+            className="font-medium text-[#006403] hover:text-[#004d02]"
           >
             Sign In
           </Link>

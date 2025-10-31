@@ -142,11 +142,11 @@ export function RoleDetail() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Active Permissions</p>
-                <p className="text-2xl font-bold text-[#8B1538]">
+                <p className="text-2xl font-bold text-[#006403]">
                   {Object.values(mockRole.permissions).flat().filter(p => p.enabled).length}
                 </p>
               </div>
-              <Shield className="w-8 h-8 text-[#8B1538]" />
+              <Shield className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -217,7 +217,7 @@ export function RoleDetail() {
                   {permissions.map((permission) => (
                     <div
                       key={permission.id}
-                      className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                      className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                     >
                       <div className="flex items-center gap-3">
                         <Checkbox
@@ -259,11 +259,11 @@ export function RoleDetail() {
                 {mockRole.users.map((user) => (
                   <div
                     key={user.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                        <User className="w-6 h-6 text-[#8B1538]" />
+                      <div className="w-12 h-12 bg-[#006403]/10 rounded-full flex items-center justify-center">
+                        <User className="w-6 h-6 text-[#006403]" />
                       </div>
                       <div>
                         <div className="flex items-center gap-3 mb-1">

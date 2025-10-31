@@ -11,7 +11,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
   return (
     <div className="flex min-h-screen">
       {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-[#8B1538] to-[#6B0F2A]">
+      <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-[#006403] to-[#004d02]">
         {/* Background Image - Using unsplash justice/courthouse image */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20"
@@ -43,8 +43,15 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
         <div className="relative z-20 flex flex-col justify-between p-12 text-white">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center">
-              <Scale className="h-10 w-10 text-white" />
+            <div className="relative">
+              <Image
+                src="/images/Seal_of_Kano.png"
+                alt="Kano State Logo"
+                width={64}
+                height={64}
+                className="object-contain"
+                style={{ height: '64px', width: 'auto' }}
+              />
             </div>
             <div>
               <h1 className="text-2xl font-bold">Kano State</h1>
@@ -112,8 +119,15 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
           {/* Mobile Logo */}
           <div className="lg:hidden text-center">
             <div className="inline-flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-                <Scale className="h-8 w-8 text-[#8B1538]" />
+              <div className="relative">
+                <Image
+                  src="/images/Seal_of_Kano.png"
+                  alt="Kano State Logo"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                  style={{ height: '48px', width: 'auto' }}
+                />
               </div>
               <div className="text-left">
                 <h1 className="text-xl font-bold text-gray-900">Kano State</h1>

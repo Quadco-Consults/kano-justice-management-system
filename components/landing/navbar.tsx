@@ -9,8 +9,8 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-              <Scale className="h-6 w-6 text-[#8B1538]" />
+            <div className="w-10 h-10 bg-[#006403]/10 rounded-lg flex items-center justify-center">
+              <Scale className="h-6 w-6 text-[#006403]" />
             </div>
             <div className="hidden sm:block">
               <div className="text-sm font-bold text-gray-900">Kano State</div>
@@ -20,13 +20,13 @@ export function Navbar() {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-gray-700 hover:text-[#8B1538] font-medium">
+            <Link href="/" className="text-gray-700 hover:text-[#006403] font-medium">
               Home
             </Link>
-            <Link href="/request-advisory" className="text-gray-700 hover:text-[#8B1538] font-medium">
+            <Link href="/request-advisory" className="text-gray-700 hover:text-[#006403] font-medium">
               Request Advisory
             </Link>
-            <Link href="/notices" className="text-gray-700 hover:text-[#8B1538] font-medium">
+            <Link href="/notices" className="text-gray-700 hover:text-[#006403] font-medium">
               Public Notices
             </Link>
           </div>

@@ -77,15 +77,15 @@ export function SignupForm() {
             <h3 className="text-lg font-semibold text-gray-900">What happens next?</h3>
             <ul className="mt-4 space-y-2 text-sm text-gray-600 text-left max-w-sm mx-auto">
               <li className="flex items-start gap-2">
-                <span className="text-[#8B1538]">1.</span>
+                <span className="text-[#006403]">1.</span>
                 <span>Your request will be reviewed by the system administrator</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#8B1538]">2.</span>
+                <span className="text-[#006403]">2.</span>
                 <span>You'll receive an email with your login credentials</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#8B1538]">3.</span>
+                <span className="text-[#006403]">3.</span>
                 <span>Use the credentials to access the system</span>
               </li>
             </ul>
@@ -294,7 +294,7 @@ export function SignupForm() {
           Already have an account?{" "}
           <Link
             href="/auth/login"
-            className="font-medium text-[#8B1538] hover:text-[#6B0F2A]"
+            className="font-medium text-[#006403] hover:text-[#004d02]"
           >
             Sign In
           </Link>

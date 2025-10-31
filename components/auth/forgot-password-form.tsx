@@ -52,15 +52,15 @@ export function ForgotPasswordForm() {
             </p>
             <ul className="mt-4 space-y-2 text-sm text-gray-600 text-left max-w-sm mx-auto">
               <li className="flex items-start gap-2">
-                <span className="text-[#8B1538]">1.</span>
+                <span className="text-[#006403]">1.</span>
                 <span>Check your email inbox (and spam folder)</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#8B1538]">2.</span>
+                <span className="text-[#006403]">2.</span>
                 <span>Click the password reset link in the email</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#8B1538]">3.</span>
+                <span className="text-[#006403]">3.</span>
                 <span>Create a new password</span>
               </li>
             </ul>
@@ -146,7 +146,7 @@ export function ForgotPasswordForm() {
       <div className="text-center pt-4 border-t">
         <Link
           href="/auth/login"
-          className="text-sm font-medium text-[#8B1538] hover:text-[#6B0F2A] inline-flex items-center gap-2"
+          className="text-sm font-medium text-[#006403] hover:text-[#004d02] inline-flex items-center gap-2"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Login

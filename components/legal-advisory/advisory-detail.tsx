@@ -211,10 +211,10 @@ The ministry requires urgent advisory as the project is scheduled to commence by
                 {advisory.documents.map((doc, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-colors"
+                    className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#006403] transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-[#8B1538]" />
+                      <FileText className="w-5 h-5 text-[#006403]" />
                       <div>
                         <p className="font-medium text-gray-900">{doc.name}</p>
                         <p className="text-sm text-gray-600">
@@ -242,7 +242,7 @@ The ministry requires urgent advisory as the project is scheduled to commence by
             <CardContent className="space-y-4">
               <div className="space-y-4">
                 {advisory.comments.map((comment) => (
-                  <div key={comment.id} className="border-l-4 border-[#8B1538] pl-4 py-2">
+                  <div key={comment.id} className="border-l-4 border-[#006403] pl-4 py-2">
                     <div className="flex items-center gap-2 mb-2">
                       <p className="font-medium text-gray-900">{comment.user}</p>
                       <span className="text-sm text-gray-500">

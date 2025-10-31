@@ -152,9 +152,9 @@ export function DepartmentDetail() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Active Cases</p>
-                <p className="text-2xl font-bold text-[#8B1538]">{mockDepartment.activeCases}</p>
+                <p className="text-2xl font-bold text-[#006403]">{mockDepartment.activeCases}</p>
               </div>
-              <Briefcase className="w-8 h-8 text-[#8B1538]" />
+              <Briefcase className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -210,8 +210,8 @@ export function DepartmentDetail() {
             </CardHeader>
             <CardContent>
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                  <User className="w-8 h-8 text-[#8B1538]" />
+                <div className="w-16 h-16 bg-[#006403]/10 rounded-full flex items-center justify-center">
+                  <User className="w-8 h-8 text-[#006403]" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900">{mockDepartment.head.name}</h3>
@@ -280,11 +280,11 @@ export function DepartmentDetail() {
                 {mockDepartment.staff.map((staff) => (
                   <div
                     key={staff.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                        <User className="w-6 h-6 text-[#8B1538]" />
+                      <div className="w-12 h-12 bg-[#006403]/10 rounded-full flex items-center justify-center">
+                        <User className="w-6 h-6 text-[#006403]" />
                       </div>
                       <div>
                         <div className="flex items-center gap-3 mb-1">
@@ -323,7 +323,7 @@ export function DepartmentDetail() {
                 {mockDepartment.recentCases.map((case_) => (
                   <div
                     key={case_.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
@@ -377,7 +377,7 @@ export function DepartmentDetail() {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
-                        className="bg-[#8B1538] h-2 rounded-full"
+                        className="bg-[#006403] h-2 rounded-full"
                         style={{ width: `${(stat.convictions / stat.cases) * 100}%` }}
                       />
                     </div>
@@ -392,7 +392,7 @@ export function DepartmentDetail() {
               <CardContent className="pt-6">
                 <div className="text-center">
                   <p className="text-sm text-gray-600 mb-2">Average Conviction Rate</p>
-                  <p className="text-3xl font-bold text-[#8B1538]">{mockDepartment.convictionRate}%</p>
+                  <p className="text-3xl font-bold text-[#006403]">{mockDepartment.convictionRate}%</p>
                 </div>
               </CardContent>
             </Card>

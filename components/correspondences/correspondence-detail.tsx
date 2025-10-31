@@ -325,9 +325,9 @@ export function CorrespondenceDetail({ id }: CorrespondenceDetailProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Participants</p>
-                <p className="text-2xl font-bold text-[#8B1538]">{mockCorrespondence.participants.length}</p>
+                <p className="text-2xl font-bold text-[#006403]">{mockCorrespondence.participants.length}</p>
               </div>
-              <User className="w-8 h-8 text-[#8B1538]" />
+              <User className="w-8 h-8 text-[#006403]" />
             </div>
           </CardContent>
         </Card>
@@ -408,8 +408,8 @@ export function CorrespondenceDetail({ id }: CorrespondenceDetailProps) {
                 {mockCorrespondence.participants.map((participant, index) => (
                   <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                        <User className="w-5 h-5 text-[#8B1538]" />
+                      <div className="w-10 h-10 bg-[#006403]/10 rounded-full flex items-center justify-center">
+                        <User className="w-5 h-5 text-[#006403]" />
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">{participant.name}</p>
@@ -441,7 +441,7 @@ export function CorrespondenceDetail({ id }: CorrespondenceDetailProps) {
               <div className="space-y-3">
                 {mockCorrespondence.requests.map((request) => (
                   <Link key={request.id} href={`/communications/requests/${request.id}`}>
-                    <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                    <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
@@ -506,7 +506,7 @@ export function CorrespondenceDetail({ id }: CorrespondenceDetailProps) {
                 {mockCorrespondence.documents.map((doc) => (
                   <div
                     key={doc.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#006403] transition-all"
                   >
                     <div className="flex items-center gap-4 flex-1">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">

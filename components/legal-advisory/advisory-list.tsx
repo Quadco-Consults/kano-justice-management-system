@@ -135,12 +135,12 @@ export function AdvisoryList() {
               <Button
                 variant="outline"
                 onClick={() => setShowFilters(!showFilters)}
-                className={hasActiveFilters ? "border-[#8B1538] text-[#8B1538]" : ""}
+                className={hasActiveFilters ? "border-[#006403] text-[#006403]" : ""}
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Filters
                 {hasActiveFilters && (
-                  <Badge className="ml-2 bg-[#8B1538] text-white">
+                  <Badge className="ml-2 bg-[#006403] text-white">
                     {Object.values(filters).filter(v => v !== "").length}
                   </Badge>
                 )}
@@ -303,7 +303,7 @@ export function AdvisoryList() {
           <div className="space-y-4">
             {mockRequests.map((request) => (
               <Link key={request.id} href={`/legal-advisory/${request.id}`}>
-                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                <div className="p-4 border border-gray-200 rounded-lg hover:border-[#006403] hover:shadow-sm transition-all cursor-pointer">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">

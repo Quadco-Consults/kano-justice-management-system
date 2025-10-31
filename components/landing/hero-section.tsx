@@ -4,7 +4,7 @@ import { Scale, ArrowRight, FileText, Gavel, Users, Shield } from "lucide-react"
 
 export function HeroSection() {
   return (
-    <section className="relative bg-gradient-to-br from-[#8B1538] to-[#6B0F2A] text-white overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[#006403] to-[#004d02] text-white overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +47,7 @@ export function HeroSection() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/auth/login">
-                <Button size="lg" className="w-full sm:w-auto bg-white text-[#8B1538] hover:bg-gray-100">
+                <Button size="lg" className="w-full sm:w-auto bg-white text-[#006403] hover:bg-gray-100">
                   Staff Login
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>

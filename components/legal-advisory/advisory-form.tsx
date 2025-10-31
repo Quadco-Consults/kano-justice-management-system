@@ -259,7 +259,7 @@ export function AdvisoryForm() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="documents">Upload Documents</Label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#8B1538] transition-colors">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#006403] transition-colors">
                 <input
                   id="documents"
                   type="file"

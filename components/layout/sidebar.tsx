@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -129,8 +130,15 @@ export function Sidebar() {
       {/* Logo */}
       <div className="flex h-16 items-center border-b px-6 bg-white">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-            <Scale className="h-5 w-5 text-[#8B1538]" />
+          <div className="relative">
+            <Image
+              src="/images/Seal_of_Kano.png"
+              alt="Kano State Logo"
+              width={40}
+              height={40}
+              className="object-contain"
+              style={{ height: '40px', width: 'auto' }}
+            />
           </div>
           <div>
             <h1 className="text-sm font-bold text-gray-900">Kano Justice</h1>
@@ -142,7 +150,7 @@ export function Sidebar() {
       {/* User Info */}
       <div className="border-b p-4">
         <div className="flex items-center space-x-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#8B1538] text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#006403] text-white">
             {user?.firstName?.[0]}
             {user?.lastName?.[0]}
           </div>
@@ -174,7 +182,7 @@ export function Sidebar() {
                     className={cn(
                       'flex items-center space-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                       isActive
-                        ? 'bg-[#8B1538] text-white'
+                        ? 'bg-[#006403] text-white'
                         : 'text-gray-700 hover:bg-gray-200'
                     )}
                   >

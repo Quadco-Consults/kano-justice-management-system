@@ -48,8 +48,8 @@ export function SettingsContent() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-                  <Building2 className="w-5 h-5 text-[#8B1538]" />
+                <div className="w-10 h-10 bg-[#006403]/10 rounded-lg flex items-center justify-center">
+                  <Building2 className="w-5 h-5 text-[#006403]" />
                 </div>
                 <div>
                   <CardTitle>Organization Information</CardTitle>
