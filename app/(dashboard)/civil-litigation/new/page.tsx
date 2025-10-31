@@ -1,5 +1,14 @@
+import { Suspense } from "react"
 import { LitigationForm } from "@/components/civil-litigation/litigation-form"
 
-export default function NewCivilLitigationPage() {
+function LitigationFormContent() {
   return <LitigationForm />
+}
+
+export default function NewCivilLitigationPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LitigationFormContent />
+    </Suspense>
+  )
 }

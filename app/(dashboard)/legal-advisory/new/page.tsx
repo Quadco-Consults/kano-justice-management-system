@@ -1,5 +1,14 @@
+import { Suspense } from "react"
 import { AdvisoryForm } from "@/components/legal-advisory/advisory-form"
 
-export default function NewAdvisoryPage() {
+function AdvisoryFormContent() {
   return <AdvisoryForm />
+}
+
+export default function NewAdvisoryPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AdvisoryFormContent />
+    </Suspense>
+  )
 }
