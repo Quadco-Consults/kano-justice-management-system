@@ -12,14 +12,11 @@ import {
   FileText,
   Scale,
   Gavel,
-  FileCheck,
   BookOpen,
   ClipboardList,
   Bell,
-  BarChart3,
   MessageSquare,
   FolderOpen,
-  UserCog,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { useAuthStore } from '@/lib/stores/authStore';
@@ -82,21 +79,6 @@ const menuSections = [
         title: 'Notifications',
         href: '/notifications',
         icon: Bell,
-      },
-    ],
-  },
-  {
-    section: 'Reports & Analytics',
-    items: [
-      {
-        title: 'Reports',
-        href: '/reports',
-        icon: BarChart3,
-      },
-      {
-        title: 'Activity Logs',
-        href: '/activity-logs',
-        icon: FileCheck,
       },
     ],
   },
