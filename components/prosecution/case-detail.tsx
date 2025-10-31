@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { CaseStatusIndicator } from "@/components/shared/case-status-indicator"
 import { Timeline } from "@/components/shared/timeline"
 import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   User,
   Calendar,
@@ -393,100 +394,147 @@ Following a tip-off, the accused was arrested on September 16, 2025, in possessi
             </CardContent>
           </Card>
 
-          {/* Evidence */}
+          {/* Tabbed Content */}
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                Evidence & Documents
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {caseData.evidence.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-[#8B1538]" />
-                      <div>
-                        <p className="font-medium text-gray-900">{item.name}</p>
-                        <p className="text-sm text-gray-600">
-                          {item.type} • {new Date(item.date).toLocaleDateString('en-NG')}
-                        </p>
-                      </div>
-                    </div>
-                    <Button variant="ghost" size="sm">
-                      <Download className="w-4 h-4" />
+            <CardContent className="pt-6">
+              <Tabs defaultValue="evidence" className="w-full">
+                <TabsList className="w-full grid grid-cols-4">
+                  <TabsTrigger value="evidence">Evidence & Documents</TabsTrigger>
+                  <TabsTrigger value="hearings">Hearing History</TabsTrigger>
+                  <TabsTrigger value="notes">Case Notes</TabsTrigger>
+                  <TabsTrigger value="activity">Activity Log</TabsTrigger>
+                </TabsList>
+
+                {/* Evidence Tab */}
+                <TabsContent value="evidence" className="space-y-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Evidence & Documents</h3>
+                    <Button size="sm">
+                      <Upload className="w-4 h-4 mr-2" />
+                      Upload
                     </Button>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Hearing History */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Hearing History</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {caseData.hearings.map((hearing, index) => (
-                  <div key={index} className="border-l-4 border-[#8B1538] pl-4 py-2">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                      <p className="font-medium text-gray-900">
-                        {new Date(hearing.date).toLocaleDateString('en-NG')}
-                      </p>
-                      <Badge variant="outline">{hearing.purpose}</Badge>
-                    </div>
-                    <p className="text-gray-700 mb-2">{hearing.outcome}</p>
-                    <p className="text-sm text-gray-600">
-                      Next hearing: {new Date(hearing.nextDate).toLocaleDateString('en-NG')}
-                    </p>
+                  <div className="space-y-3">
+                    {caseData.evidence.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <FileText className="w-5 h-5 text-[#8B1538]" />
+                          <div>
+                            <p className="font-medium text-gray-900">{item.name}</p>
+                            <p className="text-sm text-gray-600">
+                              {item.type} • {new Date(item.date).toLocaleDateString('en-NG')}
+                            </p>
+                          </div>
+                        </div>
+                        <Button variant="ghost" size="sm">
+                          <Download className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                </TabsContent>
 
-          {/* Case Notes */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MessageSquare className="w-5 h-5" />
-                Case Notes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-4">
-                {caseData.notes.map((note) => (
-                  <div key={note.id} className="border-l-4 border-[#8B1538] pl-4 py-2">
-                    <div className="flex items-center gap-2 mb-2">
-                      <p className="font-medium text-gray-900">{note.user}</p>
-                      <span className="text-sm text-gray-500">
-                        {new Date(note.timestamp).toLocaleString('en-NG')}
-                      </span>
-                    </div>
-                    <p className="text-gray-700">{note.message}</p>
+                {/* Hearing History Tab */}
+                <TabsContent value="hearings" className="space-y-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Hearing History</h3>
+                    <Button size="sm" onClick={() => setIsHearingDialogOpen(true)}>
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Schedule New
+                    </Button>
                   </div>
-                ))}
-              </div>
+                  <div className="space-y-4">
+                    {caseData.hearings.map((hearing, index) => (
+                      <div key={index} className="border-l-4 border-[#8B1538] pl-4 py-2">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Calendar className="w-4 h-4 text-gray-400" />
+                          <p className="font-medium text-gray-900">
+                            {new Date(hearing.date).toLocaleDateString('en-NG')}
+                          </p>
+                          <Badge variant="outline">{hearing.purpose}</Badge>
+                        </div>
+                        <p className="text-gray-700 mb-2">{hearing.outcome}</p>
+                        <p className="text-sm text-gray-600">
+                          Next hearing: {new Date(hearing.nextDate).toLocaleDateString('en-NG')}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
 
-              <div className="space-y-3 pt-4 border-t">
-                <Textarea
-                  placeholder="Add a case note..."
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  rows={3}
-                />
-                <Button>
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  Add Note
-                </Button>
-              </div>
+                {/* Case Notes Tab */}
+                <TabsContent value="notes" className="space-y-4">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Case Notes</h3>
+                  <div className="space-y-4">
+                    {caseData.notes.map((noteItem) => (
+                      <div key={noteItem.id} className="border-l-4 border-[#8B1538] pl-4 py-2">
+                        <div className="flex items-center gap-2 mb-2">
+                          <p className="font-medium text-gray-900">{noteItem.user}</p>
+                          <span className="text-sm text-gray-500">
+                            {new Date(noteItem.timestamp).toLocaleString('en-NG')}
+                          </span>
+                        </div>
+                        <p className="text-gray-700">{noteItem.message}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="space-y-3 pt-4 border-t">
+                    <Textarea
+                      placeholder="Add a case note..."
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                      rows={3}
+                    />
+                    <Button>
+                      <MessageSquare className="w-4 h-4 mr-2" />
+                      Add Note
+                    </Button>
+                  </div>
+                </TabsContent>
+
+                {/* Activity Log Tab */}
+                <TabsContent value="activity" className="space-y-4">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Activity Log</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 p-3 border-l-4 border-blue-500 bg-blue-50 rounded">
+                      <Clock className="w-5 h-5 text-blue-600 mt-0.5" />
+                      <div>
+                        <p className="font-medium text-gray-900">Case Status Changed</p>
+                        <p className="text-sm text-gray-600">Status updated to "In Trial" by Barr. Maryam Usman</p>
+                        <p className="text-xs text-gray-500 mt-1">2025-10-20 10:30 AM</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 border-l-4 border-green-500 bg-green-50 rounded">
+                      <Upload className="w-5 h-5 text-green-600 mt-0.5" />
+                      <div>
+                        <p className="font-medium text-gray-900">Document Uploaded</p>
+                        <p className="text-sm text-gray-600">Police Investigation Report.pdf added to evidence</p>
+                        <p className="text-xs text-gray-500 mt-1">2025-09-18 02:15 PM</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 border-l-4 border-purple-500 bg-purple-50 rounded">
+                      <Calendar className="w-5 h-5 text-purple-600 mt-0.5" />
+                      <div>
+                        <p className="font-medium text-gray-900">Hearing Scheduled</p>
+                        <p className="text-sm text-gray-600">Next hearing scheduled for November 5, 2025</p>
+                        <p className="text-xs text-gray-500 mt-1">2025-10-05 03:45 PM</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 border-l-4 border-[#8B1538] bg-red-50 rounded">
+                      <FileText className="w-5 h-5 text-[#8B1538] mt-0.5" />
+                      <div>
+                        <p className="font-medium text-gray-900">Case Filed</p>
+                        <p className="text-sm text-gray-600">Case filed at High Court 1, Kano</p>
+                        <p className="text-xs text-gray-500 mt-1">2025-09-20 09:00 AM</p>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
             </CardContent>
           </Card>
         </div>
