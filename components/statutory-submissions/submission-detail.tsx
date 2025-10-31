@@ -533,27 +533,27 @@ export function SubmissionDetail({ id }: SubmissionDetailProps) {
               <CardTitle>Activity Timeline</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {mockSubmission.timeline.map((item, index) => (
-                  <div key={item.id} className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-[#8B1538]" />
+              <div className="space-y-3">
+                {mockSubmission.timeline.map((item, index) => {
+                  const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
+                  const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
+                  const iconColors = ['text-blue-600', 'text-green-600', 'text-purple-600', 'text-red-600']
+                  const colorIndex = index % 4
+
+                  return (
+                    <div key={item.id} className={`flex items-start gap-3 p-3 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded`}>
+                      <CheckCircle className={`w-5 h-5 ${iconColors[colorIndex]} mt-0.5`} />
+                      <div className="flex-1">
+                        <p className="font-medium text-gray-900">{item.event}</p>
+                        <div className="flex items-center gap-3 text-sm text-gray-600 mt-1">
+                          <span>{new Date(item.date).toLocaleDateString('en-NG')}</span>
+                          <span>•</span>
+                          <span>{item.actor}</span>
+                        </div>
                       </div>
-                      {index < mockSubmission.timeline.length - 1 && (
-                        <div className="w-0.5 h-12 bg-gray-200 my-1" />
-                      )}
                     </div>
-                    <div className="flex-1 pb-4">
-                      <p className="font-medium text-gray-900">{item.event}</p>
-                      <div className="flex items-center gap-3 text-sm text-gray-600 mt-1">
-                        <span>{new Date(item.date).toLocaleDateString('en-NG')}</span>
-                        <span>•</span>
-                        <span>{item.actor}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </CardContent>
           </Card>
@@ -565,23 +565,28 @@ export function SubmissionDetail({ id }: SubmissionDetailProps) {
             <CardHeader>
               <CardTitle>Review Comments</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {mockSubmission.comments.map((comment) => (
-                <div key={comment.id} className="p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-start gap-3 mb-2">
-                    <div className="w-10 h-10 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                      <User className="w-5 h-5 text-[#8B1538]" />
+            <CardContent className="space-y-3">
+              {mockSubmission.comments.map((comment, index) => {
+                const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
+                const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
+                const iconColors = ['text-blue-600', 'text-green-600', 'text-purple-600', 'text-red-600']
+                const colorIndex = index % 4
+
+                return (
+                  <div key={comment.id} className={`p-4 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded`}>
+                    <div className="flex items-start gap-3 mb-2">
+                      <User className={`w-5 h-5 ${iconColors[colorIndex]} mt-0.5`} />
+                      <div className="flex-1">
+                        <p className="font-semibold text-gray-900">{comment.author}</p>
+                        <p className="text-xs text-gray-500">
+                          {new Date(comment.date).toLocaleString('en-NG')}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <p className="font-semibold text-gray-900">{comment.author}</p>
-                      <p className="text-xs text-gray-500">
-                        {new Date(comment.date).toLocaleString('en-NG')}
-                      </p>
-                    </div>
+                    <p className="text-gray-900 ml-8">{comment.comment}</p>
                   </div>
-                  <p className="text-gray-900 ml-13">{comment.comment}</p>
-                </div>
-              ))}
+                )
+              })}
             </CardContent>
           </Card>
         </TabsContent>

@@ -348,24 +348,29 @@ export function NoticeDetail({ id }: NoticeDetailProps) {
                 <CardHeader>
                   <CardTitle>Public Comments & Feedback</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  {notice.publicComments.map((comment) => (
-                    <div key={comment.id} className="p-4 bg-gray-50 rounded-lg">
-                      <div className="flex items-start gap-3 mb-3">
-                        <div className="w-10 h-10 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                          <User className="w-5 h-5 text-[#8B1538]" />
+                <CardContent className="space-y-3">
+                  {notice.publicComments.map((comment, index) => {
+                    const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
+                    const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
+                    const iconColors = ['text-blue-600', 'text-green-600', 'text-purple-600', 'text-red-600']
+                    const colorIndex = index % 4
+
+                    return (
+                      <div key={comment.id} className={`p-4 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded`}>
+                        <div className="flex items-start gap-3 mb-3">
+                          <User className={`w-5 h-5 ${iconColors[colorIndex]} mt-0.5`} />
+                          <div className="flex-1">
+                            <p className="font-semibold text-gray-900">{comment.name}</p>
+                            <p className="text-sm text-gray-600">{comment.organization}</p>
+                            <p className="text-xs text-gray-500 mt-1">
+                              {new Date(comment.date).toLocaleDateString('en-NG')}
+                            </p>
+                          </div>
                         </div>
-                        <div className="flex-1">
-                          <p className="font-semibold text-gray-900">{comment.name}</p>
-                          <p className="text-sm text-gray-600">{comment.organization}</p>
-                          <p className="text-xs text-gray-500 mt-1">
-                            {new Date(comment.date).toLocaleDateString('en-NG')}
-                          </p>
-                        </div>
+                        <p className="text-gray-900 ml-8">{comment.comment}</p>
                       </div>
-                      <p className="text-gray-900">{comment.comment}</p>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </CardContent>
               </Card>
             </TabsContent>
@@ -377,28 +382,28 @@ export function NoticeDetail({ id }: NoticeDetailProps) {
                   <CardTitle>Activity Log</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    {notice.activityLog.map((activity, index) => (
-                      <div key={index} className="flex gap-4">
-                        <div className="flex flex-col items-center">
-                          <div className="w-10 h-10 bg-[#8B1538]/10 rounded-full flex items-center justify-center">
-                            <Clock className="w-5 h-5 text-[#8B1538]" />
+                  <div className="space-y-3">
+                    {notice.activityLog.map((activity, index) => {
+                      const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
+                      const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
+                      const iconColors = ['text-blue-600', 'text-green-600', 'text-purple-600', 'text-red-600']
+                      const colorIndex = index % 4
+
+                      return (
+                        <div key={index} className={`flex items-start gap-3 p-3 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded`}>
+                          <Clock className={`w-5 h-5 ${iconColors[colorIndex]} mt-0.5`} />
+                          <div className="flex-1">
+                            <p className="font-medium text-gray-900">{activity.action}</p>
+                            <p className="text-sm text-gray-600 mt-1">{activity.details}</p>
+                            <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
+                              <span>{activity.timestamp}</span>
+                              <span>•</span>
+                              <span>{activity.user}</span>
+                            </div>
                           </div>
-                          {index < notice.activityLog.length - 1 && (
-                            <div className="w-0.5 h-12 bg-gray-200 my-1" />
-                          )}
                         </div>
-                        <div className="flex-1 pb-4">
-                          <p className="font-medium text-gray-900">{activity.action}</p>
-                          <p className="text-sm text-gray-600 mt-1">{activity.details}</p>
-                          <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
-                            <span>{activity.timestamp}</span>
-                            <span>•</span>
-                            <span>{activity.user}</span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </CardContent>
               </Card>

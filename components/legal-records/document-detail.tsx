@@ -415,19 +415,26 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
                 <TabsContent value="activity" className="space-y-4">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Activity Log</h3>
                   <div className="space-y-3">
-                    {document.activityLog.map((activity, index) => (
-                      <div key={index} className="flex items-start gap-3 p-3 border-l-4 border-[#8B1538] bg-gray-50 rounded">
-                        <Clock className="w-5 h-5 text-[#8B1538] mt-0.5" />
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1">
-                            <p className="font-medium text-gray-900">{activity.action}</p>
-                            <p className="text-xs text-gray-500">{activity.timestamp}</p>
+                    {document.activityLog.map((activity, index) => {
+                      const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
+                      const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
+                      const iconColors = ['text-blue-600', 'text-green-600', 'text-purple-600', 'text-red-600']
+                      const colorIndex = index % 4
+
+                      return (
+                        <div key={index} className={`flex items-start gap-3 p-3 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded`}>
+                          <Clock className={`w-5 h-5 ${iconColors[colorIndex]} mt-0.5`} />
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <p className="font-medium text-gray-900">{activity.action}</p>
+                              <p className="text-xs text-gray-500">{activity.timestamp}</p>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-1">{activity.details}</p>
+                            <p className="text-xs text-gray-500">By {activity.user}</p>
                           </div>
-                          <p className="text-sm text-gray-600 mb-1">{activity.details}</p>
-                          <p className="text-xs text-gray-500">By {activity.user}</p>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </TabsContent>
 
@@ -436,20 +443,27 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Search History</h3>
                   <p className="text-sm text-gray-600 mb-4">Users who found this document through search</p>
                   <div className="space-y-3">
-                    {document.searchHistory.map((search, index) => (
-                      <div key={index} className="flex items-start gap-3 p-3 border border-gray-200 rounded-lg">
-                        <Search className="w-5 h-5 text-blue-600 mt-0.5" />
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1">
-                            <p className="font-medium text-gray-900">{search.user}</p>
-                            <p className="text-xs text-gray-500">{search.timestamp}</p>
+                    {document.searchHistory.map((search, index) => {
+                      const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
+                      const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
+                      const iconColors = ['text-blue-600', 'text-green-600', 'text-purple-600', 'text-red-600']
+                      const colorIndex = index % 4
+
+                      return (
+                        <div key={index} className={`flex items-start gap-3 p-3 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded`}>
+                          <Search className={`w-5 h-5 ${iconColors[colorIndex]} mt-0.5`} />
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <p className="font-medium text-gray-900">{search.user}</p>
+                              <p className="text-xs text-gray-500">{search.timestamp}</p>
+                            </div>
+                            <p className="text-sm text-gray-600">
+                              Searched for: <span className="font-medium text-[#8B1538]">"{search.query}"</span>
+                            </p>
                           </div>
-                          <p className="text-sm text-gray-600">
-                            Searched for: <span className="font-medium text-[#8B1538]">"{search.query}"</span>
-                          </p>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </TabsContent>
 
@@ -494,40 +508,47 @@ export function DocumentDetail({ id }: DocumentDetailProps) {
                     </Dialog>
                   </div>
                   <div className="space-y-3">
-                    {document.accessRequests.map((request) => (
-                      <div key={request.id} className="p-4 border border-gray-200 rounded-lg">
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <User className="w-5 h-5 text-gray-400" />
-                            <p className="font-medium text-gray-900">{request.user}</p>
+                    {document.accessRequests.map((request, index) => {
+                      const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
+                      const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
+                      const iconColors = ['text-blue-600', 'text-green-600', 'text-purple-600', 'text-red-600']
+                      const colorIndex = index % 4
+
+                      return (
+                        <div key={request.id} className={`p-4 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded`}>
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <User className={`w-5 h-5 ${iconColors[colorIndex]}`} />
+                              <p className="font-medium text-gray-900">{request.user}</p>
+                            </div>
+                            <Badge
+                              variant={request.status === 'approved' ? 'default' : 'secondary'}
+                              className={request.status === 'approved' ? 'bg-green-100 text-green-800' : ''}
+                            >
+                              {request.status}
+                            </Badge>
                           </div>
-                          <Badge
-                            variant={request.status === 'approved' ? 'default' : 'secondary'}
-                            className={request.status === 'approved' ? 'bg-green-100 text-green-800' : ''}
-                          >
-                            {request.status}
-                          </Badge>
+                          <p className="text-sm text-gray-700 mb-2">{request.reason}</p>
+                          <p className="text-xs text-gray-500">{request.timestamp}</p>
+                          {request.status === 'approved' && (
+                            <p className="text-xs text-gray-500 mt-1">
+                              Approved by {request.approvedBy} on {request.approvedDate}
+                            </p>
+                          )}
+                          {request.status === 'pending' && (
+                            <div className="flex gap-2 mt-3">
+                              <Button size="sm" variant="outline">
+                                <UserCheck className="w-4 h-4 mr-2" />
+                                Approve
+                              </Button>
+                              <Button size="sm" variant="outline">
+                                Reject
+                              </Button>
+                            </div>
+                          )}
                         </div>
-                        <p className="text-sm text-gray-700 mb-2">{request.reason}</p>
-                        <p className="text-xs text-gray-500">{request.timestamp}</p>
-                        {request.status === 'approved' && (
-                          <p className="text-xs text-gray-500 mt-1">
-                            Approved by {request.approvedBy} on {request.approvedDate}
-                          </p>
-                        )}
-                        {request.status === 'pending' && (
-                          <div className="flex gap-2 mt-3">
-                            <Button size="sm" variant="outline">
-                              <UserCheck className="w-4 h-4 mr-2" />
-                              Approve
-                            </Button>
-                            <Button size="sm" variant="outline">
-                              Reject
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </TabsContent>
 
