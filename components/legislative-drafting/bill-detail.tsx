@@ -325,9 +325,12 @@ const mockBill = {
 export function BillDetail() {
   const [showAmendmentDialog, setShowAmendmentDialog] = useState(false)
   const [showApprovalDialog, setShowApprovalDialog] = useState(false)
+  const [showCommentDialog, setShowCommentDialog] = useState(false)
   const [amendmentText, setAmendmentText] = useState("")
   const [approvalComments, setApprovalComments] = useState("")
+  const [commentText, setCommentText] = useState("")
   const [selectedSection, setSelectedSection] = useState<number | null>(null)
+  const [expandedSection, setExpandedSection] = useState<number | null>(null)
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -536,33 +539,144 @@ export function BillDetail() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {mockBill.sections.map((section) => (
-                  <div
-                    key={section.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
-                  >
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="w-10 h-10 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-                        <span className="font-bold text-[#8B1538]">{section.number}</span>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-1">
-                          <p className="font-semibold text-gray-900">{section.title}</p>
-                          <Badge variant={getStatusColor(section.status)}>{section.status}</Badge>
+                {mockBill.sections.map((section) => {
+                  const sectionComments = mockBill.sectionComments[section.number] || []
+                  const isExpanded = expandedSection === section.number
+
+                  return (
+                    <div
+                      key={section.id}
+                      className="border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all"
+                    >
+                      <div className="flex items-center justify-between p-4">
+                        <div className="flex items-center gap-4 flex-1">
+                          <div className="w-10 h-10 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
+                            <span className="font-bold text-[#8B1538]">{section.number}</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-1">
+                              <p className="font-semibold text-gray-900">{section.title}</p>
+                              <Badge variant={getStatusColor(section.status)}>{section.status}</Badge>
+                              {sectionComments.length > 0 && (
+                                <Badge variant="outline" className="bg-blue-50">
+                                  <MessageSquare className="w-3 h-3 mr-1" />
+                                  {sectionComments.length}
+                                </Badge>
+                              )}
+                            </div>
+                            {section.lastReviewed && (
+                              <p className="text-xs text-gray-500">
+                                Last reviewed: {new Date(section.lastReviewed).toLocaleDateString('en-NG')}
+                              </p>
+                            )}
+                          </div>
                         </div>
-                        {section.lastReviewed && (
-                          <p className="text-xs text-gray-500">
-                            Last reviewed: {new Date(section.lastReviewed).toLocaleDateString('en-NG')}
-                          </p>
-                        )}
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setSelectedSection(section.number)
+                              setShowCommentDialog(true)
+                            }}
+                          >
+                            <MessageSquare className="w-4 h-4 mr-1" />
+                            Comment
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Edit3 className="w-4 h-4 mr-1" />
+                            Edit
+                          </Button>
+                          {sectionComments.length > 0 && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setExpandedSection(isExpanded ? null : section.number)}
+                            >
+                              {isExpanded ? '▲' : '▼'}
+                            </Button>
+                          )}
+                        </div>
                       </div>
+
+                      {/* Section Comments */}
+                      {isExpanded && sectionComments.length > 0 && (
+                        <div className="px-4 pb-4 border-t border-gray-100">
+                          <div className="pt-3 space-y-3">
+                            <p className="text-sm font-medium text-gray-700">Comments on this section:</p>
+                            {sectionComments.map((comment) => (
+                              <div key={comment.id} className="p-3 bg-gray-50 rounded-lg">
+                                <div className="flex items-start gap-3">
+                                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <User className="w-4 h-4 text-blue-600" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <p className="font-medium text-sm text-gray-900">{comment.author}</p>
+                                      <span className="text-xs text-gray-500">
+                                        {new Date(comment.date).toLocaleString('en-NG')}
+                                      </span>
+                                      {comment.resolved && (
+                                        <Badge variant="success" className="text-xs">Resolved</Badge>
+                                      )}
+                                    </div>
+                                    <p className="text-sm text-gray-700">{comment.comment}</p>
+                                    {!comment.resolved && (
+                                      <Button variant="ghost" size="sm" className="mt-2 text-xs">
+                                        Mark as Resolved
+                                      </Button>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    <Button variant="outline" size="sm">Edit Section</Button>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </CardContent>
           </Card>
+
+          {/* Add Comment Dialog */}
+          <Dialog open={showCommentDialog} onOpenChange={setShowCommentDialog}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Add Comment to Section {selectedSection}</DialogTitle>
+                <DialogDescription>
+                  Provide feedback or suggestions for this section
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label>Comment</Label>
+                  <Textarea
+                    placeholder="Enter your comment or suggestion..."
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    rows={5}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => {
+                  setShowCommentDialog(false)
+                  setCommentText("")
+                }}>
+                  Cancel
+                </Button>
+                <Button onClick={() => {
+                  // In real implementation, this would save the comment
+                  setShowCommentDialog(false)
+                  setCommentText("")
+                }}>
+                  Submit Comment
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </TabsContent>
 
         {/* Version History Tab */}
