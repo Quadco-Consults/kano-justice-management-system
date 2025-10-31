@@ -5,8 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Search, Plus, Filter, MessageSquare, Users, Mail, FileText } from "lucide-react"
+import { Search, Plus, Filter, MessageSquare, Users, Mail, FileText, X } from "lucide-react"
 import Link from "next/link"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const mockStakeholders = [
   {
@@ -73,6 +80,22 @@ const mockStakeholders = [
 
 export function StakeholdersList() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [showFilters, setShowFilters] = useState(false)
+  const [filters, setFilters] = useState({
+    type: "",
+    status: "",
+    tier: "",
+  })
+
+  const clearFilters = () => {
+    setFilters({
+      type: "",
+      status: "",
+      tier: "",
+    })
+  }
+
+  const hasActiveFilters = Object.values(filters).some(value => value !== "")
 
   return (
     <div className="space-y-6">
@@ -93,21 +116,105 @@ export function StakeholdersList() {
       {/* Filters */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search stakeholders by name, type, or contact person..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
+          <div className="space-y-4">
+            <div className="flex gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search stakeholders by name, type, or contact person..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className={hasActiveFilters ? "border-[#8B1538] text-[#8B1538]" : ""}
+              >
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+                {hasActiveFilters && (
+                  <Badge className="ml-2 bg-[#8B1538] text-white">
+                    {Object.values(filters).filter(v => v !== "").length}
+                  </Badge>
+                )}
+              </Button>
             </div>
-            <Button variant="outline">
-              <Filter className="w-4 h-4 mr-2" />
-              Filters
-            </Button>
+
+            {/* Filter Options */}
+            {showFilters && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Organization Type</label>
+                  <Select
+                    value={filters.type}
+                    onValueChange={(value) => setFilters({ ...filters, type: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Types" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Types</SelectItem>
+                      <SelectItem value="Law Enforcement">Law Enforcement</SelectItem>
+                      <SelectItem value="Judiciary">Judiciary</SelectItem>
+                      <SelectItem value="MDA">Government MDA</SelectItem>
+                      <SelectItem value="Federal Agency">Federal Agency</SelectItem>
+                      <SelectItem value="Legislature">Legislature</SelectItem>
+                      <SelectItem value="External Counsel">External Counsel</SelectItem>
+                      <SelectItem value="Private Organization">Private Organization</SelectItem>
+                      <SelectItem value="NGO/Civil Society">NGO/Civil Society</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Status</label>
+                  <Select
+                    value={filters.status}
+                    onValueChange={(value) => setFilters({ ...filters, status: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Statuses" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Statuses</SelectItem>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="inactive">Inactive</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Stakeholder Tier</label>
+                  <Select
+                    value={filters.tier}
+                    onValueChange={(value) => setFilters({ ...filters, tier: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Tiers" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Tiers</SelectItem>
+                      <SelectItem value="Primary">Primary (High Priority)</SelectItem>
+                      <SelectItem value="Secondary">Secondary (Regular)</SelectItem>
+                      <SelectItem value="Tertiary">Tertiary (Occasional)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {hasActiveFilters && (
+                  <div className="md:col-span-3 flex justify-end">
+                    <Button variant="ghost" onClick={clearFilters} size="sm">
+                      <X className="w-4 h-4 mr-2" />
+                      Clear Filters
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -158,23 +265,6 @@ export function StakeholdersList() {
             </div>
           </CardContent>
         </Card>
-      </div>
-
-      {/* Stakeholder Types Grid */}
-      <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Browse by Type</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {['Law Enforcement', 'Judiciary', 'MDA', 'Federal Agency', 'Legislature', 'External Counsel'].map((type) => (
-            <Card key={type} className="hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-[#8B1538]" />
-                  <span className="text-sm font-medium text-gray-900">{type}</span>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
       </div>
 
       {/* Stakeholders List */}
