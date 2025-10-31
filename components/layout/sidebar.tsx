@@ -77,9 +77,14 @@ const menuSections = [
     section: 'Collaboration',
     items: [
       {
+        title: 'Communications',
+        href: '/communications',
+        icon: MessageSquare,
+      },
+      {
         title: 'Stakeholder Portal',
         href: '/stakeholders',
-        icon: MessageSquare,
+        icon: Users,
       },
       {
         title: 'Notifications',

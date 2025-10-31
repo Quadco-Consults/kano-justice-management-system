@@ -18,6 +18,7 @@ import {
   Settings
 } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 const mockStakeholder = {
   id: 1,
@@ -153,7 +154,17 @@ const mockStakeholder = {
   ]
 }
 
-export function StakeholderDetail() {
+interface StakeholderDetailProps {
+  id: string
+}
+
+export function StakeholderDetail({ id }: StakeholderDetailProps) {
+  const router = useRouter()
+
+  const handleEdit = () => {
+    router.push(`/stakeholders/new?id=${id}`)
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -177,10 +188,18 @@ export function StakeholderDetail() {
             </div>
           </div>
         </div>
-        <Button variant="outline">
-          <Settings className="w-4 h-4 mr-2" />
-          Edit Details
-        </Button>
+        <div className="flex items-center gap-2">
+          <Link href="/communications">
+            <Button variant="outline">
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Send Message
+            </Button>
+          </Link>
+          <Button variant="outline" onClick={handleEdit}>
+            <Settings className="w-4 h-4 mr-2" />
+            Edit Details
+          </Button>
+        </div>
       </div>
 
       {/* Stats */}
@@ -258,6 +277,7 @@ export function StakeholderDetail() {
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="requests">Active Requests</TabsTrigger>
+          <TabsTrigger value="correspondence">Correspondence</TabsTrigger>
           <TabsTrigger value="history">Interaction History</TabsTrigger>
           <TabsTrigger value="documents">Documents</TabsTrigger>
           <TabsTrigger value="notes">Internal Notes</TabsTrigger>
@@ -434,6 +454,88 @@ export function StakeholderDetail() {
                     <Button variant="outline" size="sm">View Details</Button>
                   </div>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Correspondence Tab */}
+        <TabsContent value="correspondence" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle>Message History</CardTitle>
+                <Link href="/communications">
+                  <Button size="sm">
+                    <MessageSquare className="w-4 h-4 mr-2" />
+                    Send New Message
+                  </Button>
+                </Link>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {[
+                  {
+                    id: 1,
+                    subject: 'Contract Review Request - School Construction',
+                    date: '2025-10-28',
+                    from: 'Ministry of Education',
+                    to: 'Barr. Fatima Ibrahim',
+                    status: 'replied',
+                    lastMessage: 'Thank you for the prompt review. We will proceed with your recommendations.',
+                  },
+                  {
+                    id: 2,
+                    subject: 'MOU Review Follow-up',
+                    date: '2025-10-24',
+                    from: 'Barr. Yusuf Ali',
+                    to: 'Ministry of Education',
+                    status: 'sent',
+                    lastMessage: 'Please find attached the reviewed MOU with our comments.',
+                  },
+                  {
+                    id: 3,
+                    subject: 'Education Policy Amendment Consultation',
+                    date: '2025-10-20',
+                    from: 'Ministry of Education',
+                    to: 'Legislative Team',
+                    status: 'replied',
+                    lastMessage: 'We appreciate the detailed consultation. The amendments are now under review.',
+                  },
+                ].map((message, index) => {
+                  const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
+                  const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
+                  const iconColors = ['text-blue-600', 'text-green-600', 'text-purple-600', 'text-red-600']
+                  const colorIndex = index % 4
+
+                  return (
+                    <div
+                      key={message.id}
+                      className={`flex items-start gap-3 p-4 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded cursor-pointer hover:shadow-sm transition-all`}
+                    >
+                      <MessageSquare className={`w-5 h-5 ${iconColors[colorIndex]} mt-0.5`} />
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-semibold text-gray-900">{message.subject}</h4>
+                          <Badge
+                            className={message.status === 'replied' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}
+                          >
+                            {message.status}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-gray-600 mb-2">{message.lastMessage}</p>
+                        <div className="flex items-center gap-4 text-xs text-gray-500">
+                          <span>From: {message.from}</span>
+                          <span>•</span>
+                          <span>To: {message.to}</span>
+                          <span>•</span>
+                          <span>{new Date(message.date).toLocaleDateString('en-NG')}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </CardContent>
           </Card>
