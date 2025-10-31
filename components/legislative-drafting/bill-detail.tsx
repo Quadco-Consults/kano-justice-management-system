@@ -24,7 +24,7 @@ import {
   Edit3
 } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import {
   Dialog,
@@ -35,6 +35,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
+import dynamic from "next/dynamic"
+import "react-quill-new/dist/quill.snow.css"
+
+// Dynamic import for ReactQuill to avoid SSR issues
+const ReactQuill = dynamic(() => import('react-quill-new'), {
+  ssr: false,
+  loading: () => <p className="text-gray-500 py-4">Loading editor...</p>
+})
 
 const mockBill = {
   id: 1,
@@ -332,9 +340,41 @@ export function BillDetail() {
   const [amendmentText, setAmendmentText] = useState("")
   const [approvalComments, setApprovalComments] = useState("")
   const [commentText, setCommentText] = useState("")
+  const [sectionTitle, setSectionTitle] = useState("")
   const [sectionContent, setSectionContent] = useState("")
+  const [sectionNotes, setSectionNotes] = useState("")
   const [selectedSection, setSelectedSection] = useState<number | null>(null)
   const [expandedSection, setExpandedSection] = useState<number | null>(null)
+
+  // Quill editor modules configuration
+  const quillModules = useMemo(() => ({
+    toolbar: [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'font': [] }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'script': 'sub' }, { 'script': 'super' }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'indent': '-1' }, { 'indent': '+1' }],
+      [{ 'align': [] }],
+      ['blockquote', 'code-block'],
+      ['link'],
+      ['clean']
+    ],
+  }), [])
+
+  const quillFormats = [
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike',
+    'color', 'background',
+    'script',
+    'list', 'bullet',
+    'indent',
+    'align',
+    'blockquote', 'code-block',
+    'link'
+  ]
 
   const handleExportPDF = () => {
     // In real implementation, this would generate and download a PDF
@@ -353,7 +393,10 @@ export function BillDetail() {
 
   const handleEditSection = (section: any) => {
     setSelectedSection(section.number)
-    setSectionContent(section.title) // In real implementation, load actual section content
+    setSectionTitle(section.title)
+    // In real implementation, load actual section content from API
+    setSectionContent(`<h3>Section ${section.number}: ${section.title}</h3><p>Enter the section content here...</p>`)
+    setSectionNotes("")
     setShowEditSectionDialog(true)
   }
 
@@ -792,23 +835,31 @@ export function BillDetail() {
                 <div className="space-y-2">
                   <Label>Section Title</Label>
                   <Input
-                    value={sectionContent}
-                    onChange={(e) => setSectionContent(e.target.value)}
+                    value={sectionTitle}
+                    onChange={(e) => setSectionTitle(e.target.value)}
                     placeholder="Enter section title..."
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Section Content</Label>
-                  <Textarea
-                    placeholder="Enter section content..."
-                    rows={15}
-                    className="font-mono text-sm"
-                  />
+                  <Label>Section Content (WYSIWYG Editor)</Label>
+                  <div className="bg-white rounded-lg border border-gray-200">
+                    <ReactQuill
+                      theme="snow"
+                      value={sectionContent}
+                      onChange={setSectionContent}
+                      modules={quillModules}
+                      formats={quillFormats}
+                      placeholder="Enter the section content here using the rich text editor..."
+                      className="h-[400px]"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label>Notes</Label>
+                <div className="space-y-2 mt-16">
+                  <Label>Drafting Notes</Label>
                   <Textarea
-                    placeholder="Add any drafting notes or references..."
+                    value={sectionNotes}
+                    onChange={(e) => setSectionNotes(e.target.value)}
+                    placeholder="Add any drafting notes, references, or legal precedents..."
                     rows={3}
                   />
                 </div>
@@ -816,18 +867,25 @@ export function BillDetail() {
               <div className="flex justify-end gap-2">
                 <Button variant="outline" onClick={() => {
                   setShowEditSectionDialog(false)
+                  setSectionTitle("")
                   setSectionContent("")
+                  setSectionNotes("")
                 }}>
                   Cancel
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => {
+                  // In real implementation, this would save as draft
+                  alert(`Section ${selectedSection} saved as draft!`)
+                }}>
                   Save Draft
                 </Button>
                 <Button onClick={() => {
                   // In real implementation, this would save the section
-                  alert(`Section ${selectedSection} updated successfully!`)
+                  alert(`Section ${selectedSection} updated successfully!\n\nTitle: ${sectionTitle}\nContent: ${sectionContent.replace(/<[^>]*>/g, '').substring(0, 100)}...`)
                   setShowEditSectionDialog(false)
+                  setSectionTitle("")
                   setSectionContent("")
+                  setSectionNotes("")
                 }}>
                   Save & Publish
                 </Button>
