@@ -1,5 +1,5 @@
-import { LitigationList } from "@/components/civil-litigation/litigation-list"
+import { LitigationDashboard } from "@/components/civil-litigation/litigation-dashboard"
 
 export default function CivilLitigationPage() {
-  return <LitigationList />
+  return <LitigationDashboard />
 }

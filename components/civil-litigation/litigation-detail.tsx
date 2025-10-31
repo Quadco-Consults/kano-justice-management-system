@@ -16,6 +16,10 @@ import {
   Briefcase,
   DollarSign,
   MessageSquare,
+  Gavel,
+  CheckCircle,
+  AlertCircle,
+  Handshake
 } from "lucide-react"
 import { useState } from "react"
 
@@ -141,6 +145,8 @@ Despite several demands and notices, the contractor failed to return to site or 
         timestamp: '2025-09-15T14:30:00',
       },
     ],
+    judgment: null, // Can be: { date, ruling, amount, judge, summary, enforcement }
+    settlement: null, // Can be: { proposedDate, proposedAmount, status, terms, finalizedDate }
   }
 
   return (
@@ -344,6 +350,163 @@ Despite several demands and notices, the contractor failed to return to site or 
               </div>
             </CardContent>
           </Card>
+
+          {/* Judgment Tracking */}
+          {litigation.judgment ? (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Gavel className="w-5 h-5" />
+                  Judgment
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                      <p className="font-semibold text-green-900">Judgment Delivered</p>
+                    </div>
+                    <Badge className="bg-green-100 text-green-800">{litigation.judgment.ruling}</Badge>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-3">
+                    <div>
+                      <p className="text-sm text-green-700">Date</p>
+                      <p className="font-medium text-green-900">
+                        {new Date(litigation.judgment.date).toLocaleDateString('en-NG')}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-green-700">Judge</p>
+                      <p className="font-medium text-green-900">{litigation.judgment.judge}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-green-700">Award Amount</p>
+                      <p className="font-semibold text-green-900">{litigation.judgment.amount}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-green-700">Enforcement Status</p>
+                      <Badge variant="outline">{litigation.judgment.enforcement}</Badge>
+                    </div>
+                  </div>
+                  <div className="pt-3 border-t border-green-200">
+                    <p className="text-sm font-medium text-green-900 mb-2">Summary</p>
+                    <p className="text-sm text-green-800">{litigation.judgment.summary}</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline" className="flex-1">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Upload Judgment
+                  </Button>
+                  <Button className="flex-1">
+                    <Gavel className="w-4 h-4 mr-2" />
+                    Track Enforcement
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ) : (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Gavel className="w-5 h-5" />
+                  Judgment
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg text-center">
+                  <AlertCircle className="w-10 h-10 text-gray-400 mx-auto mb-2" />
+                  <p className="text-gray-600 mb-3">No judgment delivered yet</p>
+                  <Button variant="outline" size="sm">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Record Judgment
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Settlement Tracking */}
+          {litigation.settlement ? (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Handshake className="w-5 h-5" />
+                  Settlement Negotiation
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className={`p-4 border rounded-lg ${
+                  litigation.settlement.status === 'finalized'
+                    ? 'bg-green-50 border-green-200'
+                    : litigation.settlement.status === 'negotiating'
+                    ? 'bg-blue-50 border-blue-200'
+                    : 'bg-orange-50 border-orange-200'
+                }`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="font-semibold text-gray-900">Settlement Status</p>
+                    <Badge className={
+                      litigation.settlement.status === 'finalized'
+                        ? 'bg-green-100 text-green-800'
+                        : litigation.settlement.status === 'negotiating'
+                        ? 'bg-blue-100 text-blue-800'
+                        : 'bg-orange-100 text-orange-800'
+                    }>
+                      {litigation.settlement.status}
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-3">
+                    <div>
+                      <p className="text-sm text-gray-700">Proposed Amount</p>
+                      <p className="font-semibold text-gray-900">{litigation.settlement.proposedAmount}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-700">Proposed Date</p>
+                      <p className="font-medium text-gray-900">
+                        {new Date(litigation.settlement.proposedDate).toLocaleDateString('en-NG')}
+                      </p>
+                    </div>
+                  </div>
+                  {litigation.settlement.terms && (
+                    <div className="pt-3 border-t">
+                      <p className="text-sm font-medium text-gray-900 mb-2">Terms</p>
+                      <p className="text-sm text-gray-700">{litigation.settlement.terms}</p>
+                    </div>
+                  )}
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline" className="flex-1">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Upload Agreement
+                  </Button>
+                  <Button className="flex-1">
+                    <Handshake className="w-4 h-4 mr-2" />
+                    Update Status
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ) : (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Handshake className="w-5 h-5" />
+                  Settlement Negotiation
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg text-center">
+                  <AlertCircle className="w-10 h-10 text-gray-400 mx-auto mb-2" />
+                  <p className="text-gray-600 mb-3">No settlement discussions yet</p>
+                  <Button variant="outline" size="sm">
+                    <Handshake className="w-4 h-4 mr-2" />
+                    Initiate Settlement
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         {/* Sidebar */}
