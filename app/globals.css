@@ -81,3 +81,9 @@ body {
 .ql-toolbar .ql-picker-label {
   color: #111827 !important;
 }
+
+/* Dialog Description - Override default gray */
+[data-radix-dialog-description],
+.text-sm.text-muted-foreground {
+  color: #111827 !important; /* Dark text for dialog descriptions */
+}
