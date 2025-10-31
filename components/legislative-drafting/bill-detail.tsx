@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   FileText,
@@ -326,11 +327,35 @@ export function BillDetail() {
   const [showAmendmentDialog, setShowAmendmentDialog] = useState(false)
   const [showApprovalDialog, setShowApprovalDialog] = useState(false)
   const [showCommentDialog, setShowCommentDialog] = useState(false)
+  const [showPreviewDialog, setShowPreviewDialog] = useState(false)
+  const [showEditSectionDialog, setShowEditSectionDialog] = useState(false)
   const [amendmentText, setAmendmentText] = useState("")
   const [approvalComments, setApprovalComments] = useState("")
   const [commentText, setCommentText] = useState("")
+  const [sectionContent, setSectionContent] = useState("")
   const [selectedSection, setSelectedSection] = useState<number | null>(null)
   const [expandedSection, setExpandedSection] = useState<number | null>(null)
+
+  const handleExportPDF = () => {
+    // In real implementation, this would generate and download a PDF
+    alert(`Exporting ${mockBill.billNo} as PDF...`)
+  }
+
+  const handleDownloadVersion = (version: any) => {
+    // In real implementation, this would download the specific version
+    alert(`Downloading Version ${version.version}...`)
+  }
+
+  const handleViewVersion = (version: any) => {
+    // In real implementation, this would open the version for viewing
+    alert(`Opening Version ${version.version} for viewing...`)
+  }
+
+  const handleEditSection = (section: any) => {
+    setSelectedSection(section.number)
+    setSectionContent(section.title) // In real implementation, load actual section content
+    setShowEditSectionDialog(true)
+  }
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -373,16 +398,92 @@ export function BillDetail() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleExportPDF}>
             <Download className="w-4 h-4 mr-2" />
             Export PDF
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => setShowPreviewDialog(true)}>
             <Eye className="w-4 h-4 mr-2" />
             Preview
           </Button>
         </div>
       </div>
+
+      {/* Preview Dialog */}
+      <Dialog open={showPreviewDialog} onOpenChange={setShowPreviewDialog}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{mockBill.title}</DialogTitle>
+            <DialogDescription>Bill Number: {mockBill.billNo}</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6 py-4">
+            <div className="space-y-4">
+              <div>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2">Bill Information</h3>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="text-gray-600">Type:</span>{" "}
+                    <span className="font-medium">{mockBill.type}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600">Status:</span>{" "}
+                    <span className="font-medium capitalize">{mockBill.status}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600">Sponsor:</span>{" "}
+                    <span className="font-medium">{mockBill.sponsor}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600">Drafter:</span>{" "}
+                    <span className="font-medium">{mockBill.draftedBy}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2">Description</h3>
+                <p className="text-gray-700">{mockBill.description}</p>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2">Objectives</h3>
+                <ul className="list-disc list-inside space-y-1">
+                  {mockBill.objectives.map((obj, idx) => (
+                    <li key={idx} className="text-gray-700">{obj}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2">Sections</h3>
+                <div className="space-y-3">
+                  {mockBill.sections.map((section) => (
+                    <div key={section.id} className="p-3 border border-gray-200 rounded-lg">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-medium">Section {section.number}:</span>
+                        <span className="text-gray-700">{section.title}</span>
+                        <Badge variant="outline" className="text-xs">{section.status}</Badge>
+                      </div>
+                      <p className="text-sm text-gray-600 mt-2 pl-4">
+                        [Section content would appear here in the actual implementation]
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setShowPreviewDialog(false)}>
+              Close
+            </Button>
+            <Button onClick={handleExportPDF}>
+              <Download className="w-4 h-4 mr-2" />
+              Export as PDF
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -583,7 +684,7 @@ export function BillDetail() {
                             <MessageSquare className="w-4 h-4 mr-1" />
                             Comment
                           </Button>
-                          <Button variant="outline" size="sm">
+                          <Button variant="outline" size="sm" onClick={() => handleEditSection(section)}>
                             <Edit3 className="w-4 h-4 mr-1" />
                             Edit
                           </Button>
@@ -677,6 +778,62 @@ export function BillDetail() {
               </div>
             </DialogContent>
           </Dialog>
+
+          {/* Edit Section Dialog */}
+          <Dialog open={showEditSectionDialog} onOpenChange={setShowEditSectionDialog}>
+            <DialogContent className="max-w-4xl max-h-[80vh]">
+              <DialogHeader>
+                <DialogTitle>Edit Section {selectedSection}</DialogTitle>
+                <DialogDescription>
+                  {mockBill.sections.find(s => s.number === selectedSection)?.title}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label>Section Title</Label>
+                  <Input
+                    value={sectionContent}
+                    onChange={(e) => setSectionContent(e.target.value)}
+                    placeholder="Enter section title..."
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Section Content</Label>
+                  <Textarea
+                    placeholder="Enter section content..."
+                    rows={15}
+                    className="font-mono text-sm"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Notes</Label>
+                  <Textarea
+                    placeholder="Add any drafting notes or references..."
+                    rows={3}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => {
+                  setShowEditSectionDialog(false)
+                  setSectionContent("")
+                }}>
+                  Cancel
+                </Button>
+                <Button variant="outline">
+                  Save Draft
+                </Button>
+                <Button onClick={() => {
+                  // In real implementation, this would save the section
+                  alert(`Section ${selectedSection} updated successfully!`)
+                  setShowEditSectionDialog(false)
+                  setSectionContent("")
+                }}>
+                  Save & Publish
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </TabsContent>
 
         {/* Version History Tab */}
@@ -719,11 +876,11 @@ export function BillDetail() {
                       </div>
                       {!version.isCurrent && (
                         <div className="flex items-center gap-2">
-                          <Button variant="outline" size="sm">
+                          <Button variant="outline" size="sm" onClick={() => handleViewVersion(version)}>
                             <Eye className="w-4 h-4 mr-1" />
                             View
                           </Button>
-                          <Button variant="outline" size="sm">
+                          <Button variant="outline" size="sm" onClick={() => handleDownloadVersion(version)}>
                             <Download className="w-4 h-4 mr-1" />
                             Download
                           </Button>

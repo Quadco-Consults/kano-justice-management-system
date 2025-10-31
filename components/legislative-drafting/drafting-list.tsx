@@ -73,6 +73,24 @@ const mockBills = [
 
 export function DraftingList() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [showFilters, setShowFilters] = useState(false)
+  const [selectedStatus, setSelectedStatus] = useState<string>("all")
+  const [selectedType, setSelectedType] = useState<string>("all")
+  const [selectedCategory, setSelectedCategory] = useState<string>("all")
+
+  // Filter bills based on search and filters
+  const filteredBills = mockBills.filter((bill) => {
+    const matchesSearch =
+      bill.billNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bill.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      bill.category.toLowerCase().includes(searchQuery.toLowerCase())
+
+    const matchesStatus = selectedStatus === "all" || bill.status === selectedStatus
+    const matchesType = selectedType === "all" || bill.type === selectedType
+    const matchesCategory = selectedCategory === "all" || bill.category === selectedCategory
+
+    return matchesSearch && matchesStatus && matchesType && matchesCategory
+  })
 
   return (
     <div className="space-y-6">
@@ -104,11 +122,60 @@ export function DraftingList() {
                 className="pl-10"
               />
             </div>
-            <Button variant="outline">
+            <Button variant="outline" onClick={() => setShowFilters(!showFilters)}>
               <Filter className="w-4 h-4 mr-2" />
               Filters
             </Button>
           </div>
+
+          {/* Filter Options */}
+          {showFilters && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-4 border-t">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Status</label>
+                <select
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                  className="w-full p-2 border border-gray-200 rounded-lg"
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="draft">Draft</option>
+                  <option value="under-review">Under Review</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="submitted">Submitted</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Bill Type</label>
+                <select
+                  value={selectedType}
+                  onChange={(e) => setSelectedType(e.target.value)}
+                  className="w-full p-2 border border-gray-200 rounded-lg"
+                >
+                  <option value="all">All Types</option>
+                  <option value="Executive Bill">Executive Bill</option>
+                  <option value="Private Member Bill">Private Member Bill</option>
+                  <option value="Amendment">Amendment</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Category</label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full p-2 border border-gray-200 rounded-lg"
+                >
+                  <option value="all">All Categories</option>
+                  <option value="Environmental Law">Environmental Law</option>
+                  <option value="Land & Property">Land & Property</option>
+                  <option value="Public Administration">Public Administration</option>
+                  <option value="Education">Education</option>
+                  <option value="Healthcare">Healthcare</option>
+                </select>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -178,7 +245,12 @@ export function DraftingList() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {mockBills.map((bill) => (
+            {filteredBills.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-500">No bills found matching your criteria</p>
+              </div>
+            ) : (
+              filteredBills.map((bill) => (
               <Link key={bill.id} href={`/legislative-drafting/${bill.id}`}>
                 <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
                   <div className="flex items-start justify-between mb-3">
@@ -215,7 +287,8 @@ export function DraftingList() {
                   </div>
                 </div>
               </Link>
-            ))}
+              ))
+            )}
           </div>
         </CardContent>
       </Card>
