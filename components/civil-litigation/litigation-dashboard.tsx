@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Select,
   SelectContent,
@@ -52,17 +53,17 @@ const mockDashboardData = {
     avgResolutionLastQuarter: 312
   },
   byCategory: [
-    { name: 'Contract Disputes', total: 42, active: 15, won: 20, settled: 5, lost: 2, claimAmount: '₦850M' },
-    { name: 'Land Disputes', total: 28, active: 10, won: 12, settled: 4, lost: 2, claimAmount: '₦620M' },
-    { name: 'Debt Recovery', total: 24, active: 8, won: 12, settled: 3, lost: 1, claimAmount: '₦480M' },
-    { name: 'Employment Matters', total: 18, active: 7, won: 8, settled: 3, lost: 0, claimAmount: '₦280M' },
-    { name: 'Breach of Agreement', total: 15, active: 5, won: 6, settled: 3, lost: 1, claimAmount: '₦220M' }
+    { id: 'CL-001', name: 'Contract Disputes', total: 42, active: 15, won: 20, settled: 5, lost: 2, claimAmount: '₦850M' },
+    { id: 'CL-002', name: 'Land Disputes', total: 28, active: 10, won: 12, settled: 4, lost: 2, claimAmount: '₦620M' },
+    { id: 'CL-005', name: 'Debt Recovery', total: 24, active: 8, won: 12, settled: 3, lost: 1, claimAmount: '₦480M' },
+    { id: 'CL-003', name: 'Employment Matters', total: 18, active: 7, won: 8, settled: 3, lost: 0, claimAmount: '₦280M' },
+    { id: 'CL-006', name: 'Breach of Agreement', total: 15, active: 5, won: 6, settled: 3, lost: 1, claimAmount: '₦220M' }
   ],
   byCourt: [
-    { name: 'Federal High Court', cases: 45, active: 18, won: 20, success: 95.2 },
-    { name: 'State High Court', cases: 38, active: 12, won: 18, success: 90.0 },
-    { name: 'Magistrate Court', cases: 28, active: 10, won: 14, success: 93.3 },
-    { name: 'Customary Court', cases: 16, active: 5, won: 6, success: 85.7 }
+    { id: 'CL-001', name: 'Federal High Court', cases: 45, active: 18, won: 20, success: 95.2 },
+    { id: 'CL-002', name: 'State High Court', cases: 38, active: 12, won: 18, success: 90.0 },
+    { id: 'CL-003', name: 'Magistrate Court', cases: 28, active: 10, won: 14, success: 93.3 },
+    { id: 'CL-007', name: 'Customary Court', cases: 16, active: 5, won: 6, success: 85.7 }
   ],
   byCounsel: [
     { name: 'Barr. Fatima Ibrahim', cases: 28, active: 12, won: 13, success: 96.3 },
@@ -72,15 +73,27 @@ const mockDashboardData = {
     { name: 'Others', cases: 35, active: 8, won: 15, success: 88.2 }
   ],
   upcomingHearings: [
-    { suitNo: 'SUIT/HC/25/2025', title: 'Kano State v. ABC Construction', court: 'Federal High Court', date: '2025-11-15', purpose: 'Trial Continuation' },
-    { suitNo: 'SUIT/HC/18/2025', title: 'State v. XYZ Properties Ltd', court: 'State High Court', date: '2025-11-16', purpose: 'Judgment' },
-    { suitNo: 'SUIT/MC/42/2025', title: 'State v. John Doe', court: 'Magistrate Court', date: '2025-11-18', purpose: 'Motion Hearing' },
-    { suitNo: 'SUIT/HC/31/2025', title: 'Ministry of Works v. Contractor', court: 'Federal High Court', date: '2025-11-20', purpose: 'Pre-Trial Conference' }
+    { suitNo: 'CL-001', title: 'Kano State v. ABC Construction', court: 'Federal High Court', date: '2025-11-15', purpose: 'Trial Continuation' },
+    { suitNo: 'CL-002', title: 'State v. XYZ Properties Ltd', court: 'State High Court', date: '2025-11-16', purpose: 'Judgment' },
+    { suitNo: 'CL-003', title: 'State v. John Doe', court: 'Magistrate Court', date: '2025-11-18', purpose: 'Motion Hearing' },
+    { suitNo: 'CL-004', title: 'Ministry of Works v. Contractor', court: 'Federal High Court', date: '2025-11-20', purpose: 'Pre-Trial Conference' }
   ],
   criticalCases: [
-    { suitNo: 'SUIT/HC/25/2025', title: 'ABC Construction Contract Breach', status: 'Trial', daysInCourt: 92, claimAmount: '₦25M', nextHearing: '2025-11-15' },
-    { suitNo: 'SUIT/HC/18/2025', title: 'XYZ Land Dispute', status: 'Awaiting Judgment', daysInCourt: 156, claimAmount: '₦45M', nextHearing: '2025-11-16' },
-    { suitNo: 'SUIT/HC/12/2024', title: 'Debt Recovery - ABC Bank', status: 'Appeal', daysInCourt: 387, claimAmount: '₦120M', nextHearing: '2025-12-05' }
+    { suitNo: 'CL-001', title: 'ABC Construction Contract Breach', status: 'Trial', daysInCourt: 92, claimAmount: '₦25M', nextHearing: '2025-11-15' },
+    { suitNo: 'CL-002', title: 'XYZ Land Dispute', status: 'Awaiting Judgment', daysInCourt: 156, claimAmount: '₦45M', nextHearing: '2025-11-16' },
+    { suitNo: 'CL-005', title: 'Debt Recovery - ABC Bank', status: 'Appeal', daysInCourt: 387, claimAmount: '₦120M', nextHearing: '2025-12-05' }
+  ],
+  allCases: [
+    { suitNo: 'CL-001', title: 'ABC Construction Contract Breach', category: 'Contract Disputes', court: 'Federal High Court', status: 'in-trial', claimAmount: '₦25M', counsel: 'Barr. Fatima Ibrahim', filingDate: '2025-08-15', nextHearing: '2025-11-15' },
+    { suitNo: 'CL-002', title: 'XYZ Properties Land Dispute', category: 'Land Disputes', court: 'State High Court', status: 'awaiting-judgment', claimAmount: '₦45M', counsel: 'Barr. Yusuf Ali', filingDate: '2025-05-22', nextHearing: '2025-11-16' },
+    { suitNo: 'CL-003', title: 'John Doe Employment Dispute', category: 'Employment Matters', court: 'Magistrate Court', status: 'in-trial', claimAmount: '₦8M', counsel: 'Barr. Amina Yusuf', filingDate: '2025-09-10', nextHearing: '2025-11-18' },
+    { suitNo: 'CL-004', title: 'Ministry of Works v. Contractor', category: 'Contract Disputes', court: 'Federal High Court', status: 'pre-trial', claimAmount: '₦35M', counsel: 'Barr. Ibrahim Bello', filingDate: '2025-07-05', nextHearing: '2025-11-20' },
+    { suitNo: 'CL-005', title: 'ABC Bank Debt Recovery', category: 'Debt Recovery', court: 'Federal High Court', status: 'appeal', claimAmount: '₦120M', counsel: 'Barr. Fatima Ibrahim', filingDate: '2024-03-12', nextHearing: '2025-12-05' },
+    { suitNo: 'CL-006', title: 'Commercial Lease Agreement Breach', category: 'Breach of Agreement', court: 'State High Court', status: 'settled', claimAmount: '₦18M', counsel: 'Barr. Yusuf Ali', filingDate: '2025-02-14', nextHearing: null },
+    { suitNo: 'CL-007', title: 'Land Boundary Dispute - Plot 123', category: 'Land Disputes', court: 'State High Court', status: 'won', claimAmount: '₦22M', counsel: 'Barr. Ibrahim Bello', filingDate: '2025-01-08', nextHearing: null },
+    { suitNo: 'CL-008', title: 'Wrongful Termination Case', category: 'Employment Matters', court: 'Magistrate Court', status: 'in-trial', claimAmount: '₦5M', counsel: 'Barr. Amina Yusuf', filingDate: '2025-08-20', nextHearing: '2025-11-22' },
+    { suitNo: 'CL-009', title: 'Supply Contract Dispute', category: 'Contract Disputes', court: 'Federal High Court', status: 'won', claimAmount: '₦42M', counsel: 'Barr. Fatima Ibrahim', filingDate: '2025-04-03', nextHearing: null },
+    { suitNo: 'CL-010', title: 'Partnership Dissolution', category: 'Breach of Agreement', court: 'State High Court', status: 'in-trial', claimAmount: '₦28M', counsel: 'Barr. Yusuf Ali', filingDate: '2025-06-18', nextHearing: '2025-11-25' }
   ]
 }
 
@@ -115,6 +128,15 @@ export function LitigationDashboard() {
           </Link>
         </div>
       </div>
+
+      {/* Tabs */}
+      <Tabs defaultValue="overview" className="w-full">
+        <TabsList>
+          <TabsTrigger value="overview">Overview & Analytics</TabsTrigger>
+          <TabsTrigger value="cases">All Cases</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="space-y-6 mt-6">
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -238,33 +260,35 @@ export function LitigationDashboard() {
           <CardContent>
             <div className="space-y-3">
               {mockDashboardData.byCategory.map((category, index) => (
-                <div key={index} className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="font-semibold text-gray-900">{category.name}</p>
-                      <p className="text-sm text-gray-600">Claim Amount: {category.claimAmount}</p>
+                <Link key={index} href={`/civil-litigation/${category.id}`}>
+                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <p className="font-semibold text-gray-900">{category.name}</p>
+                        <p className="text-sm text-gray-600">Claim Amount: {category.claimAmount}</p>
+                      </div>
+                      <Badge className="bg-gray-100 text-gray-900">{category.total} cases</Badge>
                     </div>
-                    <Badge className="bg-gray-100 text-gray-900">{category.total} cases</Badge>
+                    <div className="grid grid-cols-4 gap-3 text-sm">
+                      <div>
+                        <p className="text-gray-600">Active</p>
+                        <p className="font-semibold text-orange-600">{category.active}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Won</p>
+                        <p className="font-semibold text-green-600">{category.won}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Settled</p>
+                        <p className="font-semibold text-blue-600">{category.settled}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Lost</p>
+                        <p className="font-semibold text-red-600">{category.lost}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-4 gap-3 text-sm">
-                    <div>
-                      <p className="text-gray-600">Active</p>
-                      <p className="font-semibold text-orange-600">{category.active}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-600">Won</p>
-                      <p className="font-semibold text-green-600">{category.won}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-600">Settled</p>
-                      <p className="font-semibold text-blue-600">{category.settled}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-600">Lost</p>
-                      <p className="font-semibold text-red-600">{category.lost}</p>
-                    </div>
-                  </div>
-                </div>
+                </Link>
               ))}
             </div>
           </CardContent>
@@ -278,32 +302,34 @@ export function LitigationDashboard() {
           <CardContent>
             <div className="space-y-3">
               {mockDashboardData.byCourt.map((court, index) => (
-                <div key={index} className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] transition-all">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <Building2 className="w-5 h-5 text-gray-400" />
-                      <p className="font-semibold text-gray-900">{court.name}</p>
+                <Link key={index} href={`/civil-litigation/${court.id}`}>
+                  <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <Building2 className="w-5 h-5 text-gray-400" />
+                        <p className="font-semibold text-gray-900">{court.name}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-semibold text-green-600">{court.success}%</p>
+                        <p className="text-xs text-gray-500">success rate</p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm font-semibold text-green-600">{court.success}%</p>
-                      <p className="text-xs text-gray-500">success rate</p>
+                    <div className="grid grid-cols-3 gap-3 text-sm">
+                      <div>
+                        <p className="text-gray-600">Total</p>
+                        <p className="font-semibold text-gray-900">{court.cases}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Active</p>
+                        <p className="font-semibold text-orange-600">{court.active}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Won</p>
+                        <p className="font-semibold text-green-600">{court.won}</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-3 gap-3 text-sm">
-                    <div>
-                      <p className="text-gray-600">Total</p>
-                      <p className="font-semibold text-gray-900">{court.cases}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-600">Active</p>
-                      <p className="font-semibold text-orange-600">{court.active}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-600">Won</p>
-                      <p className="font-semibold text-green-600">{court.won}</p>
-                    </div>
-                  </div>
-                </div>
+                </Link>
               ))}
             </div>
           </CardContent>
@@ -424,6 +450,81 @@ export function LitigationDashboard() {
           </CardContent>
         </Card>
       </div>
+        </TabsContent>
+
+        {/* Cases Tab */}
+        <TabsContent value="cases" className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>All Civil Litigation Cases</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {mockDashboardData.allCases.map((caseItem, index) => (
+                  <Link key={index} href={`/civil-litigation/${caseItem.suitNo}`}>
+                    <div className="p-4 border border-gray-200 rounded-lg hover:border-[#8B1538] hover:shadow-sm transition-all cursor-pointer">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <Badge variant="outline">{caseItem.suitNo}</Badge>
+                            <Badge
+                              className={
+                                caseItem.status === 'won'
+                                  ? 'bg-green-100 text-green-800'
+                                  : caseItem.status === 'settled'
+                                  ? 'bg-blue-100 text-blue-800'
+                                  : caseItem.status === 'in-trial'
+                                  ? 'bg-orange-100 text-orange-800'
+                                  : caseItem.status === 'awaiting-judgment'
+                                  ? 'bg-purple-100 text-purple-800'
+                                  : caseItem.status === 'appeal'
+                                  ? 'bg-red-100 text-red-800'
+                                  : 'bg-gray-100 text-gray-800'
+                              }
+                            >
+                              {caseItem.status.replace('-', ' ')}
+                            </Badge>
+                          </div>
+                          <p className="font-semibold text-gray-900 mb-1">{caseItem.title}</p>
+                          <p className="text-sm text-gray-600">{caseItem.category}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-lg font-bold text-[#8B1538]">{caseItem.claimAmount}</p>
+                          <p className="text-xs text-gray-500">Claim Amount</p>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-4 gap-4 text-sm pt-3 border-t border-gray-100">
+                        <div>
+                          <p className="text-gray-600">Court</p>
+                          <p className="font-medium text-gray-900">{caseItem.court}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-600">Counsel</p>
+                          <p className="font-medium text-gray-900">{caseItem.counsel}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-600">Filed</p>
+                          <p className="font-medium text-gray-900">
+                            {new Date(caseItem.filingDate).toLocaleDateString('en-NG', { month: 'short', year: 'numeric' })}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-gray-600">Next Hearing</p>
+                          <p className="font-medium text-gray-900">
+                            {caseItem.nextHearing
+                              ? new Date(caseItem.nextHearing).toLocaleDateString('en-NG', { month: 'short', day: 'numeric' })
+                              : 'N/A'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

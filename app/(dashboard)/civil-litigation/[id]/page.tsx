@@ -1,4 +1,4 @@
-import { LitigationDetail } from "@/components/civil-litigation/litigation-detail"
+import { CaseDetail } from "@/components/prosecution/case-detail"
 
 interface PageProps {
   params: {
@@ -6,6 +6,6 @@ interface PageProps {
   }
 }
 
-export default function CivilLitigationDetailPage({ params }: PageProps) {
-  return <LitigationDetail id={params.id} />
+export default function CivilLitigationCasePage({ params }: PageProps) {
+  return <CaseDetail id={params.id} />
 }
