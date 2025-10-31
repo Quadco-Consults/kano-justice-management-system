@@ -5,8 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { CaseStatusIndicator } from "@/components/shared/case-status-indicator"
-import { Search, Plus, Filter, Gavel, Calendar, User } from "lucide-react"
+import { Search, Plus, Filter, Gavel, Calendar, User, X } from "lucide-react"
 import Link from "next/link"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Badge } from "@/components/ui/badge"
 
 const mockCases = [
   {
@@ -73,6 +81,24 @@ const mockCases = [
 
 export function ProsecutionList() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [showFilters, setShowFilters] = useState(false)
+  const [filters, setFilters] = useState({
+    status: "",
+    offense: "",
+    court: "",
+    prosecutor: "",
+  })
+
+  const clearFilters = () => {
+    setFilters({
+      status: "",
+      offense: "",
+      court: "",
+      prosecutor: "",
+    })
+  }
+
+  const hasActiveFilters = Object.values(filters).some(value => value !== "")
 
   return (
     <div className="space-y-6">
@@ -93,21 +119,132 @@ export function ProsecutionList() {
       {/* Filters */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search by case number, accused, or offense..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
+          <div className="space-y-4">
+            <div className="flex gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search by case number, accused, or offense..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className={hasActiveFilters ? "border-[#8B1538] text-[#8B1538]" : ""}
+              >
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+                {hasActiveFilters && (
+                  <Badge className="ml-2 bg-[#8B1538] text-white">
+                    {Object.values(filters).filter(v => v !== "").length}
+                  </Badge>
+                )}
+              </Button>
             </div>
-            <Button variant="outline">
-              <Filter className="w-4 h-4 mr-2" />
-              Filters
-            </Button>
+
+            {/* Filter Options */}
+            {showFilters && (
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Status</label>
+                  <Select
+                    value={filters.status}
+                    onValueChange={(value) => setFilters({ ...filters, status: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Statuses" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Statuses</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="under-investigation">Under Investigation</SelectItem>
+                      <SelectItem value="filed">Filed</SelectItem>
+                      <SelectItem value="in-trial">In Trial</SelectItem>
+                      <SelectItem value="verdict-delivered">Verdict Delivered</SelectItem>
+                      <SelectItem value="convicted">Convicted</SelectItem>
+                      <SelectItem value="acquitted">Acquitted</SelectItem>
+                      <SelectItem value="withdrawn">Withdrawn</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Offense Type</label>
+                  <Select
+                    value={filters.offense}
+                    onValueChange={(value) => setFilters({ ...filters, offense: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Offenses" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Offenses</SelectItem>
+                      <SelectItem value="robbery">Armed Robbery</SelectItem>
+                      <SelectItem value="fraud">Fraud</SelectItem>
+                      <SelectItem value="assault">Assault</SelectItem>
+                      <SelectItem value="embezzlement">Embezzlement</SelectItem>
+                      <SelectItem value="theft">Theft</SelectItem>
+                      <SelectItem value="murder">Murder</SelectItem>
+                      <SelectItem value="drug-trafficking">Drug Trafficking</SelectItem>
+                      <SelectItem value="corruption">Corruption</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Court</label>
+                  <Select
+                    value={filters.court}
+                    onValueChange={(value) => setFilters({ ...filters, court: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Courts" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Courts</SelectItem>
+                      <SelectItem value="high-court-1">High Court 1, Kano</SelectItem>
+                      <SelectItem value="high-court-2">High Court 2, Kano</SelectItem>
+                      <SelectItem value="magistrate-1">Magistrate Court 1, Kano</SelectItem>
+                      <SelectItem value="magistrate-2">Magistrate Court 2, Kano</SelectItem>
+                      <SelectItem value="magistrate-3">Magistrate Court 3, Kano</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-900">Prosecutor</label>
+                  <Select
+                    value={filters.prosecutor}
+                    onValueChange={(value) => setFilters({ ...filters, prosecutor: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All Prosecutors" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Prosecutors</SelectItem>
+                      <SelectItem value="maryam">Barr. Maryam Usman</SelectItem>
+                      <SelectItem value="ibrahim">Barr. Ibrahim Sani</SelectItem>
+                      <SelectItem value="halima">Barr. Halima Mohammed</SelectItem>
+                      <SelectItem value="ahmad">Barr. Ahmad Bello</SelectItem>
+                      <SelectItem value="amina">Barr. Amina Hassan</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {hasActiveFilters && (
+                  <div className="md:col-span-4 flex justify-end">
+                    <Button variant="ghost" onClick={clearFilters} size="sm">
+                      <X className="w-4 h-4 mr-2" />
+                      Clear Filters
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
