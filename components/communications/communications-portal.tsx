@@ -11,7 +11,7 @@ import {
   Clock,
   TrendingUp,
 } from "lucide-react"
-import { MessagesTab } from "./messages-tab"
+import { CorrespondencesTab } from "./correspondences-tab"
 import { DocumentSharingTab } from "./document-sharing-tab"
 import { ApprovalWorkflowTab } from "./approval-workflow-tab"
 import { StakeholderActivityTab } from "./stakeholder-activity-tab"
@@ -76,11 +76,11 @@ export function CommunicationsPortal() {
       </div>
 
       {/* Main Portal Tabs */}
-      <Tabs defaultValue="messages" className="space-y-6">
+      <Tabs defaultValue="correspondences" className="space-y-6">
         <TabsList className="grid grid-cols-4 w-full">
-          <TabsTrigger value="messages" className="flex items-center gap-2">
+          <TabsTrigger value="correspondences" className="flex items-center gap-2">
             <MessageSquare className="w-4 h-4" />
-            Messages
+            All Correspondences
           </TabsTrigger>
           <TabsTrigger value="documents" className="flex items-center gap-2">
             <FileText className="w-4 h-4" />
@@ -96,8 +96,8 @@ export function CommunicationsPortal() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="messages">
-          <MessagesTab />
+        <TabsContent value="correspondences">
+          <CorrespondencesTab />
         </TabsContent>
 
         <TabsContent value="documents">

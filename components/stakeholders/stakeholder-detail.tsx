@@ -15,7 +15,11 @@ import {
   Users,
   MessageSquare,
   Activity,
-  Settings
+  Settings,
+  Plus,
+  AlertCircle,
+  CheckCircle2,
+  Clock
 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -43,8 +47,71 @@ const mockStakeholder = {
     lastInteraction: '2025-10-28',
     totalInteractions: 87,
     activeRequests: 5,
-    completedRequests: 82
+    completedRequests: 82,
+    totalCorrespondences: 24
   },
+  correspondences: [
+    {
+      id: 'CORR-2025-001',
+      title: 'School Construction Contract Review',
+      status: 'active',
+      priority: 'high',
+      createdDate: '2025-10-20',
+      lastActivity: '2025-10-30',
+      requestsCount: 3,
+      documentsCount: 12,
+      commentsCount: 8,
+      participants: ['Barr. Fatima Ibrahim', 'Hon. Commissioner', 'Legal Advisory Team']
+    },
+    {
+      id: 'CORR-2025-002',
+      title: 'Teacher Training Partnership MOU',
+      status: 'active',
+      priority: 'medium',
+      createdDate: '2025-10-15',
+      lastActivity: '2025-10-29',
+      requestsCount: 2,
+      documentsCount: 8,
+      commentsCount: 5,
+      participants: ['Barr. Yusuf Ali', 'Permanent Secretary']
+    },
+    {
+      id: 'CORR-2025-003',
+      title: 'Education Policy Bill Amendment',
+      status: 'pending-approval',
+      priority: 'high',
+      createdDate: '2025-10-10',
+      lastActivity: '2025-10-28',
+      requestsCount: 5,
+      documentsCount: 15,
+      commentsCount: 12,
+      participants: ['Legislative Team', 'Director Legal', 'Commissioner']
+    },
+    {
+      id: 'CORR-2025-004',
+      title: 'School Facilities Legal Compliance',
+      status: 'completed',
+      priority: 'medium',
+      createdDate: '2025-09-25',
+      lastActivity: '2025-10-15',
+      requestsCount: 2,
+      documentsCount: 6,
+      commentsCount: 4,
+      participants: ['Barr. Ibrahim Bello', 'MOE Legal Officer']
+    },
+    {
+      id: 'CORR-2024-045',
+      title: 'Annual Service Agreement Review',
+      status: 'completed',
+      priority: 'low',
+      createdDate: '2024-12-01',
+      lastActivity: '2025-01-15',
+      requestsCount: 1,
+      documentsCount: 3,
+      commentsCount: 2,
+      participants: ['Director Legal Advisory', 'Permanent Secretary']
+    }
+  ],
   activeRequests: [
     {
       id: 1,
@@ -464,76 +531,102 @@ export function StakeholderDetail({ id }: StakeholderDetailProps) {
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle>Message History</CardTitle>
-                <Link href="/communications">
+                <CardTitle>All Correspondences</CardTitle>
+                <Link href={`/correspondences/new?stakeholder=${id}`}>
                   <Button size="sm">
-                    <MessageSquare className="w-4 h-4 mr-2" />
-                    Send New Message
+                    <Plus className="w-4 h-4 mr-2" />
+                    New Correspondence
                   </Button>
                 </Link>
               </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {[
-                  {
-                    id: 1,
-                    subject: 'Contract Review Request - School Construction',
-                    date: '2025-10-28',
-                    from: 'Ministry of Education',
-                    to: 'Barr. Fatima Ibrahim',
-                    status: 'replied',
-                    lastMessage: 'Thank you for the prompt review. We will proceed with your recommendations.',
-                  },
-                  {
-                    id: 2,
-                    subject: 'MOU Review Follow-up',
-                    date: '2025-10-24',
-                    from: 'Barr. Yusuf Ali',
-                    to: 'Ministry of Education',
-                    status: 'sent',
-                    lastMessage: 'Please find attached the reviewed MOU with our comments.',
-                  },
-                  {
-                    id: 3,
-                    subject: 'Education Policy Amendment Consultation',
-                    date: '2025-10-20',
-                    from: 'Ministry of Education',
-                    to: 'Legislative Team',
-                    status: 'replied',
-                    lastMessage: 'We appreciate the detailed consultation. The amendments are now under review.',
-                  },
-                ].map((message, index) => {
+                {mockStakeholder.correspondences.map((correspondence, index) => {
                   const bgColors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-red-50']
                   const borderColors = ['border-blue-500', 'border-green-500', 'border-purple-500', 'border-red-500']
-                  const iconColors = ['text-blue-600', 'text-green-600', 'text-purple-600', 'text-red-600']
                   const colorIndex = index % 4
 
                   return (
-                    <div
-                      key={message.id}
-                      className={`flex items-start gap-3 p-4 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded cursor-pointer hover:shadow-sm transition-all`}
-                    >
-                      <MessageSquare className={`w-5 h-5 ${iconColors[colorIndex]} mt-0.5`} />
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-semibold text-gray-900">{message.subject}</h4>
-                          <Badge
-                            className={message.status === 'replied' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}
-                          >
-                            {message.status}
-                          </Badge>
+                    <Link key={correspondence.id} href={`/correspondences/${correspondence.id}`}>
+                      <div
+                        className={`flex items-start gap-4 p-4 border-l-4 ${borderColors[colorIndex]} ${bgColors[colorIndex]} rounded cursor-pointer hover:shadow-md transition-all`}
+                      >
+                        <div className="flex-shrink-0">
+                          {correspondence.status === 'active' ? (
+                            <AlertCircle className="w-6 h-6 text-blue-600" />
+                          ) : correspondence.status === 'pending-approval' ? (
+                            <Clock className="w-6 h-6 text-orange-600" />
+                          ) : (
+                            <CheckCircle2 className="w-6 h-6 text-green-600" />
+                          )}
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">{message.lastMessage}</p>
-                        <div className="flex items-center gap-4 text-xs text-gray-500">
-                          <span>From: {message.from}</span>
-                          <span>•</span>
-                          <span>To: {message.to}</span>
-                          <span>•</span>
-                          <span>{new Date(message.date).toLocaleDateString('en-NG')}</span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <h4 className="font-semibold text-gray-900">{correspondence.title}</h4>
+                                <Badge variant="outline" className="text-xs">{correspondence.id}</Badge>
+                              </div>
+                              <div className="flex items-center gap-2 mb-2">
+                                <Badge
+                                  variant={
+                                    correspondence.status === 'active'
+                                      ? 'default'
+                                      : correspondence.status === 'pending-approval'
+                                      ? 'secondary'
+                                      : 'success'
+                                  }
+                                >
+                                  {correspondence.status}
+                                </Badge>
+                                <Badge
+                                  className={
+                                    correspondence.priority === 'high'
+                                      ? 'bg-red-100 text-red-800'
+                                      : correspondence.priority === 'medium'
+                                      ? 'bg-orange-100 text-orange-800'
+                                      : 'bg-gray-100 text-gray-800'
+                                  }
+                                >
+                                  {correspondence.priority}
+                                </Badge>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-3 gap-4 mb-3">
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <FileText className="w-4 h-4" />
+                              <span>{correspondence.requestsCount} requests</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <FileText className="w-4 h-4" />
+                              <span>{correspondence.documentsCount} documents</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <MessageSquare className="w-4 h-4" />
+                              <span>{correspondence.commentsCount} comments</span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between text-xs text-gray-500">
+                            <div className="flex items-center gap-3">
+                              <span>Created: {new Date(correspondence.createdDate).toLocaleDateString('en-NG')}</span>
+                              <span>•</span>
+                              <span>Last activity: {new Date(correspondence.lastActivity).toLocaleDateString('en-NG')}</span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 mt-2">
+                            <Users className="w-4 h-4 text-gray-400" />
+                            <span className="text-xs text-gray-600">
+                              {correspondence.participants.join(', ')}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   )
                 })}
               </div>
